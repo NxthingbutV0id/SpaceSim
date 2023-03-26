@@ -1,10 +1,10 @@
 package main;
 
 import main.simulation.SimulationManager;
+import javafx.application.Application;
 
 public class Main {
     public static void main(String[] args) {
-        SimulationManager sm = new SimulationManager();
-        sm.start();
+        Application.launch(SimulationManager.class, args);
     }
 }

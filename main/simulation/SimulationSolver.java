@@ -1,9 +1,12 @@
 package main.simulation;
 
-import java.awt.*;
 import java.util.LinkedList;
-import customUtils.*;
-import main.constants.Universe;
+
+import javafx.scene.canvas.Canvas;
+import javafx.scene.paint.*;
+import main.constants.Mass;
+import main.customUtils.*;
+import main.constants.*;
 
 public class SimulationSolver {
     private final LinkedList<CelestialBody> bodies = new LinkedList<>();
@@ -16,7 +19,7 @@ public class SimulationSolver {
     public void createBodies() {
         CelestialBody body1 = new CelestialBody(
                 "A",
-                1,
+                Mass.EARTH,
                 100,
                 new Vec2(0, 0),
                 new Vec2(0, 0),
@@ -24,18 +27,18 @@ public class SimulationSolver {
         );
         CelestialBody body2 = new CelestialBody(
                 "B",
-                1,
+                Mass.EARTH,
                 100,
                 new Vec2(-500, 0),
-                new Vec2(0, 0),
+                new Vec2(0, -1e6),
                 Color.BLUE
         );
         CelestialBody body3 = new CelestialBody(
                 "C",
-                1,
+                Mass.EARTH,
                 100,
-                new Vec2(0, 600),
-                new Vec2(0, 0),
+                new Vec2(0, 750),
+                new Vec2(1e6, 0),
                 Color.GREEN
         );
         bodies.add(body1);
@@ -62,13 +65,18 @@ public class SimulationSolver {
     private Vec2 getAcceleration(CelestialBody body){
         Vec2 accel = new Vec2(0, 0);
         for (CelestialBody otherBody : bodies) {
-            Vec2 step1 = body.getPosition().sub(otherBody.getPosition());
-            double step2 = step1.getMagnitude() * step1.getMagnitude() * step1.getMagnitude();
-            Vec2 step3 = step1.divide(step2);
-            Vec2 step4 = step3.multiply(otherBody.getMass());
-            Vec2 step5 = step4.multiply(Universe.GRAVITATIONAL_CONSTANT);
-            Vec2 step6 = step5.multiply(-1);
-            accel.incrementBy(step6);
+            if (otherBody != body) {
+                Vec2 step1 = body.getPosition().sub(otherBody.getPosition());
+                double step2 = step1.getMagnitude() * step1.getMagnitude() * step1.getMagnitude();
+                Vec2 step3 = step1.divide(step2);
+                Vec2 step4 = step3.multiply(otherBody.getMass());
+                Vec2 step5 = step4.multiply(Universe.GRAVITATIONAL_CONSTANT);
+                Vec2 step6 = step5.multiply(-1);
+                accel.incrementBy(step6);
+            }
+        }
+        if (Double.isNaN(accel.getX()) || Double.isNaN(accel.getY())) {
+            System.out.println("AN ERROR OCCURRED, POSSIBLE COLLISION");
         }
         return accel;
     }
@@ -88,18 +96,16 @@ public class SimulationSolver {
     }
 
     public Vec2 getCenterOfMass() {
-        double xCM, yCM, xN, yN, xD, yD;
-        xN = yN = xD = yD = 0;
+        double totalMass = 0;
+        Vec2 centerOfMass, summationVec = new Vec2(0, 0);
         for (CelestialBody body : bodies) {
-            xN += body.getPosition().getX() * body.getMass();
-            yN += body.getPosition().getY() * body.getMass();
-            xD += body.getMass();
-            yD += body.getMass();
+            totalMass += body.getMass();
         }
-
-        xCM = xN/xD;
-        yCM = yN/yD;
-
-        return new Vec2(xCM, yCM);
+        for (CelestialBody body : bodies) {
+            summationVec.incrementBy(body.getPosition().multiply(body.getMass()));
+        }
+        centerOfMass = summationVec.divide(totalMass);
+        System.out.println(centerOfMass);
+        return centerOfMass;
     }
 }

@@ -1,17 +1,18 @@
 package main.simulation;
 
-import customUtils.*;
-import java.awt.*;
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.*;
+import main.customUtils.*;
 
 public class CelestialBody {
-    private String name;
-    private double mass;
-    private double radius;
+    private final String name;
+    private final double mass;
+    private final double radius;
     private Vec2 position;
     private Vec2 velocity;
-    private Color planetColor;
+    private final Paint planetColor;
 
-    public CelestialBody(String name, double mass, double radius, Vec2 position, Vec2 velocity, Color color) {
+    public CelestialBody(String name, double mass, double radius, Vec2 position, Vec2 velocity, Paint color) {
         this.name = name;
         this.mass = mass;
         this.radius = radius;
@@ -40,13 +41,21 @@ public class CelestialBody {
         this.velocity = velocity;
     }
 
-    public void drawBody(Graphics2D g, double scale, int screenWidth, int screenHeight, Vec2 relative) {
-        g.setColor(planetColor);
+    public void drawBody(GraphicsContext g, double scale, double screenWidth, double screenHeight, Vec2 relative) {
+        double x, y, r, relX, relY;
+
+        x = position.getX() * scale;
+        y = position.getY() * scale;
+        r = radius*scale;
+        relX = relative.getX() * scale;
+        relY = relative.getY() * scale;
+
+        g.setFill(planetColor);
         g.fillOval(
-                (int)(((position.getX() * scale) + screenWidth/2) - relative.getX()),
-                (int)(((position.getY() * scale) + screenHeight/2) - relative.getY()),
-                (int)(radius*scale),
-                (int)(radius*scale)
+                ((x - r) + screenWidth/2) - relX,
+                ((y - r) + screenHeight/2) - relY,
+                2*r,
+                2*r
         );
     }
 

@@ -1,4 +1,4 @@
-package customUtils;
+package main.customUtils;
 
 public class Vec2 {
     private double x, y;
@@ -77,5 +77,10 @@ public class Vec2 {
 
     public Vec2 normalize() {
         return new Vec2(x/getMagnitude(), y/getMagnitude());
+    }
+
+    @Override
+    public String toString() {
+        return "(" + x + ", " + y + ")";
     }
 }

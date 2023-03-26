@@ -1,27 +1,36 @@
 package main.simulation;
 
-import main.engine.*;
+import javafx.application.Application;
+import javafx.scene.*;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.layout.StackPane;
+import javafx.scene.paint.*;
+import javafx.stage.*;
+import main.graphics.Animator;
 
-public class SimulationManager implements AbstractScene {
-    private final Container container;
-    private final SimulationSolver simulator = new SimulationSolver();
+public class SimulationManager extends Application {
+    private final double width = 1280, height = 720;
+    private final SimulationSolver simulator = new SimulationSolver();;
+    private Canvas canvas;
 
-    public SimulationManager() {
-        container = new Container(1280, 720, 1f, "Gravity Simulation", this);
-    }
+    @Override
+    public void start(Stage stage) throws Exception {
+        stage.setTitle("System Simulation V0.0.4");
+        stage.setWidth(width);
+        stage.setHeight(height);
+        stage.setResizable(false);
 
-    public void start() {
-        container.start();
+        StackPane root = new StackPane();
+        Scene mainScene = new Scene(root, Color.BLACK);
+        stage.setScene(mainScene);
+
+        canvas = new Canvas(width, height);
+        root.getChildren().add(canvas);
         simulator.createBodies();
-    }
 
-    @Override
-    public void update(Container container, double deltaT) {
-        simulator.update(deltaT, 1);
-    }
+        Animator animator = new Animator(canvas, 0.2, simulator);
+        animator.start();
 
-    @Override
-    public void render(Container container, Renderer renderer) {
-
+        stage.show();
     }
 }
