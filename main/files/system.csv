@@ -1,0 +1,4 @@
+Name,Mass,Radius,x Position,y Position,x Velocity,y Velocity,Relative body
+Sol,1 (Ms),1 (Rs),0,0,0,0,null
+Earth,1 (Me),1 (Re),1 (AU),0,0,30000,Sol
+Moon,1 (Mm),1 (Rm),3.85E+08,0,0,1020,Earth

@@ -3,18 +3,22 @@ package main.simulation;
 import javafx.application.Application;
 import javafx.scene.*;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.*;
 import javafx.stage.*;
 import main.graphics.Animator;
 
 public class SimulationManager extends Application {
-    private final double width = 1280, height = 720;
-    private final SimulationSolver simulator = new SimulationSolver();;
-    private Canvas canvas;
+    private final SimulationSolver simulator = new SimulationSolver();
+    private double scale, timeScale;
 
     @Override
     public void start(Stage stage) throws Exception {
+        double width = 1280, height = 720;
+        timeScale = 100000;
+        scale = 1;
+
         stage.setTitle("System Simulation V0.0.4");
         stage.setWidth(width);
         stage.setHeight(height);
@@ -24,11 +28,11 @@ public class SimulationManager extends Application {
         Scene mainScene = new Scene(root, Color.BLACK);
         stage.setScene(mainScene);
 
-        canvas = new Canvas(width, height);
+        Canvas canvas = new Canvas(width, height);
         root.getChildren().add(canvas);
         simulator.createBodies();
 
-        Animator animator = new Animator(canvas, 0.2, simulator);
+        Animator animator = new Animator(canvas, mainScene, scale, simulator, timeScale);
         animator.start();
 
         stage.show();

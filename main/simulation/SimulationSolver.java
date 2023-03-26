@@ -2,9 +2,7 @@ package main.simulation;
 
 import java.util.LinkedList;
 
-import javafx.scene.canvas.Canvas;
 import javafx.scene.paint.*;
-import main.constants.Mass;
 import main.customUtils.*;
 import main.constants.*;
 
@@ -19,7 +17,7 @@ public class SimulationSolver {
     public void createBodies() {
         CelestialBody body1 = new CelestialBody(
                 "A",
-                Mass.EARTH,
+                Constants.Mass.EARTH,
                 100,
                 new Vec2(0, 0),
                 new Vec2(0, 0),
@@ -27,7 +25,7 @@ public class SimulationSolver {
         );
         CelestialBody body2 = new CelestialBody(
                 "B",
-                Mass.EARTH,
+                Constants.Mass.EARTH,
                 100,
                 new Vec2(-500, 0),
                 new Vec2(0, -1e6),
@@ -35,7 +33,7 @@ public class SimulationSolver {
         );
         CelestialBody body3 = new CelestialBody(
                 "C",
-                Mass.EARTH,
+                Constants.Mass.EARTH,
                 100,
                 new Vec2(0, 750),
                 new Vec2(1e6, 0),
@@ -70,7 +68,7 @@ public class SimulationSolver {
                 double step2 = step1.getMagnitude() * step1.getMagnitude() * step1.getMagnitude();
                 Vec2 step3 = step1.divide(step2);
                 Vec2 step4 = step3.multiply(otherBody.getMass());
-                Vec2 step5 = step4.multiply(Universe.GRAVITATIONAL_CONSTANT);
+                Vec2 step5 = step4.multiply(Constants.GRAVITATIONAL_CONSTANT);
                 Vec2 step6 = step5.multiply(-1);
                 accel.incrementBy(step6);
             }
@@ -105,7 +103,6 @@ public class SimulationSolver {
             summationVec.incrementBy(body.getPosition().multiply(body.getMass()));
         }
         centerOfMass = summationVec.divide(totalMass);
-        System.out.println(centerOfMass);
         return centerOfMass;
     }
 }
