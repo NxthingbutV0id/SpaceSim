@@ -11,7 +11,7 @@ public class DataManager {
     private final BufferedReader reader;
 
     public DataManager() throws FileNotFoundException {
-        String file = "\\main\\files\\system.csv";
+        String file = "main/files/system.csv";
         reader = new BufferedReader(new FileReader(file));
     }
 
@@ -20,14 +20,20 @@ public class DataManager {
 
         try {
             LinkedList<String[]> data = rawData();
-            data.removeFirst();
-            //0 = name, 1 = Mass, 2 = Radius, (3, 4) Position, (5, 6) Velocity, 7 = relative body
+            /*
+            0 = Name
+            1 = Mass
+            2 = Radius
+            3, 4 = Position
+            5, 6 = Velocity
+            7 = HexColor
+            8 = isRelative (boolean)
+            9 = name of relative body (x if 8 is false)
+             */
             for (String[] row : data) {
                 CelestialBody body = createBody(row);
-                if (Boolean.parseBoolean(row[8])) {
-
-                }
                 bodies.add(body);
+                setRelative(row[8], row[9], bodies, body);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -43,7 +49,7 @@ public class DataManager {
         while ((line = reader.readLine()) != null) {
             data.add(line.split(","));
         }
-
+        data.removeFirst();
         return data;
     }
 
@@ -52,10 +58,10 @@ public class DataManager {
         double mass = getMass(data[1]);
         double radius = getRadius(data[2]);
         Vec2 position = new Vec2(getDistance(data[3]), getDistance(data[4]));
-        Vec2 velocity = new Vec2(getValue(data[3]), getValue(data[4]));
+        Vec2 velocity = new Vec2(getValue(data[5]), getValue(data[6]));
         Paint planetColor = getColor(data[7]);
 
-        return new CelestialBody();
+        return new CelestialBody(name, mass, radius, position, velocity, planetColor);
     }
 
     private double getMass(String str) {
@@ -107,15 +113,23 @@ public class DataManager {
         }
     }
 
-    private Vec2 getVec(String str1, String str2) {
-        return new Vec2(getDistance(str1), getDistance(str2));
-    }
-
     private double extractDouble(String str) {
         return Double.parseDouble(str.replaceAll("[^\\d.]", ""));
     }
 
     private double getValue(String str) {
         return extractDouble(str);
+    }
+
+    private void setRelative(String str1, String str2, LinkedList<CelestialBody> bodies, CelestialBody body) {
+        if (Boolean.parseBoolean(str1)) {
+            for (CelestialBody otherBody : bodies) {
+                if (otherBody.getName().equals(str2)) {
+                    body.getPosition().incrementBy(otherBody.getPosition());
+                    body.getVelocity().incrementBy(otherBody.getVelocity());
+                    return;
+                }
+            }
+        }
     }
 }

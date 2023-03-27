@@ -14,7 +14,8 @@ public class Animator extends AnimationTimer {
     private long lastTime = System.nanoTime();
     private double timer = 0;
     private final SimulationSolver simulator;
-    private int lastSimTime, simUPS;
+    private int lastSimTime;
+    private double simUPS;
     private final Canvas canvas;
     private double scale;
     private double timeScale;
@@ -34,7 +35,7 @@ public class Animator extends AnimationTimer {
         double deltaT = (currentTime - lastTime) / 1e9;
         timer += deltaT;
 
-        simulator.update(deltaT/timeScale, 10000);
+        simulator.update(deltaT / timeScale, 10);
 
         update();
 
@@ -80,16 +81,22 @@ public class Animator extends AnimationTimer {
 
         gc.setFill(Color.WHITE);
         if (timer >= 1) {
-            simUPS = simulator.getSimulationTime() - lastSimTime;
+            simUPS = (simulator.getSimulationTime() - lastSimTime)/timer;
             str = "Simulation Rate: " + simUPS + " UPS";
             gc.fillText(str, 50.0, 50.0);
             lastSimTime = simulator.getSimulationTime();
             --timer;
+
+            simulator.printBodiesStats();
         } else {
             str = "Simulation Rate: " + simUPS + " UPS";
             gc.fillText(str, 50.0, 50.0);
         }
         gc.fillText("Zoom level: " + scale, 50.0, 70.0);
         gc.fillText("Time scale: " + 1/timeScale + "x real time", 50.0, 90.0);
+
+        for (CelestialBody body : simulator.getBodies()) {
+            body.drawBodyText(gc, scale, canvas.getWidth(), canvas.getHeight(), simulator.getCenterOfMass());
+        }
     }
 }

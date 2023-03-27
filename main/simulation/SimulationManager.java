@@ -3,7 +3,6 @@ package main.simulation;
 import javafx.application.Application;
 import javafx.scene.*;
 import javafx.scene.canvas.Canvas;
-import javafx.scene.input.KeyCode;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.*;
 import javafx.stage.*;
@@ -16,8 +15,8 @@ public class SimulationManager extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         double width = 1280, height = 720;
-        timeScale = 100000;
-        scale = 1;
+        timeScale = 1;
+        scale = 1e-9;
 
         stage.setTitle("System Simulation V0.0.4");
         stage.setWidth(width);

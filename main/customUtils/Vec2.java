@@ -83,4 +83,8 @@ public class Vec2 {
     public String toString() {
         return "(" + x + ", " + y + ")";
     }
+
+    public double distance(Vec2 vec) {
+        return Math.sqrt((Math.abs(vec.x - x) * Math.abs(vec.x - x)) + (Math.abs(vec.y - y) * Math.abs(vec.y - y)));
+    }
 }
