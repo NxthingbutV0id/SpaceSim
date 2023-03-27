@@ -1,3 +1,27 @@
+/* Class: CelestialBody
+ * Author: Christian Torres
+ * Created: 2023/3/13
+ * Modified:
+ *
+ * Purpose: The bodies that generate gravity
+ *
+ * Attributes: -name: String
+ *             -mass: double
+ *             -radius: double
+ *             -position: Vec2
+ *             -velocity: Vec2
+ *             -planetColor: Paint
+ *
+ * Methods: +CelestialBody(String, double, double, Vec2, Vec2, Paint): this
+ *          +getMass(): double
+ *          +getPosition(): Vec2
+ *          +getVelocity(): Vec2
+ *          +drawBody(GraphicsContext, double, double, double, Vec2): void
+ *          +drawBodyText(GraphicsContext, double, double, double, Vec2): void
+ *          +getName(): String
+ *          +setName(String): void
+ *          +printStats(): void
+ */
 package main.simulation;
 
 import javafx.scene.canvas.GraphicsContext;
@@ -5,12 +29,12 @@ import javafx.scene.paint.*;
 import main.customUtils.*;
 
 public class CelestialBody {
-    private String name;
-    private double mass;
-    private double radius;
+    private final String name;
+    private final double mass;
+    private final double radius;
     private Vec2 position;
     private Vec2 velocity;
-    private Paint planetColor;
+    private final Paint planetColor;
 
     public CelestialBody(String name, double mass, double radius, Vec2 position, Vec2 velocity, Paint color) {
         this.name = name;
@@ -66,22 +90,6 @@ public class CelestialBody {
 
     public String getName() {
         return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setMass(double mass) {
-        this.mass = mass;
-    }
-
-    public void setPlanetColor(Paint planetColor) {
-        this.planetColor = planetColor;
-    }
-
-    public void setRadius(double radius) {
-        this.radius = radius;
     }
 
     public void printStats() {

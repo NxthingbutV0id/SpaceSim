@@ -1,3 +1,27 @@
+/* Class: Animator
+ * Author: Christian Torres
+ * Created: 2023/3/23
+ * Modified:
+ *
+ * Purpose: Runs the animation logic and draws the pictures
+ *
+ * Attributes: -lastTime: long
+               -timer: double
+               -simulator: SimulationSolver
+               -lastSimTime: int
+               -simUPS: double
+               -canvas: Canvas
+               -scale: double
+               -timeScale: double
+               -scene: Scene
+ *
+ * Methods: +Animator(Canvas, Scene, double, SimulationSolver, double): this
+ *          +handle(long): void
+ *          -update(): void
+ *          -draw(): void
+ *          -drawBodies(GraphicsContext): void
+ *          -drawText(GraphicsContext): void
+ */
 package main.graphics;
 
 import javafx.animation.AnimationTimer;

@@ -1,3 +1,33 @@
+/* Class: Vec2
+ * Author: Christian Torres
+ * Created: 2023/3/13
+ * Modified:
+ *
+ * Purpose: My own version of a vector with the necessary methods
+ *
+ * Attributes: -x: double
+ *             -y: double
+ *
+ * Methods: +Vec2(double, double): this
+ *          +Vec2(double, Vec2): this
+ *          +getX(): double
+ *          +getY(): double
+ *          +getMagnitude(): double
+ *          +getAngleRadians(): double
+ *          +getAngleDegrees(): double
+ *          +getComponents(): double[]
+ *          +setXY(double, double): void
+ *          +setXY(double[]): void
+ *          +add(Vec2): Vec2
+ *          +sub(Vec2): Vec2
+ *          +multiply(double): Vec2
+ *          +divide(double): Vec2
+ *          +getDistance(Vec2): double
+ *          +dotProduct(Vec2): double
+ *          +radiansBetween(Vec2): double
+ *          +normalize(): Vec2
+ *          +toString(): String
+ */
 package main.customUtils;
 
 public class Vec2 {
@@ -6,6 +36,11 @@ public class Vec2 {
     public Vec2(double x, double y) {
         this.x = x;
         this.y = y;
+    }
+
+    public Vec2(double magnitude, Vec2 direction) {
+        x = magnitude * Math.sin(direction.getAngleRadians());
+        y = magnitude * Math.cos(direction.getAngleRadians());
     }
 
     public double getX() {
@@ -59,12 +94,12 @@ public class Vec2 {
         return new Vec2(x * scalar, y * scalar);
     }
 
-    public double getDistance(Vec2 vec) {
-        return (((vec.getX() - x) * (vec.getX() - x)) + ((vec.getY() - y) * (vec.getY() - y)));
-    }
-
     public Vec2 divide(double scalar) {
         return new Vec2(x / scalar, y / scalar);
+    }
+
+    public double distance(Vec2 vec) {
+        return Math.sqrt((Math.abs(vec.x - x) * Math.abs(vec.x - x)) + (Math.abs(vec.y - y) * Math.abs(vec.y - y)));
     }
 
     public double dotProduct(Vec2 vec) {
@@ -82,9 +117,5 @@ public class Vec2 {
     @Override
     public String toString() {
         return "(" + x + ", " + y + ")";
-    }
-
-    public double distance(Vec2 vec) {
-        return Math.sqrt((Math.abs(vec.x - x) * Math.abs(vec.x - x)) + (Math.abs(vec.y - y) * Math.abs(vec.y - y)));
     }
 }

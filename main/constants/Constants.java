@@ -1,3 +1,17 @@
+/* Class: Constants
+ * Author: Christian Torres
+ * Created: 2023/3/22
+ * Modified:
+ *
+ * Purpose: To hold useful constants for the rest of the program
+ *
+ * Attributes: +_GRAVITATIONAL_CONSTANT: double
+ *             +_Radius: Class
+ *             +_Mass: Class
+ *             +_Distance: Class
+ *
+ * Methods:
+ */
 package main.constants;
 
 public class Constants {

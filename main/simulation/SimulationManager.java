@@ -1,3 +1,16 @@
+/* Class: SimulationManager
+ * Author: Christian Torres
+ * Created: 2023/3/13
+ * Modified:
+ *
+ * Purpose: The sets up the window and the application
+ *
+ * Attributes: -simulator: SimulationSolver
+ *             -scale: double
+ *             -timeScale: double
+ *
+ * Methods: +start(Stage): void
+ */
 package main.simulation;
 
 import javafx.application.Application;

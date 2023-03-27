@@ -1,3 +1,14 @@
+/* Class: SimulationSolver
+ * Author: Christian Torres
+ * Created: 2023/3/13
+ * Modified:
+ *
+ * Purpose: grabs the data from the file and runs the calculations
+ *
+ * Attributes:
+ *
+ * Methods: +_main(String[]): void - Start of program
+ */
 package main.simulation;
 
 import java.util.LinkedList;
@@ -45,23 +56,23 @@ public class SimulationSolver {
 
     //TODO: get this shit to work dammit! a = GM/r^2
     private Vec2 getAcceleration(CelestialBody body){
-        Vec2 accel = new Vec2(0, 0);
+        Vec2 accel;
+        Vec2 totalAccel = new Vec2(0, 0);
         for (CelestialBody otherBody : bodies) {
             if (otherBody != body) {
                 double dist = body.getPosition().distance(otherBody.getPosition());
                 double dist2 = dist * dist;
-                Vec2 step1 = body.getPosition().sub(otherBody.getPosition()).normalize();
-                Vec2 step2 = step1.multiply(otherBody.getMass());
-                Vec2 step3 = step2.multiply(Constants.GRAVITATIONAL_CONSTANT);
-                Vec2 step5 = step3.divide(dist2);
-                accel.incrementBy(step5);
+                Vec2 direction = body.getPosition().sub(otherBody.getPosition()).normalize();
+                double magnitude = (Constants.GRAVITATIONAL_CONSTANT * body.getMass())/dist2;
+                accel = new Vec2(magnitude, direction);
+                totalAccel.incrementBy(accel);
             }
         }
-        if (Double.isNaN(accel.getX()) || Double.isNaN(accel.getY())) {
+        if (Double.isNaN(totalAccel.getX()) || Double.isNaN(totalAccel.getY())) {
             System.out.println("AN ERROR OCCURRED, POSSIBLE COLLISION");
         }
-        System.out.println(body.getName() + " acceleration calculated: " + accel);
-        return accel;
+        System.out.println(body.getName() + " acceleration calculated: " + totalAccel);
+        return totalAccel;
     }
 
     private void updatePosition(CelestialBody body, Vec2 velocity, double deltaT) {
