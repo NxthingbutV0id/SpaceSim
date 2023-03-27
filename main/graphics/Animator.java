@@ -31,6 +31,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import main.customUtils.Vec2;
 import main.simulation.CelestialBody;
 import main.simulation.SimulationSolver;
 
@@ -44,6 +45,8 @@ public class Animator extends AnimationTimer {
     private double scale;
     private double timeScale;
     private final Scene scene;
+    private boolean paused;
+    private Vec2 camera;
 
     public Animator(Canvas canvas, Scene scene, double scale, SimulationSolver simulator, double timeScale) {
         this.simulator = simulator;
@@ -52,6 +55,8 @@ public class Animator extends AnimationTimer {
         this.scale = scale;
         this.timeScale = timeScale;
         this.scene = scene;
+        paused = true;
+        camera = new Vec2(0, 0);
     }
 
     @Override
@@ -59,7 +64,9 @@ public class Animator extends AnimationTimer {
         double deltaT = (currentTime - lastTime) / 1e9;
         timer += deltaT;
 
-        simulator.update(deltaT / timeScale, 10);
+        if (!paused) {
+            simulator.update(deltaT / timeScale, 60);
+        }
 
         update();
 
@@ -80,6 +87,18 @@ public class Animator extends AnimationTimer {
             } else if (event.getCode() == KeyCode.RIGHT) {
                 timeScale *= 1.1;
             }
+            if (event.getCode() == KeyCode.SPACE) {
+                paused = !paused;
+            }
+            if (event.getCode() == KeyCode.W) {
+                camera.incrementBy(new Vec2(0, -4/scale));
+            } else if (event.getCode() == KeyCode.A) {
+                camera.incrementBy(new Vec2(-4/scale, 0));
+            } else if (event.getCode() == KeyCode.S) {
+                camera.incrementBy(new Vec2(0, 4/scale));
+            } else if (event.getCode() == KeyCode.D) {
+                camera.incrementBy(new Vec2(4/scale, 0));
+            }
         });
     }
 
@@ -96,7 +115,7 @@ public class Animator extends AnimationTimer {
         gc.setFill(Color.BLACK);
         gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
         for (CelestialBody body : simulator.getBodies()) {
-            body.drawBody(gc, scale, canvas.getWidth(), canvas.getHeight(), simulator.getCenterOfMass());
+            body.drawBody(gc, scale, canvas.getWidth(), canvas.getHeight(), camera);
         }
     }
 
@@ -110,8 +129,6 @@ public class Animator extends AnimationTimer {
             gc.fillText(str, 50.0, 50.0);
             lastSimTime = simulator.getSimulationTime();
             --timer;
-
-            simulator.printBodiesStats();
         } else {
             str = "Simulation Rate: " + simUPS + " UPS";
             gc.fillText(str, 50.0, 50.0);
@@ -120,7 +137,7 @@ public class Animator extends AnimationTimer {
         gc.fillText("Time scale: " + 1/timeScale + "x real time", 50.0, 90.0);
 
         for (CelestialBody body : simulator.getBodies()) {
-            body.drawBodyText(gc, scale, canvas.getWidth(), canvas.getHeight(), simulator.getCenterOfMass());
+            body.drawBodyText(gc, scale, canvas.getWidth(), canvas.getHeight(), camera);
         }
     }
 }

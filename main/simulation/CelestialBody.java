@@ -39,7 +39,7 @@ public class CelestialBody {
     public CelestialBody(String name, double mass, double radius, Vec2 position, Vec2 velocity, Paint color) {
         this.name = name;
         this.mass = mass;
-        this.radius = 100 * radius;
+        this.radius = radius;
         this.position = position;
         this.velocity = velocity;
         planetColor = color;

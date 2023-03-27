@@ -17,6 +17,8 @@ import javafx.scene.paint.*;
 import main.customUtils.*;
 import main.constants.*;
 
+import static java.lang.Math.sqrt;
+
 public class SimulationSolver {
     private LinkedList<CelestialBody> bodies = new LinkedList<>();
     private int simulationTime;
@@ -57,22 +59,24 @@ public class SimulationSolver {
     //TODO: get this shit to work dammit! a = GM/r^2
     private Vec2 getAcceleration(CelestialBody body){
         Vec2 accel;
-        Vec2 totalAccel = new Vec2(0, 0);
+        double dx, dy, r, f, ax = 0, ay = 0;
         for (CelestialBody otherBody : bodies) {
             if (otherBody != body) {
-                double dist = body.getPosition().distance(otherBody.getPosition());
-                double dist2 = dist * dist;
-                Vec2 direction = body.getPosition().sub(otherBody.getPosition()).normalize();
-                double magnitude = (Constants.GRAVITATIONAL_CONSTANT * body.getMass())/dist2;
-                accel = new Vec2(magnitude, direction);
-                totalAccel.incrementBy(accel);
+                dx = otherBody.getPosition().getX() - body.getPosition().getX();
+                dy = otherBody.getPosition().getY() - body.getPosition().getY();
+
+                r = sqrt(dx * dx + dy * dy);
+                f = Constants.GRAVITATIONAL_CONSTANT * otherBody.getMass() / (r * r);
+
+                ax += f * dx/r;
+                ay += f * dy/r;
             }
         }
-        if (Double.isNaN(totalAccel.getX()) || Double.isNaN(totalAccel.getY())) {
+        accel = new Vec2(ax, ay);
+        if (Double.isNaN(ax) || Double.isNaN(ay)) {
             System.out.println("AN ERROR OCCURRED, POSSIBLE COLLISION");
         }
-        System.out.println(body.getName() + " acceleration calculated: " + totalAccel);
-        return totalAccel;
+        return new Vec2(ax, ay);
     }
 
     private void updatePosition(CelestialBody body, Vec2 velocity, double deltaT) {
@@ -80,11 +84,7 @@ public class SimulationSolver {
     }
 
     private void updateVelocity(CelestialBody body, Vec2 acceleration, double deltaT) {
-        System.out.println(body.getName() + " updateVelocity deltaT: " + deltaT);
-        System.out.println(body.getName() + " velocity before: " + body.getVelocity());
         body.getVelocity().incrementBy(acceleration.multiply(deltaT));
-        System.out.println(body.getName() + " velocity after: " + body.getVelocity());
-        System.out.println();
     }
 
     public int getSimulationTime() {
@@ -102,6 +102,14 @@ public class SimulationSolver {
         }
         centerOfMass = summationVec.divide(totalMass);
         return centerOfMass;
+    }
+
+    public Vec2 getCenterOfAllBodies() {
+        Vec2 summationVec = new Vec2(0, 0);
+        for (CelestialBody body : bodies) {
+            summationVec.incrementBy(body.getPosition());
+        }
+        return summationVec;
     }
 
     public void printBodiesStats() {

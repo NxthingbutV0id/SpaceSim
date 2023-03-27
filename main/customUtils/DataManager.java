@@ -135,7 +135,11 @@ public class DataManager {
     }
 
     private double extractDouble(String str) {
-        return Double.parseDouble(str.replaceAll("[^\\d.]", ""));
+        try {
+            return Double.parseDouble(str.replaceAll("[^\\d.Ee+-]", ""));
+        } catch (Exception e) {
+            return Double.parseDouble(str.replaceAll("[^\\d.]", ""));
+        }
     }
 
     private double getValue(String str) {
