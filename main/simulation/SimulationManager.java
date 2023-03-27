@@ -27,7 +27,7 @@ public class SimulationManager extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        double width = 1920, height = 1080;
+        double width = 1280, height = 720;
         timeScale = 1.0/86400.0;
         scale = 5e-9;
 

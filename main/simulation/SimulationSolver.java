@@ -31,9 +31,6 @@ public class SimulationSolver {
         try {
             DataManager dm = new DataManager();
             bodies = dm.getData();
-            for (CelestialBody body : bodies) {
-                body.printStats();
-            }
         } catch (Exception e) {
             System.out.println("Error creating bodies, make sure \"system.csv\" is in the proper format");
             e.printStackTrace();
@@ -56,9 +53,7 @@ public class SimulationSolver {
         return bodies;
     }
 
-    //TODO: get this shit to work dammit! a = GM/r^2
     private Vec2 getAcceleration(CelestialBody body){
-        Vec2 accel;
         double dx, dy, r, f, ax = 0, ay = 0;
         for (CelestialBody otherBody : bodies) {
             if (otherBody != body) {
@@ -72,7 +67,6 @@ public class SimulationSolver {
                 ay += f * dy/r;
             }
         }
-        accel = new Vec2(ax, ay);
         if (Double.isNaN(ax) || Double.isNaN(ay)) {
             System.out.println("AN ERROR OCCURRED, POSSIBLE COLLISION");
         }
