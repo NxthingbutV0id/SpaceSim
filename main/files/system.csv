@@ -1,4 +1,30 @@
-Name,Mass,Radius,x Position,y Position,x Velocity(m/s),y Velocity(m/s),Color(Hex),Relative?,Relative body
-Sol,1 Ms,1 Rs,0,0,0,0,#fcf44c,FALSE,x
-Earth,1 Me,1 Re,1 Au,0,0,30000,#6184c2,TRUE,Sol
-Moon,1 Mm,1 Rm,4.057e+8,0,0,1020,#949494,TRUE,Earth
+Name,Mass,Radius,x Position,y Position,x Velocity(m/s),y Velocity(m/s),Color(Hex),Relative?,Relative body,Type,Albedo
+Sol,1 Ms,1 Rs,0,0,0,0,#fcf44c,FALSE,N/A,Star,N/A
+Mercury,0.055 Me,0.38 Re,0.30749951 Au,0,0,58956,#a6a6a6,TRUE,Sol,Terrestrial,N/A
+Venus,0.815 Me,0.949 Re,0.71843 Au,0,0,35219,#fff8bd,TRUE,Sol,Terrestrial,N/A
+Earth,1 Me,1 Re,1 Au,0,0,30000,#6184c2,TRUE,Sol,Terrestrial,N/A
+Moon,1 Mm,1 Rm,4.057e8,0,0,1020,#949494,TRUE,Earth,Terrestrial,N/A
+Mars,0.1074 Me,0.5325 Re,1.3813335 Au,0,0,26499,#e77d11,TRUE,Sol,Terrestrial,N/A
+Phobos,1.0659e16,11100,9378000,0,0,2140,#9c6c4e,TRUE,Mars,Terrestrial,N/A
+Deimos,1.4762e15,6200,23460000,0,0,1360,#bf8f71,TRUE,Mars,Terrestrial,N/A
+Jupiter,1 Mj,1 Rj,5.20336301 Au,0,0,13000,#e37a3d,TRUE,Sol,GasGiant,N/A
+Io,1.2156 Mm,1.0484 Rm,4.218e8,0,0,17330,#c29e3c,TRUE,Jupiter,Terrestrial,N/A
+Europa,0.6532 Mm,0.8984 Rm,6.711e8,0,0,13740,#d4d3cf,TRUE,Jupiter,Terrestrial,N/A
+Ganymede,2.0168 Mm,1.5144 Rm,1.0704e9,0,0,10880,#757575,TRUE,Jupiter,Terrestrial,N/A
+Calisto,1.4643 Mm,1.3873 Rm,1.8827e9,0,0,8200,#5e523e,TRUE,Jupiter,Terrestrial,N/A
+Saturn,95.2 Me,0.834 Rj,9.53707032 Au,0,0,9640,#f5d6a4,TRUE,Sol,GasGiant,N/A
+Mimas,3.75e19,0.1141 Rm,1.85539e8,0,0,14300,#bfbfbf,TRUE,Saturn,Terrestrial,N/A
+Enceladus,1.08e20,0.1451 Rm,2.38037e8,0,0,12400,#bfbfbf,TRUE,Saturn,Terrestrial,N/A
+Tethys,6.18e20,0.3056 Rm,2.94619e8,0,0,11400,#bfbfbf,TRUE,Saturn,Terrestrial,N/A
+Dione,1.10e21,0.3231 Rm,3.77396e8,0,0,10000,#bfbfbf,TRUE,Saturn,Terrestrial,N/A
+Rhea,2.31e21,0.4394 Rm,5.27108e8,0,0,8500,#bfbfbf,TRUE,Saturn,Terrestrial,N/A
+Titan,1.35e23,1.4821 Rm,1.22187e9,0,0,5600,#ffaf2e,TRUE,Saturn,Terrestrial,N/A
+Iapetus,1.81e21,0.4228 Rm,3.56082e9,0,0,3300,#362a16,TRUE,Saturn,Terrestrial,N/A
+Uranus,14.54 Me,0.363 Rj,19.19126393 Au,0,0,6800,#71c4f5,TRUE,Sol,IceGiant,N/A
+Miranda,6.59e19,0.1357 Rm,1.2939e8,0,0,6660,#bdbdbd,TRUE,Uranus,Terrestrial,N/A
+Ariel,1.35e21,0.3332 Rm,1.9102e8,0,0,5510,#382a28,TRUE,Uranus,Terrestrial,N/A
+Umbriel,1.17e21,0.3365 Rm,2.66e8,0,0,4670,#bdbdbd,TRUE,Uranus,Terrestrial,N/A
+Titania,3.53e21,0.4541 Rm,4.3591e8,0,0,3640,#d1c4b2,TRUE,Uranus,Terrestrial,N/A
+Oberon,3.03e21,0.4382 Rm,5.8352e8,0,0,3150,#4a4a49,TRUE,Uranus,Terrestrial,N/A
+Neptune,17.15 Me,3.86 Re,30.06896348 Au,0,0,5430,#2666c7,TRUE,Sol,IceGiant,N/A
+Triton,0.29124 Mm,0.7785 Rm,3.548e8,0,0,-4390,#857c73,TRUE,Neptune,Terrestrial,N/A

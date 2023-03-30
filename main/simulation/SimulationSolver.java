@@ -13,18 +13,20 @@ package main.simulation;
 
 import java.util.LinkedList;
 
-import javafx.scene.paint.*;
 import main.customUtils.*;
-import main.constants.*;
+import main.graphics.Animator;
+import main.simulation.bodies.CelestialBody;
 
 import static java.lang.Math.sqrt;
 
 public class SimulationSolver {
     private LinkedList<CelestialBody> bodies = new LinkedList<>();
     private int simulationTime;
+    private Animator animator;
 
-    public SimulationSolver() {
+    public SimulationSolver(Animator animator) {
         simulationTime = 0;
+        this.animator = animator;
     }
 
     public void createBodies() {
@@ -46,6 +48,9 @@ public class SimulationSolver {
             for (CelestialBody body : bodies) {
                 updatePosition(body, body.getVelocity(), deltaT / timeStep);
             }
+            for (CelestialBody body : bodies) {
+                body.addToPath();
+            }
         }
     }
 
@@ -61,7 +66,7 @@ public class SimulationSolver {
                 dy = otherBody.getPosition().getY() - body.getPosition().getY();
 
                 r = sqrt(dx * dx + dy * dy);
-                f = Constants.GRAVITATIONAL_CONSTANT * otherBody.getMass() / (r * r);
+                f = Constants.GRAVITATIONAL_CONSTANT.getValue() * otherBody.getMass() / (r * r);
 
                 ax += f * dx/r;
                 ay += f * dy/r;

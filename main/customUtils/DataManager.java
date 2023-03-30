@@ -23,8 +23,7 @@ package main.customUtils;
 
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
-import main.constants.Constants;
-import main.simulation.CelestialBody;
+import main.simulation.bodies.CelestialBody;
 import java.io.*;
 import java.util.LinkedList;
 
@@ -82,20 +81,23 @@ public class DataManager {
         Vec2 velocity = new Vec2(getValue(data[5]), getValue(data[6]));
         Paint planetColor = getColor(data[7]);
 
-        return new CelestialBody(name, mass, radius, position, velocity, planetColor);
+        CelestialBody body = new CelestialBody(name, mass, radius, position, velocity);
+        body.setPlanetColor(planetColor);
+
+        return body;
     }
 
     private double getMass(String str) {
         double massValue = extractDouble(str);
 
         if (str.contains("Ms")) {
-            massValue *= Constants.Mass.SOL;
+            massValue *= Constants.SOL_MASS.getValue();
         } else if (str.contains("Me")) {
-            massValue *= Constants.Mass.EARTH;
+            massValue *= Constants.EARTH_MASS.getValue();
         } else if (str.contains("Mj")) {
-            massValue *= Constants.Mass.JUPITER;
+            massValue *= Constants.JUPITER_MASS.getValue();
         } else if (str.contains("Mm")) {
-            massValue *= Constants.Mass.MOON;
+            massValue *= Constants.MOON_MASS.getValue();
         }
 
         return massValue;
@@ -105,13 +107,13 @@ public class DataManager {
         double radiusValue = extractDouble(str);
 
         if (str.contains("Rs")) {
-            radiusValue *= Constants.Radius.SOL;
+            radiusValue *= Constants.SOL_RADIUS.getValue();
         } else if (str.contains("Re")) {
-            radiusValue *= Constants.Radius.EARTH;
+            radiusValue *= Constants.EARTH_RADIUS.getValue();
         } else if (str.contains("Rj")) {
-            radiusValue *= Constants.Radius.JUPITER;
+            radiusValue *= Constants.JUPITER_RADIUS.getValue();
         } else if (str.contains("Rm")) {
-            radiusValue *= Constants.Radius.MOON;
+            radiusValue *= Constants.MOON_MASS.getValue();
         }
 
         return radiusValue;
@@ -120,7 +122,9 @@ public class DataManager {
     private double getDistance(String str) {
         double dist = extractDouble(str);
         if (str.contains("Au")) {
-            dist *= Constants.Distance.AU;
+            dist *= Constants.ASTRONOMICAL_UNIT.getValue();
+        } else if (str.contains("Km")) {
+            dist *= Constants.KILOMETER.getValue();
         }
         return dist;
     }
@@ -129,7 +133,6 @@ public class DataManager {
         if (str.charAt(0) == '#') {
             return Paint.valueOf(str);
         } else {
-            System.out.println("Error at 'getColor()' not proper format, defaulting to white");
             return Color.WHITE;
         }
     }

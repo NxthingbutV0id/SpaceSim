@@ -29,27 +29,34 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import main.customUtils.Vec2;
-import main.simulation.CelestialBody;
+import main.simulation.bodies.CelestialBody;
 import main.simulation.SimulationSolver;
+
+import java.util.HashMap;
 
 public class Animator extends AnimationTimer {
     private long lastTime = System.nanoTime();
     private double timer = 0;
-    private final SimulationSolver simulator;
+    private SimulationSolver simulator;
     private int lastSimTime;
     private double simUPS;
-    private final Canvas canvas;
+    private Canvas canvas;
     private double scale;
     private double timeScale;
-    private final Scene scene;
+    private Scene scene;
     private boolean paused;
     private Vec2 camera;
+    private boolean lockOn;
+    private Vec2 target;
+    private HashMap<String, KeyCode> controls = new HashMap<>();
 
-    public Animator(Canvas canvas, Scene scene, double scale, SimulationSolver simulator, double timeScale) {
-        this.simulator = simulator;
+    public Animator(Canvas canvas, Scene scene, double scale, double timeScale) {
+        simulator = new SimulationSolver(this);
+        simulator.createBodies();
         lastSimTime = simulator.getSimulationTime();
         this.canvas = canvas;
         this.scale = scale;
@@ -57,6 +64,20 @@ public class Animator extends AnimationTimer {
         this.scene = scene;
         paused = true;
         camera = new Vec2(0, 0);
+        target = camera;
+        setControls();
+    }
+
+    private void setControls() {
+        controls.put("zoom in", KeyCode.UP);
+        controls.put("zoom out", KeyCode.DOWN);
+        controls.put("speed up time", KeyCode.RIGHT);
+        controls.put("slow down time", KeyCode.LEFT);
+        controls.put("move up", KeyCode.W);
+        controls.put("move down", KeyCode.S);
+        controls.put("move left", KeyCode.A);
+        controls.put("move right", KeyCode.D);
+        controls.put("pause", KeyCode.SPACE);
     }
 
     @Override
@@ -65,7 +86,7 @@ public class Animator extends AnimationTimer {
         timer += deltaT;
 
         if (!paused) {
-            simulator.update(deltaT / timeScale, 60);
+            simulator.update(deltaT / timeScale, 100);
         }
 
         update();
@@ -76,30 +97,59 @@ public class Animator extends AnimationTimer {
     }
 
     private void update() {
+        double cameraMoveSpeed = 4/scale;
         scene.setOnKeyPressed(event -> {
-            if (event.getCode() == KeyCode.UP) {
+            if (event.getCode() == controls.get("zoom in")) {
                 scale *= 1.1;
-            } else if (event.getCode() == KeyCode.DOWN) {
+            } else if (event.getCode() == controls.get("zoom out")) {
                 scale *= 0.9;
             }
-            if (event.getCode() == KeyCode.LEFT) {
-                timeScale *= 0.9;
-            } else if (event.getCode() == KeyCode.RIGHT) {
+            if (event.getCode() == controls.get("speed up time")) {
                 timeScale *= 1.1;
+            } else if (event.getCode() == controls.get("slow down time")) {
+                timeScale *= 0.9;
             }
-            if (event.getCode() == KeyCode.SPACE) {
+            if (event.getCode() == controls.get("move up")) {
+                camera.incrementBy(new Vec2(0, -cameraMoveSpeed));
+            } else if (event.getCode() == controls.get("move down")) {
+                camera.incrementBy(new Vec2(0, cameraMoveSpeed));
+            }
+            if (event.getCode() == controls.get("move left")) {
+                camera.incrementBy(new Vec2(-cameraMoveSpeed, 0));
+            } else if (event.getCode() == controls.get("move right")) {
+                camera.incrementBy(new Vec2(cameraMoveSpeed, 0));
+            }
+            if (event.getCode() == controls.get("pause")) {
                 paused = !paused;
             }
-            if (event.getCode() == KeyCode.W) {
-                camera.incrementBy(new Vec2(0, -4/scale));
-            } else if (event.getCode() == KeyCode.A) {
-                camera.incrementBy(new Vec2(-4/scale, 0));
-            } else if (event.getCode() == KeyCode.S) {
-                camera.incrementBy(new Vec2(0, 4/scale));
-            } else if (event.getCode() == KeyCode.D) {
-                camera.incrementBy(new Vec2(4/scale, 0));
+        });
+        scene.setOnMouseClicked(event -> {
+            if (event.isPrimaryButtonDown()) {
+                setTarget(event);
+                if (lockOn) {
+                    camera = target;
+                } else {
+                    target = camera;
+                }
             }
         });
+    }
+
+    private void setTarget(MouseEvent mouse) {
+        for (CelestialBody body : simulator.getBodies()) {
+            Vec2 bodyScreenPos = body.getScreenPosition(scale, canvas.getWidth(), canvas.getHeight(), camera);
+            if (mouse.getX() <= bodyScreenPos.getX() + 10 && mouse.getX() >= bodyScreenPos.getX() - 10) {
+                if (mouse.getY() <= bodyScreenPos.getY() + 10 && mouse.getY() >= bodyScreenPos.getY() - 10) {
+                    target = body.getPosition();
+                    lockOn = true;
+                }
+            }
+            if (mouse.getX() > bodyScreenPos.getX() + 10 && mouse.getX() < bodyScreenPos.getX() - 10) {
+                if (mouse.getY() > bodyScreenPos.getY() + 10 && mouse.getY() < bodyScreenPos.getY() - 10) {
+                    lockOn = false;
+                }
+            }
+        }
     }
 
     private void draw() {
@@ -116,6 +166,7 @@ public class Animator extends AnimationTimer {
         gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
         for (CelestialBody body : simulator.getBodies()) {
             body.drawBody(gc, scale, canvas.getWidth(), canvas.getHeight(), camera);
+            body.drawBodyPath(gc, scale, canvas.getWidth(), canvas.getHeight(), camera);
         }
     }
 
