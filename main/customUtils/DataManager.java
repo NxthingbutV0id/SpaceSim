@@ -26,13 +26,16 @@ import javafx.scene.paint.Paint;
 import main.simulation.bodies.CelestialBody;
 import java.io.*;
 import java.util.LinkedList;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class DataManager {
+    private Logger logger = LoggerFactory.getLogger(DataManager.class);
     private final BufferedReader reader;
 
-    public DataManager() throws FileNotFoundException {
-        String file = "main/files/system.csv";
-        reader = new BufferedReader(new FileReader(file));
+    public DataManager(String filePath) throws FileNotFoundException {
+        logger.info("Loading from file {}", filePath);
+        reader = new BufferedReader(new FileReader(filePath));
     }
 
     public LinkedList<CelestialBody> getData() {
@@ -83,7 +86,8 @@ public class DataManager {
 
         CelestialBody body = new CelestialBody(name, mass, radius, position, velocity);
         body.setPlanetColor(planetColor);
-
+        logger.info("Data from .csv -> {}, {}, {}, ({}, {})", data[0], data[1], data[2], data[3], data[4]);
+        logger.info("{} loaded, Position: {}, Radius: {}, Mass: {}", name, position, radius, mass);
         return body;
     }
 
@@ -104,7 +108,10 @@ public class DataManager {
     }
 
     private double getRadius(String str) {
+        logger.info("getRadius string now is {}", str);
         double radiusValue = extractDouble(str);
+
+        logger.info("Value got from string is {}", radiusValue);
 
         if (str.contains("Rs")) {
             radiusValue *= Constants.SOL_RADIUS.getValue();
@@ -113,7 +120,7 @@ public class DataManager {
         } else if (str.contains("Rj")) {
             radiusValue *= Constants.JUPITER_RADIUS.getValue();
         } else if (str.contains("Rm")) {
-            radiusValue *= Constants.MOON_MASS.getValue();
+            radiusValue *= Constants.MOON_RADIUS.getValue();
         }
 
         return radiusValue;
@@ -133,6 +140,7 @@ public class DataManager {
         if (str.charAt(0) == '#') {
             return Paint.valueOf(str);
         } else {
+            logger.warn("Error loading planet color, defaulting to white");
             return Color.WHITE;
         }
     }

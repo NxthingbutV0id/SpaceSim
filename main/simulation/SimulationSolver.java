@@ -16,6 +16,8 @@ import java.util.LinkedList;
 import main.customUtils.*;
 import main.graphics.Animator;
 import main.simulation.bodies.CelestialBody;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import static java.lang.Math.sqrt;
 
@@ -23,6 +25,7 @@ public class SimulationSolver {
     private LinkedList<CelestialBody> bodies = new LinkedList<>();
     private int simulationTime;
     private Animator animator;
+    private Logger logger = LoggerFactory.getLogger(SimulationSolver.class);
 
     public SimulationSolver(Animator animator) {
         simulationTime = 0;
@@ -31,10 +34,10 @@ public class SimulationSolver {
 
     public void createBodies() {
         try {
-            DataManager dm = new DataManager();
+            DataManager dm = new DataManager("main/files/system.csv");
             bodies = dm.getData();
         } catch (Exception e) {
-            System.out.println("Error creating bodies, make sure \"system.csv\" is in the proper format");
+            logger.error(".csv file not found/failed to read file, make sure system.csv file is in the proper format");
             e.printStackTrace();
         }
     }
@@ -73,7 +76,8 @@ public class SimulationSolver {
             }
         }
         if (Double.isNaN(ax) || Double.isNaN(ay)) {
-            System.out.println("AN ERROR OCCURRED, POSSIBLE COLLISION");
+            logger.error(
+                    "Possible collision detected at {}, {} acceleration is NaN", body.getPosition(), body.getName());
         }
         return new Vec2(ax, ay);
     }

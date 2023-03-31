@@ -25,9 +25,9 @@ public class SimulationManager extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        double width = 1280, height = 720, timeScale = 1.0 / 86400.0, scale = 5e-9;
+        double width = 1920, height = 1080, timeScale = 1.0 / 86400.0, scale = 5e-9;
 
-        stage.setTitle("System Simulation V0.0.6");
+        stage.setTitle("System Simulation V0.0.7");
         stage.setWidth(width);
         stage.setHeight(height);
         stage.setResizable(false);

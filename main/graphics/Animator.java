@@ -35,6 +35,8 @@ import javafx.scene.text.Font;
 import main.customUtils.Vec2;
 import main.simulation.bodies.CelestialBody;
 import main.simulation.SimulationSolver;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
 
@@ -53,6 +55,7 @@ public class Animator extends AnimationTimer {
     private boolean lockOn;
     private Vec2 target;
     private HashMap<String, KeyCode> controls = new HashMap<>();
+    private Logger logger = LoggerFactory.getLogger(Animator.class);
 
     public Animator(Canvas canvas, Scene scene, double scale, double timeScale) {
         simulator = new SimulationSolver(this);
@@ -78,6 +81,7 @@ public class Animator extends AnimationTimer {
         controls.put("move left", KeyCode.A);
         controls.put("move right", KeyCode.D);
         controls.put("pause", KeyCode.SPACE);
+        controls.put("deselect target", KeyCode.ESCAPE);
     }
 
     @Override
@@ -99,11 +103,6 @@ public class Animator extends AnimationTimer {
     private void update() {
         double cameraMoveSpeed = 4/scale;
         scene.setOnKeyPressed(event -> {
-            if (event.getCode() == controls.get("zoom in")) {
-                scale *= 1.1;
-            } else if (event.getCode() == controls.get("zoom out")) {
-                scale *= 0.9;
-            }
             if (event.getCode() == controls.get("speed up time")) {
                 timeScale *= 1.1;
             } else if (event.getCode() == controls.get("slow down time")) {
@@ -122,15 +121,23 @@ public class Animator extends AnimationTimer {
             if (event.getCode() == controls.get("pause")) {
                 paused = !paused;
             }
+            if (event.getCode() == controls.get("deselect target")) {
+                logger.info("Escape pressed");
+                lockOn = false;
+            }
+
         });
-        scene.setOnMouseClicked(event -> {
-            if (event.isPrimaryButtonDown()) {
-                setTarget(event);
-                if (lockOn) {
-                    camera = target;
-                } else {
-                    target = camera;
-                }
+        scene.setOnMousePressed(event -> {
+            setTarget(event);
+            if (lockOn) {
+                camera = target;
+            }
+        });
+        scene.setOnScroll(event -> {
+            if (event.getDeltaY() > 1) {
+                scale *= 1.1;
+            } else if (event.getDeltaY() < 1) {
+                scale *= 0.9;
             }
         });
     }
@@ -138,15 +145,12 @@ public class Animator extends AnimationTimer {
     private void setTarget(MouseEvent mouse) {
         for (CelestialBody body : simulator.getBodies()) {
             Vec2 bodyScreenPos = body.getScreenPosition(scale, canvas.getWidth(), canvas.getHeight(), camera);
-            if (mouse.getX() <= bodyScreenPos.getX() + 10 && mouse.getX() >= bodyScreenPos.getX() - 10) {
+            double bodyScreenRadius = body.getRadius() * scale;
+            if (mouse.getX() <= bodyScreenPos.getX() + bodyScreenRadius + 10 && mouse.getX() >= bodyScreenPos.getX() + bodyScreenRadius - 10) {
                 if (mouse.getY() <= bodyScreenPos.getY() + 10 && mouse.getY() >= bodyScreenPos.getY() - 10) {
+                    logger.info("Target body: {}");
                     target = body.getPosition();
                     lockOn = true;
-                }
-            }
-            if (mouse.getX() > bodyScreenPos.getX() + 10 && mouse.getX() < bodyScreenPos.getX() - 10) {
-                if (mouse.getY() > bodyScreenPos.getY() + 10 && mouse.getY() < bodyScreenPos.getY() - 10) {
-                    lockOn = false;
                 }
             }
         }

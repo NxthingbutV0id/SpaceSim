@@ -27,6 +27,8 @@ package main.simulation.bodies;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.*;
 import main.customUtils.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.LinkedList;
 import java.util.Queue;
@@ -40,6 +42,7 @@ public class CelestialBody {
     protected Paint planetColor;
     protected double surfaceTemp;
     private Queue<Vec2> path = new LinkedList<>();
+    private Logger logger = LoggerFactory.getLogger(CelestialBody.class);
 
     public CelestialBody(String name, double mass, double radius, Vec2 position, Vec2 velocity) {
         this.name = name;
@@ -122,7 +125,7 @@ public class CelestialBody {
         relY = relative.getY() * scale;
 
         gc.setStroke(planetColor);
-        gc.setLineWidth(100);
+        gc.setLineWidth(20);
 
         Vec2 previous = path.poll();
         //TODO: fix this shit
@@ -132,16 +135,14 @@ public class CelestialBody {
             xCurr = ((current.getX() - r) + screenWidth/2) - relX;
             yCurr = ((current.getY() - r) + screenHeight/2) - relY;
             gc.strokeLine(xPrev, yPrev, xCurr, yCurr);
+            logger.debug("Drawing line from ({}, {}) to ({}, {})", xPrev, yPrev, xCurr, yCurr);
             previous = current;
         }
     }
 
     public void printStats() {
-        System.out.println("Name: " + name);
-        System.out.println("Mass: " + mass);
-        System.out.println("Radius: " + radius);
-        System.out.println("Position: " + position);
-        System.out.println("Velocity: " + velocity);
-        System.out.println();
+        logger.debug("Body stats debug\nName: {}\nMass: {}\nRadius: {}\nPosition: {}\nVelocity: {}\n",
+                name, mass, radius, position, velocity
+        );
     }
 }
