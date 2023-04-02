@@ -43,112 +43,53 @@ import java.util.HashMap;
 public class Animator extends AnimationTimer {
     private long lastTime = System.nanoTime();
     private double timer = 0;
-    private SimulationSolver simulator;
-    private int lastSimTime;
-    private double simUPS;
     private Canvas canvas;
     private double scale;
     private double timeScale;
-    private Scene scene;
     private boolean paused;
     private Vec2 camera;
     private boolean lockOn;
     private Vec2 target;
-    private HashMap<String, KeyCode> controls = new HashMap<>();
     private Logger logger = LoggerFactory.getLogger(Animator.class);
+    private SimulationHandler simulationHandler;
+    private InputHandler inputHandler;
+    private Renderer renderer;
 
     public Animator(Canvas canvas, Scene scene, double scale, double timeScale) {
-        simulator = new SimulationSolver(this);
-        simulator.createBodies();
-        lastSimTime = simulator.getSimulationTime();
         this.canvas = canvas;
         this.scale = scale;
         this.timeScale = timeScale;
-        this.scene = scene;
         paused = true;
         camera = new Vec2(0, 0);
         target = camera;
-        setControls();
-    }
-
-    private void setControls() {
-        controls.put("zoom in", KeyCode.UP);
-        controls.put("zoom out", KeyCode.DOWN);
-        controls.put("speed up time", KeyCode.RIGHT);
-        controls.put("slow down time", KeyCode.LEFT);
-        controls.put("move up", KeyCode.W);
-        controls.put("move down", KeyCode.S);
-        controls.put("move left", KeyCode.A);
-        controls.put("move right", KeyCode.D);
-        controls.put("pause", KeyCode.SPACE);
-        controls.put("deselect target", KeyCode.ESCAPE);
+        simulationHandler = new SimulationHandler(this);
+        inputHandler = new InputHandler(scene);
+        renderer = new Renderer(canvas);
     }
 
     @Override
     public void handle(long currentTime) {
         double deltaT = (currentTime - lastTime) / 1e9;
         timer += deltaT;
-
         if (!paused) {
-            simulator.update(deltaT / timeScale, 100);
+            simulationHandler.update(deltaT / timeScale, 100);
         }
-
         update();
-
         draw();
-
         lastTime = currentTime;
     }
 
     private void update() {
-        double cameraMoveSpeed = 4/scale;
-        scene.setOnKeyPressed(event -> {
-            if (event.getCode() == controls.get("speed up time")) {
-                timeScale *= 1.1;
-            } else if (event.getCode() == controls.get("slow down time")) {
-                timeScale *= 0.9;
-            }
-            if (event.getCode() == controls.get("move up")) {
-                camera.incrementBy(new Vec2(0, -cameraMoveSpeed));
-            } else if (event.getCode() == controls.get("move down")) {
-                camera.incrementBy(new Vec2(0, cameraMoveSpeed));
-            }
-            if (event.getCode() == controls.get("move left")) {
-                camera.incrementBy(new Vec2(-cameraMoveSpeed, 0));
-            } else if (event.getCode() == controls.get("move right")) {
-                camera.incrementBy(new Vec2(cameraMoveSpeed, 0));
-            }
-            if (event.getCode() == controls.get("pause")) {
-                paused = !paused;
-            }
-            if (event.getCode() == controls.get("deselect target")) {
-                logger.info("Escape pressed");
-                lockOn = false;
-            }
-
-        });
-        scene.setOnMousePressed(event -> {
-            setTarget(event);
-            if (lockOn) {
-                camera = target;
-            }
-        });
-        scene.setOnScroll(event -> {
-            if (event.getDeltaY() > 1) {
-                scale *= 1.1;
-            } else if (event.getDeltaY() < 1) {
-                scale *= 0.9;
-            }
-        });
+        inputHandler.handleInput(this);
     }
 
-    private void setTarget(MouseEvent mouse) {
-        for (CelestialBody body : simulator.getBodies()) {
+    public void setTarget(MouseEvent mouse) {
+        for (CelestialBody body : simulationHandler.getBodies()) {
             Vec2 bodyScreenPos = body.getScreenPosition(scale, canvas.getWidth(), canvas.getHeight(), camera);
             double bodyScreenRadius = body.getRadius() * scale;
             if (mouse.getX() <= bodyScreenPos.getX() + bodyScreenRadius + 10 && mouse.getX() >= bodyScreenPos.getX() + bodyScreenRadius - 10) {
                 if (mouse.getY() <= bodyScreenPos.getY() + 10 && mouse.getY() >= bodyScreenPos.getY() - 10) {
-                    logger.info("Target body: {}");
+                    logger.info("Target body: {}", body.getName());
                     target = body.getPosition();
                     lockOn = true;
                 }
@@ -157,42 +98,50 @@ public class Animator extends AnimationTimer {
     }
 
     private void draw() {
-        GraphicsContext gc = canvas.getGraphicsContext2D();
-
-        gc.setFont(new Font("FiraCode NF", 20));
-
-        drawBodies(gc);
-        drawText(gc);
+        renderer.draw(simulationHandler, scale, timeScale, camera);
     }
 
-    private void drawBodies(GraphicsContext gc) {
-        gc.setFill(Color.BLACK);
-        gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
-        for (CelestialBody body : simulator.getBodies()) {
-            body.drawBody(gc, scale, canvas.getWidth(), canvas.getHeight(), camera);
-            body.drawBodyPath(gc, scale, canvas.getWidth(), canvas.getHeight(), camera);
-        }
+    public double getScale() {
+        return scale;
     }
 
-    private void drawText(GraphicsContext gc) {
-        String str;
+    public Vec2 getCamera() {
+        return camera;
+    }
 
-        gc.setFill(Color.WHITE);
-        if (timer >= 1) {
-            simUPS = (simulator.getSimulationTime() - lastSimTime)/timer;
-            str = "Simulation Rate: " + simUPS + " UPS";
-            gc.fillText(str, 50.0, 50.0);
-            lastSimTime = simulator.getSimulationTime();
-            --timer;
-        } else {
-            str = "Simulation Rate: " + simUPS + " UPS";
-            gc.fillText(str, 50.0, 50.0);
-        }
-        gc.fillText("Zoom level: " + scale, 50.0, 70.0);
-        gc.fillText("Time scale: " + 1/timeScale + "x real time", 50.0, 90.0);
+    public double getTimeScale() {
+        return timeScale;
+    }
 
-        for (CelestialBody body : simulator.getBodies()) {
-            body.drawBodyText(gc, scale, canvas.getWidth(), canvas.getHeight(), camera);
-        }
+    public boolean isLockOn() {
+        return lockOn;
+    }
+
+    public boolean isPaused() {
+        return paused;
+    }
+
+    public Vec2 getTarget() {
+        return target;
+    }
+
+    public void setScale(double scale) {
+        this.scale = scale;
+    }
+
+    public void setCamera(Vec2 camera) {
+        this.camera = camera;
+    }
+
+    public void setTimeScale(double timeScale) {
+        this.timeScale = timeScale;
+    }
+
+    public void setLockOn(boolean lockOn) {
+        this.lockOn = lockOn;
+    }
+
+    public void setPaused(boolean paused) {
+        this.paused = paused;
     }
 }

@@ -16,6 +16,7 @@ package main.simulation;
 import javafx.application.Application;
 import javafx.scene.*;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.*;
 import javafx.stage.*;
@@ -25,18 +26,23 @@ public class SimulationManager extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        double width = 1920, height = 1080, timeScale = 1.0 / 86400.0, scale = 5e-9;
+        double width = 1280, height = 720, timeScale = 1.0 / 86400.0, scale = 5e-9;
 
-        stage.setTitle("System Simulation V0.0.7");
-        stage.setWidth(width);
-        stage.setHeight(height);
+        stage.setTitle("System Simulation V0.0.8");
+        stage.setFullScreen(true);
+        stage.setMinHeight(height);
+        stage.setMinWidth(width);
+        stage.setFullScreenExitHint("Press 'Q' to exit fullscreen");
+        stage.setFullScreenExitKeyCombination(KeyCombination.valueOf("q"));
         stage.setResizable(false);
 
         StackPane root = new StackPane();
         Scene mainScene = new Scene(root, Color.BLACK);
         stage.setScene(mainScene);
 
-        Canvas canvas = new Canvas(width, height);
+        Screen mainScreen = Screen.getScreens().get(0);
+
+        Canvas canvas = new Canvas(mainScreen.getBounds().getWidth(), mainScreen.getBounds().getHeight());
         root.getChildren().add(canvas);
 
         Animator animator = new Animator(canvas, mainScene, scale, timeScale);
