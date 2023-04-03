@@ -29,11 +29,8 @@ public class SimulationManager extends Application {
         double width = 1280, height = 720, timeScale = 1.0 / 86400.0, scale = 5e-9;
 
         stage.setTitle("System Simulation V0.0.8");
-        stage.setFullScreen(true);
         stage.setMinHeight(height);
         stage.setMinWidth(width);
-        stage.setFullScreenExitHint("Press 'Q' to exit fullscreen");
-        stage.setFullScreenExitKeyCombination(KeyCombination.valueOf("q"));
         stage.setResizable(false);
 
         StackPane root = new StackPane();
@@ -42,7 +39,7 @@ public class SimulationManager extends Application {
 
         Screen mainScreen = Screen.getScreens().get(0);
 
-        Canvas canvas = new Canvas(mainScreen.getBounds().getWidth(), mainScreen.getBounds().getHeight());
+        Canvas canvas = new Canvas(width, height);
         root.getChildren().add(canvas);
 
         Animator animator = new Animator(canvas, mainScene, scale, timeScale);

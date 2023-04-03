@@ -41,7 +41,7 @@ public class CelestialBody {
     protected Vec2 velocity;
     protected Paint planetColor;
     protected double surfaceTemp;
-    private Queue<Vec2> path = new LinkedList<>();
+    private LinkedList<Vec2> path = new LinkedList<>();
     private Logger logger = LoggerFactory.getLogger(CelestialBody.class);
 
     public CelestialBody(String name, double mass, double radius, Vec2 position, Vec2 velocity) {
@@ -50,7 +50,7 @@ public class CelestialBody {
         this.radius = radius;
         this.position = position;
         this.velocity = velocity;
-        path.add(position);
+        path.add(new Vec2(position.getX(), position.getY()));
     }
 
     public double getMass() {return mass;}
@@ -66,12 +66,12 @@ public class CelestialBody {
     public void setPosition(Vec2 position) {this.position = position;}
     public void setVelocity(Vec2 velocity) {this.velocity = velocity;}
     public void setPlanetColor(Paint planetColor) {this.planetColor = planetColor;}
-    public void setSurfaceTemp(double surfaceTemp) {this.surfaceTemp = surfaceTemp;}
 
     public void addToPath() {
-        path.add(position);
+        Vec2 currentPos = new Vec2(position.getX(), position.getY());
+        path.add(currentPos);
         if (path.size() > 1000) {
-            path.poll();
+            path.remove(0);
         }
     }
 
@@ -119,24 +119,29 @@ public class CelestialBody {
     }
 
     public void drawBodyPath(GraphicsContext gc, double scale, double screenWidth, double screenHeight, Vec2 relative) {
-        double xPrev, yPrev, xCurr, yCurr, r, relX, relY;
-        r = radius * scale;
-        relX = relative.getX() * scale;
-        relY = relative.getY() * scale;
+        double xPrev, yPrev, xCurr, yCurr, relX, relY, offsetX, offsetY;
+        relX = relative.getX();
+        relY = relative.getY();
 
         gc.setStroke(planetColor);
-        gc.setLineWidth(20);
+        gc.setLineWidth(4);
 
-        Vec2 previous = path.poll();
-        //TODO: fix this shit
-        for (Vec2 current : path) {
-            xPrev = ((previous.getX() - r) + screenWidth/2) - relX;
-            yPrev = ((previous.getY() - r) + screenHeight/2) - relY;
-            xCurr = ((current.getX() - r) + screenWidth/2) - relX;
-            yCurr = ((current.getY() - r) + screenHeight/2) - relY;
+        offsetX = screenWidth/2;
+        offsetY = screenHeight/2;
+
+        for (int i = 1; i < path.size(); ++i) {
+            Vec2 pos1 = path.get(i - 1);
+            Vec2 pos2 = path.get(i);
+
+            if (pos1.getX() == pos2.getX() && pos1.getY() == pos2.getY()) {
+                continue;
+            }
+            xPrev = ((pos1.getX() + offsetX / scale) - relX) * scale;
+            yPrev = ((pos1.getY() + offsetY / scale) - relY) * scale;
+            xCurr = ((pos2.getX() + offsetX / scale) - relX) * scale;
+            yCurr = ((pos2.getY() + offsetY / scale) - relY) * scale;
+
             gc.strokeLine(xPrev, yPrev, xCurr, yCurr);
-            logger.debug("Drawing line from ({}, {}) to ({}, {})", xPrev, yPrev, xCurr, yCurr);
-            previous = current;
         }
     }
 

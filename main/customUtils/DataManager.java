@@ -95,13 +95,13 @@ public class DataManager {
         double massValue = extractDouble(str);
 
         if (str.contains("Ms")) {
-            massValue *= Constants.SOL_MASS.getValue();
+            massValue *= Constants.M_SOL;
         } else if (str.contains("Me")) {
-            massValue *= Constants.EARTH_MASS.getValue();
+            massValue *= Constants.M_EARTH;
         } else if (str.contains("Mj")) {
-            massValue *= Constants.JUPITER_MASS.getValue();
+            massValue *= Constants.M_JUPITER;
         } else if (str.contains("Mm")) {
-            massValue *= Constants.MOON_MASS.getValue();
+            massValue *= Constants.M_MOON;
         }
 
         return massValue;
@@ -114,13 +114,13 @@ public class DataManager {
         logger.info("Value got from string is {}", radiusValue);
 
         if (str.contains("Rs")) {
-            radiusValue *= Constants.SOL_RADIUS.getValue();
+            radiusValue *= Constants.R_SOL;
         } else if (str.contains("Re")) {
-            radiusValue *= Constants.EARTH_RADIUS.getValue();
+            radiusValue *= Constants.R_EARTH;
         } else if (str.contains("Rj")) {
-            radiusValue *= Constants.JUPITER_RADIUS.getValue();
+            radiusValue *= Constants.R_JUPITER;
         } else if (str.contains("Rm")) {
-            radiusValue *= Constants.MOON_RADIUS.getValue();
+            radiusValue *= Constants.R_MOON;
         }
 
         return radiusValue;
@@ -129,9 +129,9 @@ public class DataManager {
     private double getDistance(String str) {
         double dist = extractDouble(str);
         if (str.contains("Au")) {
-            dist *= Constants.ASTRONOMICAL_UNIT.getValue();
+            dist *= Constants.ASTRONOMICAL_UNIT;
         } else if (str.contains("Km")) {
-            dist *= Constants.KILOMETER.getValue();
+            dist *= Constants.KILOMETER;
         }
         return dist;
     }

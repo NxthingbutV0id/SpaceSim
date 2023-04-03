@@ -51,9 +51,6 @@ public class SimulationSolver {
             for (CelestialBody body : bodies) {
                 updatePosition(body, body.getVelocity(), deltaT / timeStep);
             }
-            for (CelestialBody body : bodies) {
-                body.addToPath();
-            }
         }
     }
 
@@ -69,7 +66,7 @@ public class SimulationSolver {
                 dy = otherBody.getPosition().getY() - body.getPosition().getY();
 
                 r = sqrt(dx * dx + dy * dy);
-                f = Constants.GRAVITATIONAL_CONSTANT.getValue() * otherBody.getMass() / (r * r);
+                f = Constants.GRAVITATIONAL_CONSTANT * otherBody.getMass() / (r * r);
 
                 ax += f * dx/r;
                 ay += f * dy/r;

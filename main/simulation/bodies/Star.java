@@ -5,18 +5,28 @@ import main.customUtils.*;
 public class Star extends CelestialBody {
     private double luminosity;
 
-    public Star(String name, double mass, double radius, Vec2 position, Vec2 velocity, double surfaceTemp) {
+    public Star(String name, double mass, double radius, Vec2 position, Vec2 velocity) {
         super(name, mass, radius, position, velocity);
-        this.surfaceTemp = surfaceTemp;
+
+        luminosity = setLuminosity() * Constants.L_SOL;
     }
 
-    private void setTempAndLuminosity() {
-        surfaceTemp = Math.pow(Math.pow(mass/Constants.SOL_MASS.getValue(), 2.5),
-                0.25) * Constants.SOL_TEMPERATURE.getValue();
-        luminosity = (radius * radius) * (surfaceTemp * surfaceTemp * surfaceTemp * surfaceTemp); // L = R^2 * T^4
+    private double setLuminosity() {
+        double relativeMass = mass/Constants.M_SOL;
+        if (relativeMass < 0.43) {
+            return 0.23*Math.pow(relativeMass, 2.3);// 0.23 * M^2.3
+        } else if (relativeMass < 2) {
+            return relativeMass * relativeMass * relativeMass * relativeMass; // M^4
+        } else {
+            return 1.4*(relativeMass * relativeMass * relativeMass * Math.sqrt(relativeMass));// 1.4 * M^3.5
+        }
     }
 
-    public double getBrightness(double distance) {
-        return luminosity / (4 * Math.PI * distance * distance);
+    public double getLuminosity() {
+        return luminosity;
+    }
+
+    public void setTemp() {
+        surfaceTemp =  Math.pow((luminosity/(radius * radius)), 0.25) * Constants.T_SOL;
     }
 }

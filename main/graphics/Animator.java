@@ -81,6 +81,13 @@ public class Animator extends AnimationTimer {
 
     private void update() {
         inputHandler.handleInput(this);
+
+        if (timer >= 0.01) {
+            for (CelestialBody body : simulationHandler.getBodies()) {
+                body.addToPath();
+            }
+            timer -= 0.01;
+        }
     }
 
     public void setTarget(MouseEvent mouse) {

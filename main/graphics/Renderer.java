@@ -8,9 +8,6 @@ import main.simulation.bodies.CelestialBody;
 
 public class Renderer {
     private Canvas canvas;
-    private int lastSimTime;
-    private double timer = 0;
-    private double simUPS;
 
     public Renderer(Canvas canvas) {
         this.canvas = canvas;
@@ -33,19 +30,7 @@ public class Renderer {
 
     private void drawText(GraphicsContext gc, SimulationHandler simulationHandler,
                           double scale, double timeScale, Vec2 camera) {
-        String str;
-
         gc.setFill(Color.WHITE);
-        if (timer >= 1) {
-            simUPS = (simulationHandler.getSimulationTime() - lastSimTime)/timer;
-            str = "Simulation Rate: " + simUPS + " UPS";
-            gc.fillText(str, 50.0, 100.0);
-            lastSimTime = simulationHandler.getSimulationTime();
-            --timer;
-        } else {
-            str = "Simulation Rate: " + simUPS + " UPS";
-            gc.fillText(str, 50.0, 100.0);
-        }
         gc.fillText("Zoom level: " + scale, 50.0, 120.0);
         gc.fillText("Time scale: " + 1/timeScale + "x real time", 50.0, 140.0);
 
