@@ -33,8 +33,9 @@ public class DataManager {
     private Logger logger = LoggerFactory.getLogger(DataManager.class);
     private final BufferedReader reader;
 
-    public DataManager(String filePath) throws FileNotFoundException {
-        logger.info("Loading from file {}", filePath);
+    public DataManager() throws FileNotFoundException {
+        //TODO: multiple files...
+        logger.info("Loading systems...");
         reader = new BufferedReader(new FileReader(filePath));
     }
 
