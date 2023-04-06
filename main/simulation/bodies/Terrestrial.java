@@ -1,13 +1,21 @@
+/* Class: Terrestrial
+ * Author: Christian Torres
+ * Date: 4/6/2023
+ *
+ * Purpose: its like earth, or the moon, or whatever you want it to be
+ *
+ * Attributes: TBD
+ *
+ * Methods: TBD
+ */
 package main.simulation.bodies;
 
 import main.customUtils.*;
 
 public class Terrestrial extends CelestialBody {
-    private double albedo;
-    private double emissivity;
+    private double albedo; //value from 0 to 1
+    private double greenhouseFactor; // earth ~= 1.132, venus ~= 3.166, vacuum = 1
     private boolean hasAtmosphere;
-    private int atmosphereLayers;
-    private double surfaceHeatCapacity;
 
     public Terrestrial(String name, double mass, double radius, Vec2 position, Vec2 velocity) {
         super(name, mass, radius, position, velocity);
@@ -17,34 +25,31 @@ public class Terrestrial extends CelestialBody {
         surfaceTemp = temp;
     }
 
+    public void setGreenhouseFactor(double greenhouseFactor) {
+        this.greenhouseFactor = greenhouseFactor;
+    }
+
     public void setAlbedo(double albedo) {
         this.albedo = albedo;
     }
 
-    public void setEmissivity(double emissivity) {
-        this.emissivity = emissivity;
+    public void setHasAtmosphere(boolean hasAtmosphere) {
+        this.hasAtmosphere = hasAtmosphere;
     }
 
-    public void setTemp(Star star, double deltaT) {
-        //TODO: cite sources
-        double T4 = surfaceTemp * surfaceTemp * surfaceTemp * surfaceTemp;
-
-        double dist = position.distance(star.position);
-        double starFlux = star.getLuminosity()/(4 * Math.PI * (dist * dist));
-        double powerRec = starFlux * Math.PI * (star.radius * star.radius);
-
-        double powerStar = powerRec * (1 - albedo);
-        double powerAtm = emissivityFunc()*Constants.STEFAN_BOLTZMANN*T4*4*Math.PI*(radius*radius);
-
-        double powerRadiated = Constants.STEFAN_BOLTZMANN * T4 * 4 * Math.PI * (radius * radius);
-        double powerAbsorbed = powerStar + powerAtm;
-
-        surfaceTemp += ((powerRadiated - powerAbsorbed) * deltaT) / surfaceHeatCapacity;
-    }
-
-    private double emissivityFunc() {
-        double top = (2*atmosphereLayers - 2) - (atmosphereLayers - 2) * emissivity;
-        double bottom = (2*atmosphereLayers) - (atmosphereLayers - 1) * emissivity;
-        return top/bottom;
+    public void setTemp(Star star) {
+        if (star != null) {
+            double dist = position.distance(star.getPosition());
+            if (hasAtmosphere) {
+                double effectiveTemp = Math.sqrt(Math.sqrt((star.getLuminosity() * (1 - albedo))
+                        / (16 * Math.PI * (dist * dist) * Constants.STEFAN_BOLTZMANN)));
+                surfaceTemp = effectiveTemp * greenhouseFactor;
+            } else {
+                surfaceTemp = Math.sqrt(Math.sqrt((star.getLuminosity() * (1 - albedo))
+                        / (16 * Math.PI * (dist * dist) * Constants.STEFAN_BOLTZMANN)));
+            }
+        } else {
+            surfaceTemp = 0;
+        }
     }
 }

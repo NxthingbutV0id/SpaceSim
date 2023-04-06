@@ -1,3 +1,13 @@
+/* Class: Star
+ * Author: Christian Torres
+ * Date: 4/6/2023
+ *
+ * Purpose: "Its a star!" - Bill Wurtz
+ *
+ * Attributes: TBD
+ *
+ * Methods: TBD
+ */
 package main.simulation.bodies;
 
 import main.customUtils.*;
@@ -9,6 +19,7 @@ public class Star extends CelestialBody {
         super(name, mass, radius, position, velocity);
 
         luminosity = setLuminosity() * Constants.L_SOL;
+        setTemp();
     }
 
     private double setLuminosity() {
@@ -27,6 +38,6 @@ public class Star extends CelestialBody {
     }
 
     public void setTemp() {
-        surfaceTemp =  Math.pow((luminosity/(radius * radius)), 0.25) * Constants.T_SOL;
+        surfaceTemp =  Math.sqrt(Math.sqrt(luminosity/(radius * radius)));
     }
 }

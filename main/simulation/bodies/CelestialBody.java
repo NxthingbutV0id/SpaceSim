@@ -29,9 +29,7 @@ import javafx.scene.paint.*;
 import main.customUtils.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import java.util.LinkedList;
-import java.util.Queue;
 
 public class CelestialBody {
     protected String name;
@@ -58,13 +56,6 @@ public class CelestialBody {
     public Vec2 getVelocity() {return velocity;}
     public String getName() {return name;}
     public double getRadius() {return radius;}
-    public Paint getPlanetColor() {return planetColor;}
-    public double getSurfaceTemp() {return surfaceTemp;}
-    public void setName(String name) {this.name = name;}
-    public void setMass(double mass) {this.mass = mass;}
-    public void setRadius(double radius) {this.radius = radius;}
-    public void setPosition(Vec2 position) {this.position = position;}
-    public void setVelocity(Vec2 velocity) {this.velocity = velocity;}
     public void setPlanetColor(Paint planetColor) {this.planetColor = planetColor;}
 
     public void addToPath() {

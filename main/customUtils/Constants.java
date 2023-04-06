@@ -1,3 +1,11 @@
+/* Class: Constants
+ * Author: Christian Torres
+ * Date: 4/6/2023
+ *
+ * Purpose: To store constants used throughout the program
+ *
+ * Attributes: *** See code below ***
+ */
 package main.customUtils;
 
 public class Constants {

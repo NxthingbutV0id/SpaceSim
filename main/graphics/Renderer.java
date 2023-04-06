@@ -1,3 +1,13 @@
+/* Class: Renderer
+ * Author: Christian Torres
+ * Date: 4/6/2023
+ *
+ * Purpose: draws graphics to the screen
+ *
+ * Attributes: TBD
+ *
+ * Methods: TBD
+ */
 package main.graphics;
 
 import javafx.scene.canvas.Canvas;

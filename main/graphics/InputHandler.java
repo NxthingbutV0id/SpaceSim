@@ -1,12 +1,20 @@
+/* Class: InputHandler
+ * Author: Christian Torres
+ * Date: 4/6/2023
+ *
+ * Purpose: handles keyboard input
+ *
+ * Attributes: TBD
+ *
+ * Methods: TBD
+ */
 package main.graphics;
 
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.MouseEvent;
 import main.customUtils.Vec2;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import java.util.HashMap;
 
 public class InputHandler {

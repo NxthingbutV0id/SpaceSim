@@ -1,3 +1,13 @@
+/* Class: SimulationHandler
+ * Author: Christian Torres
+ * Date: 4/6/2023
+ *
+ * Purpose: handles the simulation
+ *
+ * Attributes: TBD
+ *
+ * Methods: TBD
+ */
 package main.graphics;
 
 import main.simulation.*;

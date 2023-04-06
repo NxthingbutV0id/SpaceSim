@@ -5,40 +5,20 @@
  *
  * Purpose: Runs the animation logic and draws the pictures
  *
- * Attributes: -lastTime: long
-               -timer: double
-               -simulator: SimulationSolver
-               -lastSimTime: int
-               -simUPS: double
-               -canvas: Canvas
-               -scale: double
-               -timeScale: double
-               -scene: Scene
+ * Attributes: TBD
  *
- * Methods: +Animator(Canvas, Scene, double, SimulationSolver, double): this
- *          +handle(long): void
- *          -update(): void
- *          -draw(): void
- *          -drawBodies(GraphicsContext): void
- *          -drawText(GraphicsContext): void
+ * Methods: TBD
  */
 package main.graphics;
 
 import javafx.animation.AnimationTimer;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
 import main.customUtils.Vec2;
 import main.simulation.bodies.CelestialBody;
-import main.simulation.SimulationSolver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.HashMap;
 
 public class Animator extends AnimationTimer {
     private long lastTime = System.nanoTime();

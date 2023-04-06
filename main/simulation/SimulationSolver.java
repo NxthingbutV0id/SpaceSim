@@ -14,6 +14,7 @@ package main.simulation;
 import java.util.LinkedList;
 
 import main.customUtils.*;
+import main.files.JsonReader;
 import main.graphics.Animator;
 import main.simulation.bodies.CelestialBody;
 import org.slf4j.Logger;
@@ -34,10 +35,11 @@ public class SimulationSolver {
 
     public void createBodies() {
         try {
-            DataManager dm = new DataManager("main/files/system.csv");
-            bodies = dm.getData();
+            JsonReader reader = new JsonReader();
+            bodies = reader.loadFile("main/files/ExampleSystems/Chaos.json");
+            animator.setScale(reader.getScale());
+            animator.setTimeScale(reader.getTimeScale());
         } catch (Exception e) {
-            logger.error(".csv file not found/failed to read file, make sure system.csv file is in the proper format");
             e.printStackTrace();
         }
     }
