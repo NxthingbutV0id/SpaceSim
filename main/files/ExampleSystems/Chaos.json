@@ -1,7 +1,7 @@
 {
   "settings": {
-    "time scale": 10,
-    "zoom": 0.3
+    "time scale": 0.5,
+    "zoom": 0.5
   },
   "system": [
     {
@@ -41,7 +41,7 @@
       "greenhouse effect": 1.0,
       "position": [-500.0, 500.0],
       "velocity": [200.0, 50.0],
-      "children": []
+      "parent": null
     }
   ]
 }

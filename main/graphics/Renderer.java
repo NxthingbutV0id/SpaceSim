@@ -18,18 +18,22 @@ import main.simulation.bodies.CelestialBody;
 
 public class Renderer {
     private Canvas canvas;
+    private Animator animator;
+    private GraphicsContext gc;
 
-    public Renderer(Canvas canvas) {
+    public Renderer(Canvas canvas, Animator animator) {
         this.canvas = canvas;
+        this.animator = animator;
     }
 
     public void draw(SimulationHandler simulationHandler, double scale, double timeScale, Vec2 camera) {
-        GraphicsContext gc = canvas.getGraphicsContext2D();
-        drawBodies(gc, simulationHandler, scale, camera);
-        drawText(gc, simulationHandler, scale, timeScale, camera);
+        gc = canvas.getGraphicsContext2D();
+        drawBodies(simulationHandler, scale, camera);
+        drawText(scale, timeScale);
+        drawBodyText(simulationHandler, scale, camera);
     }
 
-    private void drawBodies(GraphicsContext gc, SimulationHandler simulationHandler, double scale, Vec2 camera) {
+    private void drawBodies(SimulationHandler simulationHandler, double scale, Vec2 camera) {
         gc.setFill(Color.BLACK);
         gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
         for (CelestialBody body : simulationHandler.getBodies()) {
@@ -38,12 +42,24 @@ public class Renderer {
         }
     }
 
-    private void drawText(GraphicsContext gc, SimulationHandler simulationHandler,
-                          double scale, double timeScale, Vec2 camera) {
+    private void drawText(double scale, double timeScale) {
+        double initTextPos = 100.0;
+        CelestialBody target = animator.getTarget();
         gc.setFill(Color.WHITE);
-        gc.fillText("Zoom level: " + scale, 50.0, 120.0);
-        gc.fillText("Time scale: " + 1/timeScale + "x real time", 50.0, 140.0);
+        gc.fillText("Zoom level: " + scale, 50.0, initTextPos); initTextPos += 20;
+        gc.fillText("Time scale: " + 1/timeScale + "x real time", 50.0, initTextPos); initTextPos += 20;
+        if (animator.isLockOn()) {
+            gc.fillText("Current target: " + target.getName(), 50.0, initTextPos); initTextPos += 20;
+            gc.fillText("Mass: " + target.getMass(), 50.0, initTextPos); initTextPos += 20;
+            gc.fillText("Radius: " + target.getRadius(), 50.0, initTextPos); initTextPos += 20;
+            gc.fillText("Temperature: " + target.getTemperature(), 50.0, initTextPos);
+        } else {
+            gc.fillText("Current target: None", 50.0, initTextPos);
+        }
 
+    }
+
+    private void drawBodyText(SimulationHandler simulationHandler, double scale, Vec2 camera) {
         for (CelestialBody body : simulationHandler.getBodies()) {
             body.drawBodyText(gc, scale, canvas.getWidth(), canvas.getHeight(), camera);
         }

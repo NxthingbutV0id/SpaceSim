@@ -29,22 +29,24 @@ public class Animator extends AnimationTimer {
     private boolean paused;
     private Vec2 camera;
     private boolean lockOn;
-    private Vec2 target;
+    private CelestialBody target = new CelestialBody(null, Double.NaN, Double.NaN, new Vec2(0,0), null);
     private Logger logger = LoggerFactory.getLogger(Animator.class);
     private SimulationHandler simulationHandler;
     private InputHandler inputHandler;
     private Renderer renderer;
+    private int subDivisions;
 
-    public Animator(Canvas canvas, Scene scene, double scale, double timeScale) {
+    public Animator(Canvas canvas, Scene scene, double scale, double timeScale, int subDivisions) {
         this.canvas = canvas;
         this.scale = scale;
         this.timeScale = timeScale;
+        this.subDivisions = subDivisions;
         paused = true;
         camera = new Vec2(0, 0);
-        target = camera;
+        target.setPosition(camera);
         simulationHandler = new SimulationHandler(this);
         inputHandler = new InputHandler(scene);
-        renderer = new Renderer(canvas);
+        renderer = new Renderer(canvas, this);
     }
 
     @Override
@@ -52,34 +54,61 @@ public class Animator extends AnimationTimer {
         double deltaT = (currentTime - lastTime) / 1e9;
         timer += deltaT;
         if (!paused) {
-            simulationHandler.update(deltaT / timeScale, 100);
+            simulationHandler.update(deltaT/timeScale, subDivisions);
         }
-        update();
+        update(deltaT);
         draw();
         lastTime = currentTime;
     }
 
-    private void update() {
+    private void update(double deltaT) {
         inputHandler.handleInput(this);
 
-        if (timer >= 0.01) {
+        if (timer >= (deltaT/subDivisions)) {
             for (CelestialBody body : simulationHandler.getBodies()) {
                 body.addToPath();
             }
-            timer -= 0.01;
+            timer -= (deltaT/subDivisions);
         }
     }
 
     public void setTarget(MouseEvent mouse) {
-        for (CelestialBody body : simulationHandler.getBodies()) {
-            Vec2 bodyScreenPos = body.getScreenPosition(scale, canvas.getWidth(), canvas.getHeight(), camera);
-            double bodyScreenRadius = body.getRadius() * scale;
-            if (mouse.getX() <= bodyScreenPos.getX() + bodyScreenRadius + 10 && mouse.getX() >= bodyScreenPos.getX() + bodyScreenRadius - 10) {
-                if (mouse.getY() <= bodyScreenPos.getY() + 10 && mouse.getY() >= bodyScreenPos.getY() - 10) {
+        boolean closeOnX, closeOnY, x1, x2, y1, y2;
+        if (!lockOn) {
+            for (CelestialBody body : simulationHandler.getBodies()) {
+                Vec2 bodyScreenPos = body.getScreenPosition(scale, canvas.getWidth(), canvas.getHeight(), camera);
+                double bodyScreenRadius = body.getRadius() * scale;
+
+                x1 = mouse.getX() <= bodyScreenPos.getX() + bodyScreenRadius + 10;
+                x2 = mouse.getX() >= bodyScreenPos.getX() - bodyScreenRadius - 10;
+                y1 = mouse.getY() <= bodyScreenPos.getY() + bodyScreenRadius + 10;
+                y2 = mouse.getY() >= bodyScreenPos.getY() - bodyScreenRadius - 10;
+
+                closeOnX = x1 && x2;
+                closeOnY = y1 && y2;
+
+                if (closeOnX && closeOnY) {
                     logger.info("Target body: {}", body.getName());
-                    target = body.getPosition();
+                    target = body;
                     lockOn = true;
                 }
+            }
+        } else {
+            x1 = mouse.getX() > canvas.getWidth()/2 + 10;
+            x2 = mouse.getX() < canvas.getWidth()/2 - 10;
+            y1 = mouse.getY() > canvas.getWidth()/2 + 10;
+            y2 = mouse.getY() < canvas.getWidth()/2 - 10;
+
+            closeOnX = x1 && x2;
+            closeOnY = y1 && y2;
+
+            if (closeOnX && closeOnY) {
+                logger.info("Target body: None");
+                double newX, newY;
+                newX = target.getPosition().getX();
+                newY = target.getPosition().getY();
+                target.setPosition(new Vec2(newX, newY));
+                lockOn = false;
             }
         }
     }
@@ -108,7 +137,7 @@ public class Animator extends AnimationTimer {
         return paused;
     }
 
-    public Vec2 getTarget() {
+    public CelestialBody getTarget() {
         return target;
     }
 

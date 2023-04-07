@@ -76,7 +76,7 @@ public class InputHandler {
         scene.setOnMousePressed(event -> {
             animator.setTarget(event);
             if (animator.isLockOn()) {
-                animator.setCamera(animator.getTarget());
+                animator.setCamera(animator.getTarget().getPosition());
             }
         });
         scene.setOnScroll(event -> {

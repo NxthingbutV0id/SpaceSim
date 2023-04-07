@@ -22,8 +22,8 @@ public class SimulationHandler {
         simulator.createBodies();
     }
 
-    public void update(double deltaT, double timeScale) {
-        simulator.update(deltaT / timeScale, 100);
+    public void update(double deltaT, int subDivisions) {
+        simulator.update(deltaT, subDivisions);
     }
 
     public List<CelestialBody> getBodies() {

@@ -25,9 +25,10 @@ public class SimulationManager extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        double width = 1280, height = 720, timeScale = 1.0 / 86400.0, scale = 5e-9;
+        double width = 1280, height = 720, timeScale = 1.0, scale = 1.0;
+        int subDivisions = 10000;
 
-        stage.setTitle("System Simulation V0.1.9");
+        stage.setTitle("System Simulation V0.2.1");
         stage.setMinHeight(height);
         stage.setMinWidth(width);
         stage.setResizable(false);
@@ -41,7 +42,7 @@ public class SimulationManager extends Application {
         Canvas canvas = new Canvas(width, height);
         root.getChildren().add(canvas);
 
-        Animator animator = new Animator(canvas, mainScene, scale, timeScale);
+        Animator animator = new Animator(canvas, mainScene, scale, timeScale, subDivisions);
         animator.start();
 
         stage.show();

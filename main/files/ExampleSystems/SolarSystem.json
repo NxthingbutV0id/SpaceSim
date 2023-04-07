@@ -104,18 +104,18 @@
   {
     "type": "Gas Giant",
     "name": "Jupiter",
-    "mass": "0.1074 Me",
-    "radius": "0.532 Re",
+    "mass": "1 Mj",
+    "radius": "1 Rj",
     "color": "#c67b5c",
-    "albedo": 0.25,
+    "albedo": 0.52,
     "ring system": {
       "inner radius": 1.4,
       "outer radius": 1.72,
       "color": "#a5a5a5",
       "opacity": "0.01"
     },
-    "position": ["1.3813335 Au", 0],
-    "velocity": [0, 26499],
+    "position": ["5.20336301 Au", 0],
+    "velocity": [0, 13000],
     "parent": "Sol"
   }
 ]

@@ -66,28 +66,36 @@ public class JsonReader {
         Vec2 velocity = arrayToVec((JSONArray) body.get("velocity"));
 
         switch (bodyType) {
-            case "Star" -> {
-                Star temp = new Star(name, mass, radius, position, velocity);
-                temp.setPlanetColor((Paint) body.get("color"));
-                if (body.get("parent") != null) {
-                    decoder.setRelative((String) body.get("parent"),bodies, temp);
-                }
-                bodies.add(temp);
-            }
-            case "Terrestrial" -> {
-                Terrestrial temp = new Terrestrial(name, mass, radius, position, velocity);
-                temp.setPlanetColor(decoder.getColor(body.get("color").toString()));
-                temp.setAlbedo((double) body.get("albedo"));
-                temp.setHasAtmosphere((boolean) body.get("atmosphere present?"));
-                temp.setGreenhouseFactor((double) body.get("greenhouse effect"));
-                if (body.get("parent") != null) {
-                    decoder.setRelative((String) body.get("parent"),bodies, temp);
-                }
-                bodies.add(temp);
-            }
-            case "Gas Giant" -> {}
+            case "Star" -> createStar(body, name, mass, radius, position, velocity);
+            case "Terrestrial" -> createTerrestrial(body, name, mass, radius, position, velocity);
+            case "Gas Giant" -> createGasGiant(body, name, mass, radius, position, velocity);
             default -> throw new InvalidFileFormatException("Error, .json file not in proper format");
         }
+    }
+
+    public void createStar(JSONObject body, String name, double mass, double radius, Vec2 position, Vec2 velocity) {
+        Star temp = new Star(name, mass, radius, position, velocity);
+        temp.setPlanetColor((Paint) body.get("color"));
+        if (body.get("parent") != null) {
+            decoder.setRelative((String) body.get("parent"),bodies, temp);
+        }
+        bodies.add(temp);
+    }
+
+    public void createTerrestrial(JSONObject body, String name, double mass, double radius, Vec2 position, Vec2 velocity) {
+        Terrestrial temp = new Terrestrial(name, mass, radius, position, velocity);
+        temp.setPlanetColor(decoder.getColor(body.get("color").toString()));
+        temp.setAlbedo((double) body.get("albedo"));
+        temp.setHasAtmosphere((boolean) body.get("atmosphere present?"));
+        temp.setGreenhouseFactor((double) body.get("greenhouse effect"));
+        if (body.get("parent") != null) {
+            decoder.setRelative((String) body.get("parent"),bodies, temp);
+        }
+        bodies.add(temp);
+    }
+
+    public void createGasGiant(JSONObject body, String name, double mass, double radius, Vec2 position, Vec2 velocity) {
+        //TODO: create method
     }
 
     public Vec2 arrayToVec(JSONArray arr) {
@@ -105,15 +113,7 @@ public class JsonReader {
         return new Vec2(x, y);
     }
 
-    private void getSettings() {
-        settings = (JSONObject) rawData.get("settings");
-    }
-
-    public double getScale() {
-        return Double.parseDouble(settings.get("zoom").toString());
-    }
-
-    public double getTimeScale() {
-        return Double.parseDouble(settings.get("time scale").toString());
-    }
+    private void getSettings() {settings = (JSONObject) rawData.get("settings");}
+    public double getScale() {return Double.parseDouble(settings.get("zoom").toString());}
+    public double getTimeScale() {return 1/Double.parseDouble(settings.get("time scale").toString());}
 }

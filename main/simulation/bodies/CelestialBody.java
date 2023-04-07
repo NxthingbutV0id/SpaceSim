@@ -56,12 +56,15 @@ public class CelestialBody {
     public Vec2 getVelocity() {return velocity;}
     public String getName() {return name;}
     public double getRadius() {return radius;}
+    public double getTemperature() {return surfaceTemp;}
     public void setPlanetColor(Paint planetColor) {this.planetColor = planetColor;}
+    public void setPosition(Vec2 position) {this.position = position;}
+    public void setName(String name) {this.name = name;}
 
     public void addToPath() {
         Vec2 currentPos = new Vec2(position.getX(), position.getY());
         path.add(currentPos);
-        if (path.size() > 1000) {
+        if (path.size() > 10000) {
             path.remove(0);
         }
     }
@@ -111,6 +114,7 @@ public class CelestialBody {
 
     public void drawBodyPath(GraphicsContext gc, double scale, double screenWidth, double screenHeight, Vec2 relative) {
         double xPrev, yPrev, xCurr, yCurr, relX, relY, offsetX, offsetY;
+        boolean isOffScreen, isOffScreenX, isOffScreenY, bothSamePoint;
         relX = relative.getX();
         relY = relative.getY();
 
@@ -120,19 +124,27 @@ public class CelestialBody {
         offsetX = screenWidth/2;
         offsetY = screenHeight/2;
 
+
+
         for (int i = 1; i < path.size(); ++i) {
             Vec2 pos1 = path.get(i - 1);
             Vec2 pos2 = path.get(i);
+            bothSamePoint = pos1.getX() == pos2.getX() && pos1.getY() == pos2.getY();
+            if (!bothSamePoint) {
+                xPrev = ((pos1.getX() + offsetX / scale) - relX) * scale;
+                yPrev = ((pos1.getY() + offsetY / scale) - relY) * scale;
+                xCurr = ((pos2.getX() + offsetX / scale) - relX) * scale;
+                yCurr = ((pos2.getY() + offsetY / scale) - relY) * scale;
 
-            if (pos1.getX() == pos2.getX() && pos1.getY() == pos2.getY()) {
-                continue;
+                isOffScreenX = xPrev > screenWidth && xPrev < 0;
+                isOffScreenY = yPrev > screenHeight && yPrev < 0;
+
+                isOffScreen = isOffScreenX && isOffScreenY;
+
+                if (!isOffScreen) {
+                    gc.strokeLine(xPrev, yPrev, xCurr, yCurr);
+                }
             }
-            xPrev = ((pos1.getX() + offsetX / scale) - relX) * scale;
-            yPrev = ((pos1.getY() + offsetY / scale) - relY) * scale;
-            xCurr = ((pos2.getX() + offsetX / scale) - relX) * scale;
-            yCurr = ((pos2.getY() + offsetY / scale) - relY) * scale;
-
-            gc.strokeLine(xPrev, yPrev, xCurr, yCurr);
         }
     }
 
