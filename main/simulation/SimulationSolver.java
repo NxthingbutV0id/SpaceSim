@@ -5,21 +5,22 @@
  *
  * Purpose: grabs the data from the file and runs the calculations
  *
- * Attributes:
+ * Attributes: -bodies: LinkedList<CelestialBody>
+ *             -simulationTime: int
+ *             -animator: Animator
+ *             -logger: Logger
  *
- * Methods: +_main(String[]): void - Start of program
+ * Methods: *** for now, its a lot ***
  */
 package main.simulation;
 
 import java.util.LinkedList;
-
 import main.customUtils.*;
 import main.files.JsonReader;
 import main.graphics.Animator;
 import main.simulation.bodies.CelestialBody;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import static java.lang.Math.sqrt;
 
 public class SimulationSolver {

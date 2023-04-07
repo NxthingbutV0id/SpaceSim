@@ -5,22 +5,9 @@
  *
  * Purpose: The bodies that generate gravity
  *
- * Attributes: -name: String
- *             -mass: double
- *             -radius: double
- *             -position: Vec2
- *             -velocity: Vec2
- *             -planetColor: Paint
+ * Attributes: *TO BE FINALIZED*
  *
- * Methods: +CelestialBody(String, double, double, Vec2, Vec2, Paint): this
- *          +getMass(): double
- *          +getPosition(): Vec2
- *          +getVelocity(): Vec2
- *          +drawBody(GraphicsContext, double, double, double, Vec2): void
- *          +drawBodyText(GraphicsContext, double, double, double, Vec2): void
- *          +getName(): String
- *          +setName(String): void
- *          +printStats(): void
+ * Methods: *TO BE FINALIZED*
  */
 package main.simulation.bodies;
 

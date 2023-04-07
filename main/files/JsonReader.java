@@ -4,9 +4,9 @@
  *
  * Purpose: reads from a .json file
  *
- * Attributes: TBD
+ * Attributes: *TO BE FINALIZED*
  *
- * Methods: TBD
+ * Methods: *TO BE FINALIZED*
  */
 package main.files;
 
@@ -49,10 +49,8 @@ public class JsonReader {
     public void loadBodies() throws InvalidFileFormatException {
         JSONArray array = (JSONArray) rawData.get("system");
 
-        var iter = array.iterator();
-
-        while (iter.hasNext()) {
-            JSONObject body = (JSONObject) iter.next();
+        for (var o : array) {
+            JSONObject body = (JSONObject) o;
             setupBodies(body);
         }
     }
@@ -69,7 +67,7 @@ public class JsonReader {
             case "Star" -> createStar(body, name, mass, radius, position, velocity);
             case "Terrestrial" -> createTerrestrial(body, name, mass, radius, position, velocity);
             case "Gas Giant" -> createGasGiant(body, name, mass, radius, position, velocity);
-            default -> throw new InvalidFileFormatException("Error, .json file not in proper format");
+            default -> throw new InvalidFileFormatException("Error, Type not found");
         }
     }
 
@@ -82,7 +80,8 @@ public class JsonReader {
         bodies.add(temp);
     }
 
-    public void createTerrestrial(JSONObject body, String name, double mass, double radius, Vec2 position, Vec2 velocity) {
+    public void createTerrestrial(JSONObject body, String name, double mass,
+                                  double radius, Vec2 position, Vec2 velocity) {
         Terrestrial temp = new Terrestrial(name, mass, radius, position, velocity);
         temp.setPlanetColor(decoder.getColor(body.get("color").toString()));
         temp.setAlbedo((double) body.get("albedo"));

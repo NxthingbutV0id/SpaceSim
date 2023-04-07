@@ -4,9 +4,9 @@
  *
  * Purpose: a giant gas planet like jupiter, also could have rings!
  *
- * Attributes: TBD
+ * Attributes: *TO BE FINALIZED*
  *
- * Methods: TBD
+ * Methods: *TO BE FINALIZED*
  */
 package main.simulation.bodies;
 

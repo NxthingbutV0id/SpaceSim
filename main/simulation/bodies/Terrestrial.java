@@ -4,9 +4,9 @@
  *
  * Purpose: its like earth, or the moon, or whatever you want it to be
  *
- * Attributes: TBD
+ * Attributes: *TO BE FINALIZED*
  *
- * Methods: TBD
+ * Methods: *TO BE FINALIZED*
  */
 package main.simulation.bodies;
 

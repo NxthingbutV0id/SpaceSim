@@ -3,21 +3,11 @@
  * Created: 2023/3/25
  * Modified:
  *
- * Purpose:  parses data to usable values
+ * Purpose: parses data to usable values
  *
- * Attributes:
+ * Attributes: *TO BE FINALIZED*
  *
- * Methods: +DataManager(): this
- *          +getData(): LinkedList<CelestialBody>
- *          -rawData(): LinkedList<String[]>
- *          -createBody(String[]): CelestialBody
- *          -getMass(String): double
- *          -getRadius(String): double
- *          -getDistance(String): double
- *          -getColor(String): Paint
- *          -extractDouble(String): double
- *          -getValue(String): double
- *          -setRelative(String, String, LinkedList<CelestialBody>, CelestialBody): void
+ * Methods: *TO BE FINALIZED*
  */
 package main.files;
 

@@ -5,9 +5,7 @@
  *
  * Purpose: The sets up the window and the application
  *
- * Attributes: -simulator: SimulationSolver
- *             -scale: double
- *             -timeScale: double
+ * Attributes:
  *
  * Methods: +start(Stage): void
  */

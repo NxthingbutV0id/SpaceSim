@@ -5,9 +5,9 @@
  *
  * Purpose: Runs the animation logic and draws the pictures
  *
- * Attributes: TBD
+ * Attributes: *TO BE FINALIZED*
  *
- * Methods: TBD
+ * Methods: *TO BE FINALIZED*
  */
 package main.graphics;
 

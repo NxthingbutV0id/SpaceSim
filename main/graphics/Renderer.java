@@ -4,9 +4,9 @@
  *
  * Purpose: draws graphics to the screen
  *
- * Attributes: TBD
+ * Attributes: *TO BE FINALIZED*
  *
- * Methods: TBD
+ * Methods: *TO BE FINALIZED*
  */
 package main.graphics;
 

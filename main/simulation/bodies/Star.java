@@ -4,9 +4,9 @@
  *
  * Purpose: "Its a star!" - Bill Wurtz
  *
- * Attributes: TBD
+ * Attributes: *TO BE FINALIZED*
  *
- * Methods: TBD
+ * Methods: *TO BE FINALIZED*
  */
 package main.simulation.bodies;
 
