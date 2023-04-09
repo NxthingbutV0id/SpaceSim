@@ -49,7 +49,7 @@ public class CelestialBody {
     public void setName(String name) {this.name = name;}
 
     public void addToPath() {
-        Vec2 currentPos = new Vec2(position.getX(), position.getY());
+        Vec2 currentPos = position.copy();
         path.add(currentPos);
         if (path.size() > 10000) {
             path.remove(0);

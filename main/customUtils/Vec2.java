@@ -122,6 +122,15 @@ public class Vec2 {
         return new Vec2(x/getMagnitude(), y/getMagnitude());
     }
 
+    public Vec2 copy() {
+        return new Vec2(x, y);
+    }
+
+    public void set(Vec2 other) {
+        x = other.x;
+        y = other.y;
+    }
+
     @Override
     public String toString() {
         return "(" + x + ", " + y + ")";

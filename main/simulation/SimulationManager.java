@@ -24,7 +24,7 @@ public class SimulationManager extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         double width = 1280, height = 720, timeScale = 1.0, scale = 1.0;
-        int subDivisions = 10000;
+        int subDivisions = 100000;
 
         stage.setTitle("System Simulation V0.2.1");
         stage.setMinHeight(height);

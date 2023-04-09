@@ -13,6 +13,7 @@ package main.files;
 import javafx.scene.paint.Paint;
 import main.customUtils.Vec2;
 import main.simulation.bodies.CelestialBody;
+import main.simulation.bodies.GasGiant;
 import main.simulation.bodies.Star;
 import main.simulation.bodies.Terrestrial;
 import org.json.simple.JSONArray;
@@ -94,7 +95,25 @@ public class JsonReader {
     }
 
     public void createGasGiant(JSONObject body, String name, double mass, double radius, Vec2 position, Vec2 velocity) {
-        //TODO: create method
+        GasGiant temp = new GasGiant(name, mass, radius, position, velocity);
+        temp.setPlanetColor(decoder.getColor(body.get("color").toString()));
+        temp.setAlbedo((double) body.get("albedo"));
+        setupRing(body, temp);
+
+        if (body.get("parent") != null) {
+            decoder.setRelative((String) body.get("parent"),bodies, temp);
+        }
+        bodies.add(temp);
+    }
+
+    public void setupRing(JSONObject body, GasGiant gg) {
+        JSONObject ring = (JSONObject) body.get("ring system");
+        double ir = (double) ring.get("inner radius");
+        double or = (double) ring.get("outer radius");
+        Paint col = decoder.getColor(ring.get("color").toString());
+        double op = (double) ring.get("opacity");
+
+        gg.setRings(ir, or, col, op);
     }
 
     public Vec2 arrayToVec(JSONArray arr) {

@@ -49,29 +49,36 @@ public class InputHandler {
             boolean paused = animator.isPaused();
             if (event.getCode() == controls.get("speed up time")) {
                 timeScale *= 1.1;
+                animator.setTimeScale(timeScale);
             } else if (event.getCode() == controls.get("slow down time")) {
                 timeScale *= 0.9;
+                animator.setTimeScale(timeScale);
             }
-            if (event.getCode() == controls.get("move up")) {
-                camera.incrementBy(new Vec2(0, -cameraMoveSpeed));
-            } else if (event.getCode() == controls.get("move down")) {
-                camera.incrementBy(new Vec2(0, cameraMoveSpeed));
-            }
-            if (event.getCode() == controls.get("move left")) {
-                camera.incrementBy(new Vec2(-cameraMoveSpeed, 0));
-            } else if (event.getCode() == controls.get("move right")) {
-                camera.incrementBy(new Vec2(cameraMoveSpeed, 0));
+            if (!animator.isLockOn()) {
+                if (event.getCode() == controls.get("move up")) {
+                    camera.incrementBy(new Vec2(0, -cameraMoveSpeed));
+                } else if (event.getCode() == controls.get("move down")) {
+                    camera.incrementBy(new Vec2(0, cameraMoveSpeed));
+                }
+                if (event.getCode() == controls.get("move left")) {
+                    camera.incrementBy(new Vec2(-cameraMoveSpeed, 0));
+                } else if (event.getCode() == controls.get("move right")) {
+                    camera.incrementBy(new Vec2(cameraMoveSpeed, 0));
+                }
             }
             if (event.getCode() == controls.get("pause")) {
                 paused = !paused;
+                animator.setPaused(paused);
             }
             if (event.getCode() == controls.get("deselect target")) {
                 logger.info("Escape pressed");
-                lockOn = false;
+                logger.info("Target body: None");
+                double newX, newY;
+                newX = animator.getTarget().getPosition().getX();
+                newY = animator.getTarget().getPosition().getY();
+                animator.getTarget().setPosition(new Vec2(newX, newY));
+                animator.setLockOn(lockOn);
             }
-            animator.setTimeScale(timeScale);
-            animator.setPaused(paused);
-            animator.setLockOn(lockOn);
         });
         scene.setOnMousePressed(event -> {
             animator.setTarget(event);

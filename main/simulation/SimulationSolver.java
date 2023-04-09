@@ -49,16 +49,40 @@ public class SimulationSolver {
         simulationTime++;
         for (int i = 0; i < timeStep; i++) {
             for (CelestialBody body : bodies) {
-                updateVelocity(body, getAcceleration(body), deltaT / timeStep);
-            }
-            for (CelestialBody body : bodies) {
-                updatePosition(body, body.getVelocity(), deltaT / timeStep);
+                Vec2 originalVelocity = body.getVelocity().copy();
+                Vec2 originalPosition = body.getPosition().copy();
+
+                Vec2 k1v = getAcceleration(body).multiply(deltaT / timeStep);
+                Vec2 k1x = originalVelocity.multiply(deltaT / timeStep);
+
+                body.getVelocity().incrementBy(k1v.multiply(0.5));
+                body.getPosition().incrementBy(k1x.multiply(0.5));
+
+                Vec2 k2v = getAcceleration(body).multiply(deltaT / timeStep);
+                Vec2 k2x = body.getVelocity().multiply(deltaT / timeStep);
+
+                body.getVelocity().set(originalVelocity.add(k2v.multiply(0.5)));
+                body.getPosition().set(originalPosition.add(k2x.multiply(0.5)));
+
+                Vec2 k3v = getAcceleration(body).multiply(deltaT / timeStep);
+                Vec2 k3x = body.getVelocity().multiply(deltaT / timeStep);
+
+                body.getVelocity().set(originalVelocity.add(k3v));
+                body.getPosition().set(originalPosition.add(k3x));
+
+                Vec2 k4v = getAcceleration(body).multiply(deltaT / timeStep);
+                Vec2 k4x = body.getVelocity().multiply(deltaT / timeStep);
+
+                body.getVelocity().set(originalVelocity);
+                body.getPosition().set(originalPosition);
+
+                Vec2 deltaV = k1v.add(k2v.multiply(2)).add(k3v.multiply(2)).add(k4v).multiply(1.0 / 6.0);
+                Vec2 deltaX = k1x.add(k2x.multiply(2)).add(k3x.multiply(2)).add(k4x).multiply(1.0 / 6.0);
+
+                body.getVelocity().incrementBy(deltaV);
+                body.getPosition().incrementBy(deltaX);
             }
         }
-    }
-
-    public LinkedList<CelestialBody> getBodies() {
-        return bodies;
     }
 
     private Vec2 getAcceleration(CelestialBody body){
@@ -92,6 +116,9 @@ public class SimulationSolver {
 
     public int getSimulationTime() {
         return simulationTime;
+    }
+    public LinkedList<CelestialBody> getBodies() {
+        return bodies;
     }
 
     public Vec2 getCenterOfMass() {
