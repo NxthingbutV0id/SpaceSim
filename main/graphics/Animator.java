@@ -15,8 +15,10 @@ import javafx.animation.AnimationTimer;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 import main.customUtils.Vec2;
 import main.simulation.bodies.CelestialBody;
+import main.simulation.bodies.Terrestrial;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,81 +31,72 @@ public class Animator extends AnimationTimer {
     private boolean paused;
     private Vec2 camera;
     private boolean lockOn;
-    private CelestialBody target = new CelestialBody(null, Double.NaN, Double.NaN, new Vec2(0,0), null);
+    private CelestialBody target = new Terrestrial(null, Double.NaN, Double.NaN, new Vec2(0,0), null);
     private Logger logger = LoggerFactory.getLogger(Animator.class);
     private SimulationHandler simulationHandler;
     private InputHandler inputHandler;
     private Renderer renderer;
     private int subDivisions;
+    private String path;
+    private Stage stage;
 
-    public Animator(Canvas canvas, Scene scene, double scale, double timeScale, int subDivisions) {
+    public Animator(Stage stage, Canvas canvas, Scene scene, double scale, double timeScale, int subDivisions) {
+        this.stage = stage;
         this.canvas = canvas;
         this.scale = scale;
         this.timeScale = timeScale;
         this.subDivisions = subDivisions;
+        path = "main/files/ExampleSystems/Chaos.json";
         paused = true;
         camera = new Vec2(0, 0);
         target.setPosition(camera);
-        simulationHandler = new SimulationHandler(this);
-        inputHandler = new InputHandler(scene);
+        simulationHandler = new SimulationHandler(this, path);
+        inputHandler = new InputHandler(scene, this);
         renderer = new Renderer(canvas, this);
     }
 
     @Override
     public void handle(long currentTime) {
         double deltaT = (currentTime - lastTime) / 1e9;
+        lastTime = currentTime;
         timer += deltaT;
         if (!paused) {
             simulationHandler.update(deltaT/timeScale, subDivisions);
         }
         update(deltaT);
         draw();
-        lastTime = currentTime;
     }
 
     private void update(double deltaT) {
-        inputHandler.handleInput(this);
+        inputHandler.handleInput(deltaT);
 
-        if (timer >= (deltaT/subDivisions)) {
+        if (timer >= 1.0/60.0) {
             for (CelestialBody body : simulationHandler.getBodies()) {
                 body.addToPath();
             }
-            timer -= (deltaT/subDivisions);
+            timer -= 1.0/60.0;
         }
     }
 
     public void setTarget(MouseEvent mouse) {
-        boolean closeOnX, closeOnY, x1, x2, y1, y2;
         if (!lockOn) {
             for (CelestialBody body : simulationHandler.getBodies()) {
                 Vec2 bodyScreenPos = body.getScreenPosition(scale, canvas.getWidth(), canvas.getHeight(), camera);
                 double bodyScreenRadius = body.getRadius() * scale;
 
-                x1 = mouse.getX() <= bodyScreenPos.getX() + bodyScreenRadius + 10;
-                x2 = mouse.getX() >= bodyScreenPos.getX() - bodyScreenRadius - 10;
-                y1 = mouse.getY() <= bodyScreenPos.getY() + bodyScreenRadius + 10;
-                y2 = mouse.getY() >= bodyScreenPos.getY() - bodyScreenRadius - 10;
+                Vec2 mousePos = new Vec2(mouse.getX(), mouse.getY());
 
-                closeOnX = x1 && x2;
-                closeOnY = y1 && y2;
-
-                if (closeOnX && closeOnY) {
-                    logger.info("Target body: {}", body.getName());
+                if (mousePos.distance(bodyScreenPos) <= 2 * bodyScreenRadius) {
                     target = body;
                     lockOn = true;
+                    break;
                 }
             }
         } else {
-            x1 = mouse.getX() > canvas.getWidth()/2 + 10;
-            x2 = mouse.getX() < canvas.getWidth()/2 - 10;
-            y1 = mouse.getY() > canvas.getWidth()/2 + 10;
-            y2 = mouse.getY() < canvas.getWidth()/2 - 10;
+            Vec2 mousePos = new Vec2(mouse.getX(), mouse.getY());
+            Vec2 center = new Vec2(canvas.getWidth()/2, canvas.getHeight()/2);
 
-            closeOnX = x1 && x2;
-            closeOnY = y1 && y2;
-
-            if (closeOnX && closeOnY) {
-                logger.info("Target body: None");
+            if (mousePos.distance(center) > 100) {
                 double newX, newY;
                 newX = target.getPosition().getX();
                 newY = target.getPosition().getY();
@@ -114,6 +107,9 @@ public class Animator extends AnimationTimer {
     }
 
     private void draw() {
+        if (lockOn) {
+            camera = target.getPosition();
+        }
         renderer.draw(simulationHandler, scale, timeScale, camera);
     }
 
@@ -159,5 +155,24 @@ public class Animator extends AnimationTimer {
 
     public void setPaused(boolean paused) {
         this.paused = paused;
+    }
+
+    public void setPath(String path) {
+        paused = true;
+        this.path = path;
+        simulationHandler = new SimulationHandler(this, path);
+    }
+
+    public void restart() {
+        paused = true;
+        simulationHandler = new SimulationHandler(this, path);
+    }
+
+    public Stage getStage() {
+        return stage;
+    }
+
+    public boolean escapePressed() {
+        return inputHandler.escapePressed();
     }
 }

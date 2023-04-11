@@ -32,6 +32,7 @@ public class GasGiant extends CelestialBody {
         rings = new RingSystem(this, innerRadius, outerRadius, color, opacity);
     }
 
+    @Override
     public void setTemp(Star star) {
         if (star != null) {
             double dist = position.distance(star.getPosition());
@@ -53,7 +54,7 @@ public class GasGiant extends CelestialBody {
         relY = relative.getY() * scale;
 
         if (rings != null) {
-            rings.drawBody(g, scale, screenWidth, screenHeight, relative);
+            rings.drawRing(g, scale, screenWidth, screenHeight, relative);
         }
 
         g.setFill(planetColor);
@@ -63,48 +64,5 @@ public class GasGiant extends CelestialBody {
                 2*r,
                 2*r
         );
-    }
-
-    private class RingSystem {
-        private double innerRadius, outerRadius;
-        private Paint color;
-        private double opacity;
-        private Vec2 position;
-
-        public RingSystem(CelestialBody body, double innerRadius, double outerRadius, Paint color, double opacity) {
-            position = body.position;
-            this.innerRadius = innerRadius * body.radius;
-            this.outerRadius = outerRadius * body.radius;
-            this.color = color;
-            this.opacity = opacity;
-        }
-
-        public void drawBody(GraphicsContext g, double scale, double screenWidth, double screenHeight, Vec2 relative) {
-            double x, y, ir, or, relX, relY;
-
-            x = position.getX() * scale;
-            y = position.getY() * scale;
-            ir = innerRadius * scale;
-            or = outerRadius * scale;
-            relX = relative.getX() * scale;
-            relY = relative.getY() * scale;
-
-            g.setFill(Color.BLACK);
-            g.fillOval(
-                    ((x - or) + screenWidth/2) - relX,
-                    ((y - or) + screenHeight/2) - relY,
-                    2*or,
-                    2*or
-            );
-            g.setFill(color);
-            g.setGlobalAlpha(opacity);
-            g.fillOval(
-                    ((x - ir) + screenWidth/2) - relX,
-                    ((y - ir) + screenHeight/2) - relY,
-                    2*ir,
-                    2*ir
-            );
-            g.setGlobalAlpha(1);
-        }
     }
 }

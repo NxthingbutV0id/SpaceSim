@@ -17,9 +17,9 @@ import java.util.List;
 public class SimulationHandler {
     private SimulationSolver simulator;
 
-    public SimulationHandler(Animator animator) {
+    public SimulationHandler(Animator animator, String path) {
         simulator = new SimulationSolver(animator);
-        simulator.createBodies();
+        simulator.createBodies(path);
     }
 
     public void update(double deltaT, int subDivisions) {

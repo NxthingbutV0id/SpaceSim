@@ -39,10 +39,7 @@ public class Decoder {
     }
 
     public double getRadius(String str) {
-        logger.info("getRadius string now is {}", str);
         double radiusValue = extractDouble(str);
-
-        logger.info("Value got from string is {}", radiusValue);
 
         if (str.contains("Rs")) {
             radiusValue *= Constants.R_SOL;

@@ -43,6 +43,11 @@ public class Vec2 {
         y = magnitude * Math.cos(direction.getAngleRadians());
     }
 
+    public Vec2() {
+        x = 0;
+        y = 0;
+    }
+
     public double getX() {
         return x;
     }
@@ -75,12 +80,12 @@ public class Vec2 {
         return new double[]{x, y};
     }
 
-    public void setXY(double x, double y) {
+    public void set(double x, double y) {
         this.x = x;
         this.y = y;
     }
 
-    public void setXY(double[] xy){
+    public void set(double[] xy){
         x = xy[0];
         y = xy[1];
     }
@@ -102,6 +107,8 @@ public class Vec2 {
         return new Vec2(x * scalar, y * scalar);
     }
 
+    public void selfMultiply(double scalar) {x *= scalar; y *= scalar;}
+
     public Vec2 divide(double scalar) {
         return new Vec2(x / scalar, y / scalar);
     }
@@ -119,7 +126,19 @@ public class Vec2 {
     }
 
     public Vec2 normalize() {
-        return new Vec2(x/getMagnitude(), y/getMagnitude());
+        if (getMagnitude() != 0) {
+            return new Vec2(x / getMagnitude(), y / getMagnitude());
+        } else {
+            return new Vec2();
+        }
+    }
+
+    public void selfNormalize() {
+        double currentMag = getMagnitude();
+        if (currentMag != 0) {
+            x /= currentMag;
+            y /= currentMag;
+        }
     }
 
     public Vec2 copy() {

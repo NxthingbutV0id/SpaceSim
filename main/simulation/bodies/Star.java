@@ -19,7 +19,7 @@ public class Star extends CelestialBody {
         super(name, mass, radius, position, velocity);
 
         luminosity = setLuminosity() * Constants.L_SOL;
-        setTemp();
+        setTemp(this);
     }
 
     private double setLuminosity() {
@@ -37,7 +37,8 @@ public class Star extends CelestialBody {
         return luminosity;
     }
 
-    public void setTemp() {
+    @Override
+    public void setTemp(Star star) {
         surfaceTemp =  Math.sqrt(Math.sqrt(luminosity/(radius * radius)));
     }
 }

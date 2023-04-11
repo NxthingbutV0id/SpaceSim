@@ -10,6 +10,7 @@
  */
 package main.files;
 
+import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import main.customUtils.Vec2;
 import main.simulation.bodies.CelestialBody;
@@ -20,6 +21,9 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.LinkedList;
@@ -29,6 +33,7 @@ public class JsonReader {
     private JSONObject rawData;
     private JSONObject settings;
     private LinkedList<CelestialBody> bodies = new LinkedList<>();
+    private Logger logger = LoggerFactory.getLogger(JsonReader.class);
 
     public LinkedList<CelestialBody> loadFile(String path) {
         try {
@@ -74,7 +79,7 @@ public class JsonReader {
 
     public void createStar(JSONObject body, String name, double mass, double radius, Vec2 position, Vec2 velocity) {
         Star temp = new Star(name, mass, radius, position, velocity);
-        temp.setPlanetColor((Paint) body.get("color"));
+        temp.setPlanetColor(Color.valueOf((String) body.get("color")));
         if (body.get("parent") != null) {
             decoder.setRelative((String) body.get("parent"),bodies, temp);
         }
@@ -87,7 +92,12 @@ public class JsonReader {
         temp.setPlanetColor(decoder.getColor(body.get("color").toString()));
         temp.setAlbedo((double) body.get("albedo"));
         temp.setHasAtmosphere((boolean) body.get("atmosphere present?"));
-        temp.setGreenhouseFactor((double) body.get("greenhouse effect"));
+        if (body.get("temperature") instanceof Number) {
+            temp.setInitTemp((double) body.get("temperature"));
+        }
+        if (body.get("greenhouse effect") instanceof Number) {
+            temp.setGreenhouseFactor(((Number) body.get("greenhouse effect")).doubleValue());
+        }
         if (body.get("parent") != null) {
             decoder.setRelative((String) body.get("parent"),bodies, temp);
         }
@@ -108,12 +118,15 @@ public class JsonReader {
 
     public void setupRing(JSONObject body, GasGiant gg) {
         JSONObject ring = (JSONObject) body.get("ring system");
-        double ir = (double) ring.get("inner radius");
-        double or = (double) ring.get("outer radius");
-        Paint col = decoder.getColor(ring.get("color").toString());
-        double op = (double) ring.get("opacity");
-
-        gg.setRings(ir, or, col, op);
+        if (!ring.isEmpty()) {
+            double ir = (double) ring.get("inner radius");
+            double or = (double) ring.get("outer radius");
+            Paint col = decoder.getColor(ring.get("color").toString());
+            double op = Double.parseDouble((String) ring.get("opacity"));
+            gg.setRings(ir, or, col, op);
+        } else {
+            gg.setRings(0, 0, Color.BLACK, 0);
+        }
     }
 
     public Vec2 arrayToVec(JSONArray arr) {

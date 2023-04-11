@@ -1,121 +1,136 @@
-[
-  {
-    "type": "Star",
-    "name": "Sol",
-    "mass": "1 Ms",
-    "radius": "1 Rs",
-    "temperature": 5776,
-    "color": "#fcf44c",
-    "position": [0, 0],
-    "velocity": [0, 0],
-    "parent": null
+{
+  "settings": {
+    "time scale": 86400,
+    "zoom": 2e-9
   },
-  {
-    "type": "Terrestrial",
-    "name": "Mercury",
-    "mass": "0.055 Me",
-    "radius": "0.38 Re",
-    "color": "#a6a6a6",
-    "albedo": 0.106,
-    "atmosphere present?": false,
-    "greenhouse effect": 1,
-    "position": ["0.30749951 Au", 0],
-    "velocity": [0, 58956],
-    "parent": "Sol"
-  },
-  {
-    "type": "Terrestrial",
-    "name": "Venus",
-    "mass": "0.815 Me",
-    "radius": "0.949 Re",
-    "color": "#fff8bd",
-    "albedo": 0.75,
-    "atmosphere present?": true,
-    "greenhouse effect": 3.166,
-    "position": ["0.71843 Au", 0],
-    "velocity": [0, 35219],
-    "parent": "Sol"
-  },
-  {
-    "type": "Terrestrial",
-    "name": "Earth",
-    "mass": "1 Me",
-    "radius": "1 Re",
-    "color": "#6184c2",
-    "albedo": 0.30,
-    "atmosphere present?": true,
-    "greenhouse effect": 1.133,
-    "position": ["1 Au", 0],
-    "velocity": [0, 30000],
-    "parent": "Sol"
-  },
-  {
-    "type": "Terrestrial",
-    "name": "Moon",
-    "mass": "1 Mm",
-    "radius": "1 Rm",
-    "color": "#949494",
-    "albedo": 0.12,
-    "atmosphere present?": false,
-    "greenhouse effect": 1,
-    "position": [4.057e8, 0],
-    "velocity": [0, 1020],
-    "parent": "Earth"
-  },
-  {
-    "type": "Terrestrial",
-    "name": "Mars",
-    "mass": "0.1074 Me",
-    "radius": "0.532 Re",
-    "color": "#c67b5c",
-    "albedo": 0.25,
-    "atmosphere present?": true,
-    "greenhouse effect": 0.938053097345,
-    "position": ["1.3813335 Au", 0],
-    "velocity": [0, 26499],
-    "parent": "Sol"
-  },
-  {
-    "type": "Terrestrial",
-    "name": "Phobos",
-    "mass": 1.0659e16,
-    "radius": 11100,
-    "color": "#9c6c4e",
-    "albedo": 0.071,
-    "atmosphere present?": false,
-    "greenhouse effect": 1,
-    "position": [9378000, 0],
-    "velocity": [0, 2140],
-    "parent": "Mars"
-  },
-  {
-    "type": "Terrestrial",
-    "name": "Deimos",
-    "mass": 1.4762e15,
-    "radius": 6200,
-    "color": "#bf8f71",
-    "albedo": 0.068,
-    "atmosphere present?": false,
-    "greenhouse effect": 1,
-    "position": [23460000, 0],
-    "velocity": [0, 1360],
-    "parent": "Mars"
-  },
-  {
-    "type": "Gas Giant",
-    "name": "Jupiter",
-    "mass": "1 Mj",
-    "radius": "1 Rj",
-    "color": "#c67b5c",
-    "albedo": 0.52,
-    "ring system": {
-      "inner radius": 1.4,
-      "outer radius": 1.72,
-      "color": "#a5a5a5",
-      "opacity": "0.01"
+  "system": [
+    {
+      "type": "Star",
+      "name": "Sol",
+      "mass": "1 Ms",
+      "radius": "1 Rs",
+      "temperature": 5776,
+      "color": "#fcf44c",
+      "position": [0, 0],
+      "velocity": [0, 0],
+      "parent": null
     },
-    "position": ["5.20336301 Au", 0],
-    "velocity": [0, 13000],
-    "parent": "Sol"
-  }
-]
+    {
+      "type": "Terrestrial",
+      "name": "Mercury",
+      "mass": "0.055 Me",
+      "radius": "0.38 Re",
+      "color": "#a6a6a6",
+      "albedo": 0.106,
+      "temperature": 273.15,
+      "atmosphere present?": false,
+      "greenhouse effect": 1,
+      "position": ["0.30749951 Au", 0],
+      "velocity": [0, 58956],
+      "parent": "Sol"
+    },
+    {
+      "type": "Terrestrial",
+      "name": "Venus",
+      "mass": "0.815 Me",
+      "radius": "0.949 Re",
+      "color": "#fff8bd",
+      "albedo": 0.75,
+      "temperature": 273.15,
+      "atmosphere present?": true,
+      "greenhouse effect": 3.166,
+      "position": ["0.71843 Au", 0],
+      "velocity": [0, 35219],
+      "parent": "Sol"
+    },
+    {
+      "type": "Terrestrial",
+      "name": "Earth",
+      "mass": "1 Me",
+      "radius": "1 Re",
+      "color": "#6184c2",
+      "albedo": 0.30,
+      "temperature": 273.15,
+      "atmosphere present?": true,
+      "greenhouse effect": 1.133,
+      "position": ["1 Au", 0],
+      "velocity": [0, 30000
+      ],
+      "parent": "Sol"
+    },
+    {
+      "type": "Terrestrial",
+      "name": "Moon",
+      "mass": "1 Mm",
+      "radius": "1 Rm",
+      "color": "#949494",
+      "albedo": 0.12,
+      "temperature": 273.15,
+      "atmosphere present?": false,
+      "greenhouse effect": 1,
+      "position": [4.057e8, 0],
+      "velocity": [0, 1020],
+      "parent": "Earth"
+    },
+    {
+      "type": "Terrestrial",
+      "name": "Mars",
+      "mass": "0.1074 Me",
+      "radius": "0.532 Re",
+      "color": "#c67b5c",
+      "albedo": 0.25,
+      "temperature": 273.15,
+      "atmosphere present?": true,
+      "greenhouse effect": 0.938053097345,
+      "position": ["1.3813335 Au", 0],
+      "velocity": [0, 26499],
+      "parent": "Sol"
+    },
+    {
+      "type": "Terrestrial",
+      "name": "Phobos",
+      "mass": 1.0659e16,
+      "radius": 11100,
+      "color": "#9c6c4e",
+      "albedo": 0.071,
+      "temperature": 273.15,
+      "atmosphere present?": false,
+      "greenhouse effect": 1,
+      "position": [9378000, 0],
+      "velocity": [0, 2140],
+      "parent": "Mars"
+    },
+    {
+      "type": "Terrestrial",
+      "name": "Deimos",
+      "mass": 1.4762e15,
+      "radius": 6200,
+      "color": "#bf8f71",
+      "albedo": 0.068,
+      "temperature": 273.15,
+      "atmosphere present?": false,
+      "greenhouse effect": 1,
+      "position": [23460000, 0],
+      "velocity": [0, 1360],
+      "parent": "Mars"
+    },
+    {
+      "type": "Gas Giant",
+      "name": "Jupiter",
+      "mass": "1 Mj",
+      "radius": "1 Rj",
+      "color": "#c67b5c",
+      "albedo": 0.52,
+      "temperature": 273.15,
+      "ring system": {
+        "inner radius": 1.4,
+        "outer radius": 1.72,
+        "color": "#a5a5a5",
+        "opacity": "0.01"
+      },
+      "position": ["5.20336301 Au", 0],
+      "velocity": [0, 13000],
+      "parent": "Sol"
+    }
+  ]
+}

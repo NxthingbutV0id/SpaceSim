@@ -18,7 +18,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.util.LinkedList;
 
-public class CelestialBody {
+public abstract class CelestialBody {
     protected String name;
     protected double mass;
     protected double radius;
@@ -49,9 +49,9 @@ public class CelestialBody {
     public void setName(String name) {this.name = name;}
 
     public void addToPath() {
-        Vec2 currentPos = position.copy();
+        Vec2 currentPos = new Vec2(position.getX(), position.getY());
         path.add(currentPos);
-        if (path.size() > 10000) {
+        if (path.size() > 1000) {
             path.remove(0);
         }
     }
@@ -99,40 +99,49 @@ public class CelestialBody {
         g.fillText(name, ((x - r) + screenWidth/2) - relX, ((y - r) + screenHeight/2) - relY);
     }
 
-    public void drawBodyPath(GraphicsContext gc, double scale, double screenWidth, double screenHeight, Vec2 relative) {
-        double xPrev, yPrev, xCurr, yCurr, relX, relY, offsetX, offsetY;
-        boolean isOffScreen, isOffScreenX, isOffScreenY, bothSamePoint;
-        relX = relative.getX();
-        relY = relative.getY();
+    public void drawBodyPath(
+            GraphicsContext gc, double scale, double screenWidth, double screenHeight, Vec2 relative, Vec2 target) {
+        double offsetX = screenWidth / 2;
+        double offsetY = screenHeight / 2;
 
         gc.setStroke(planetColor);
-        gc.setLineWidth(4);
+        double thickness = radius / 2;
 
-        offsetX = screenWidth/2;
-        offsetY = screenHeight/2;
-
-
-
-        for (int i = 1; i < path.size(); ++i) {
+        for (int i = path.size() - 1; i > 1; --i) {
+            gc.setLineWidth(thickness);
             Vec2 pos1 = path.get(i - 1);
             Vec2 pos2 = path.get(i);
-            bothSamePoint = pos1.getX() == pos2.getX() && pos1.getY() == pos2.getY();
-            if (!bothSamePoint) {
-                xPrev = ((pos1.getX() + offsetX / scale) - relX) * scale;
-                yPrev = ((pos1.getY() + offsetY / scale) - relY) * scale;
-                xCurr = ((pos2.getX() + offsetX / scale) - relX) * scale;
-                yCurr = ((pos2.getY() + offsetY / scale) - relY) * scale;
 
-                isOffScreenX = xPrev > screenWidth && xPrev < 0;
-                isOffScreenY = yPrev > screenHeight && yPrev < 0;
-
-                isOffScreen = isOffScreenX && isOffScreenY;
-
-                if (!isOffScreen) {
-                    gc.strokeLine(xPrev, yPrev, xCurr, yCurr);
-                }
+            if (shouldSkipDrawing(pos1, pos2, screenWidth, screenHeight)) {
+                continue;
             }
+
+            double[] points = computeLinePoints(pos1, pos2, offsetX, offsetY, scale, relative);
+            gc.strokeLine(points[0], points[1], points[2], points[3]);
+            thickness *= 1 - (1.0 / 250);
         }
+    }
+
+    private boolean shouldSkipDrawing(Vec2 pos1, Vec2 pos2, double screenWidth, double screenHeight) {
+        boolean bothSamePoint = pos1.getX() == pos2.getX() && pos1.getY() == pos2.getY();
+        boolean isOffScreenX = pos1.getX() > screenWidth && pos1.getX() < 0;
+        boolean isOffScreenY = pos1.getY() > screenHeight && pos1.getY() < 0;
+        boolean isOffScreen = isOffScreenX && isOffScreenY;
+
+        return bothSamePoint || isOffScreen;
+    }
+
+    private double[] computeLinePoints(
+            Vec2 pos1, Vec2 pos2, double offsetX, double offsetY, double scale, Vec2 relative) {
+        double relX = relative.getX();
+        double relY = relative.getY();
+
+        double xPrev = ((pos1.getX() + offsetX / scale) - relX) * scale;
+        double yPrev = ((pos1.getY() + offsetY / scale) - relY) * scale;
+        double xCurr = ((pos2.getX() + offsetX / scale) - relX) * scale;
+        double yCurr = ((pos2.getY() + offsetY / scale) - relY) * scale;
+
+        return new double[]{xPrev, yPrev, xCurr, yCurr};
     }
 
     public void printStats() {
@@ -140,4 +149,6 @@ public class CelestialBody {
                 name, mass, radius, position, velocity
         );
     }
+
+    public abstract void setTemp(Star star);
 }
