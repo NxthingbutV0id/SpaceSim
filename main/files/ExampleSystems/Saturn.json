@@ -1,0 +1,124 @@
+{
+  "settings": {
+    "time scale": 43200,
+    "zoom": 8e-7
+  },
+  "system": [
+    {
+      "type": "Gas Giant",
+      "name": "Saturn",
+      "mass": "0.29941 Mj",
+      "radius": "0.834 Rj",
+      "color": "#f5cd89",
+      "albedo": 0.47,
+      "temperature": 273.15,
+      "ring system": {
+        "inner radius": 1.239,
+        "outer radius": 2.320,
+        "color": "#ffe1ab",
+        "opacity": "1"
+      },
+      "position": [0, 0],
+      "velocity": [0, 0],
+      "parent": null
+    },
+    {
+      "type": "Terrestrial",
+      "name": "Mimas",
+      "mass": 3.791e19,
+      "radius": 198200,
+      "color": "#ffffff",
+      "albedo": 0.6,
+      "temperature": 273.15,
+      "atmosphere present?": false,
+      "greenhouse effect": 1,
+      "position": [1.8554e8, 0],
+      "velocity": [0, 14300],
+      "parent": "Saturn"
+    },
+    {
+      "type": "Terrestrial",
+      "name": "Enceladus",
+      "mass": 1.08e20,
+      "radius": 252100,
+      "color": "#ffffff",
+      "albedo": 1,
+      "temperature": 273.15,
+      "atmosphere present?": false,
+      "greenhouse effect": 1,
+      "position": [2.3804e8, 0],
+      "velocity": [0, 12600],
+      "parent": "Saturn"
+    },
+    {
+      "type": "Terrestrial",
+      "name": "Tethys",
+      "mass": 6.175e20,
+      "radius": 531000,
+      "color": "#ffffff",
+      "albedo": 0.8,
+      "temperature": 273.15,
+      "atmosphere present?": false,
+      "greenhouse effect": 1,
+      "position": [2.947e8, 0],
+      "velocity": [0, 11300],
+      "parent": "Saturn"
+    },
+    {
+      "type": "Terrestrial",
+      "name": "Dione",
+      "mass": 1.0955e21,
+      "radius": 561400,
+      "color": "#ffffff",
+      "albedo": 0.6,
+      "temperature": 273.15,
+      "atmosphere present?": false,
+      "greenhouse effect": 1,
+      "position": [3.774e8, 0],
+      "velocity": [0, 10000],
+      "parent": "Saturn"
+    },
+    {
+      "type": "Terrestrial",
+      "name": "Rhea",
+      "mass": 2.3084e21,
+      "radius": 763500,
+      "color": "#ffffff",
+      "albedo": 0.6,
+      "temperature": 273.15,
+      "atmosphere present?": false,
+      "greenhouse effect": 1,
+      "position": [5.271e8, 0],
+      "velocity": [0, 8480],
+      "parent": "Saturn"
+    },
+    {
+      "type": "Terrestrial",
+      "name": "Titan",
+      "mass": "1.8312 Mm",
+      "radius": "1.4821 Rm",
+      "color": "#a66900",
+      "albedo": 0.2,
+      "temperature": 273.15,
+      "atmosphere present?": true,
+      "greenhouse effect": 1.07903981264637,
+      "position": [1.2219e9, 0],
+      "velocity": [0, 5570],
+      "parent": "Saturn"
+    },
+    {
+      "type": "Terrestrial",
+      "name": "Iapetus",
+      "mass": 1.8055e21,
+      "radius": 734500,
+      "color": "#ffffff",
+      "albedo": 0.6,
+      "temperature": 273.15,
+      "atmosphere present?": false,
+      "greenhouse effect": 1,
+      "position": [3.56084e9, 0],
+      "velocity": [0, 3260],
+      "parent": "Saturn"
+    }
+  ]
+}

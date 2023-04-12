@@ -90,7 +90,9 @@ public class JsonReader {
                                   double radius, Vec2 position, Vec2 velocity) {
         Terrestrial temp = new Terrestrial(name, mass, radius, position, velocity);
         temp.setPlanetColor(decoder.getColor(body.get("color").toString()));
-        temp.setAlbedo((double) body.get("albedo"));
+        if (body.get("albedo") instanceof Number) {
+            temp.setAlbedo(((Number) body.get("albedo")).doubleValue());
+        }
         temp.setHasAtmosphere((boolean) body.get("atmosphere present?"));
         if (body.get("temperature") instanceof Number) {
             temp.setInitTemp((double) body.get("temperature"));

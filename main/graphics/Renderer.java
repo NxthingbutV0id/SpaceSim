@@ -16,6 +16,8 @@ import javafx.scene.paint.Color;
 import main.customUtils.Vec2;
 import main.simulation.bodies.CelestialBody;
 
+import java.nio.file.Path;
+
 public class Renderer {
     private Canvas canvas;
     private Animator animator;
@@ -50,6 +52,9 @@ public class Renderer {
         double initTextPos = 100.0;
         CelestialBody target = animator.getTarget();
         gc.setFill(Color.WHITE);
+        Path pathFromString = Path.of(animator.getPath());
+        String file = pathFromString.getFileName().toString();
+        gc.fillText("Scenario: " + file, 50, 50);
         gc.fillText("Zoom level: " + scale, 50.0, initTextPos); initTextPos += 20;
         gc.fillText("Time scale: " + 1/timeScale + "x real time", 50.0, initTextPos); initTextPos += 20;
         if (animator.isLockOn()) {

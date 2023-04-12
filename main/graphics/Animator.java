@@ -172,6 +172,10 @@ public class Animator extends AnimationTimer {
         return stage;
     }
 
+    public String getPath() {
+        return path;
+    }
+
     public boolean escapePressed() {
         return inputHandler.escapePressed();
     }

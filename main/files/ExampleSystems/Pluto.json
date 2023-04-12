@@ -1,0 +1,92 @@
+{
+  "settings": {
+    "time scale": 1,
+    "zoom": 8e-4
+  },
+  "system": [
+    {
+      "type": "Terrestrial",
+      "name": "Pluto",
+      "mass": 1.309e22,
+      "radius": 1189900,
+      "color": "#ffffff",
+      "albedo": 0.3,
+      "temperature": 273.15,
+      "atmosphere present?": false,
+      "greenhouse effect": 1,
+      "position": [0, 0],
+      "velocity": [0, 0],
+      "parent": null
+    },
+    {
+      "type": "Terrestrial",
+      "name": "Charon",
+      "mass": 1.62e21,
+      "radius": 606000,
+      "color": "#ffffff",
+      "albedo": 0.372,
+      "temperature": 273.15,
+      "atmosphere present?": false,
+      "greenhouse effect": 1,
+      "position": [19599000, 0],
+      "velocity": [0, 211],
+      "parent": "Pluto"
+    },
+    {
+      "type": "Terrestrial",
+      "name": "Styx",
+      "mass": 7.5e15,
+      "radius": 8400,
+      "color": "#ffffff",
+      "albedo": 0.372,
+      "temperature": 273.15,
+      "atmosphere present?": false,
+      "greenhouse effect": 1,
+      "position": [4.667e7, 0],
+      "velocity": [0, 137],
+      "parent": "Pluto"
+    },
+    {
+      "type": "Terrestrial",
+      "name": "Nix",
+      "mass": 4.7e16,
+      "radius": 19500,
+      "color": "#ffffff",
+      "albedo": 0.372,
+      "temperature": 273.15,
+      "atmosphere present?": false,
+      "greenhouse effect": 1,
+      "position": [4.8375e7, 0],
+      "velocity": [0, 134],
+      "parent": "Pluto"
+    },
+    {
+      "type": "Terrestrial",
+      "name": "Kerberos",
+      "mass": 2e16,
+      "radius": 13500,
+      "color": "#ffffff",
+      "albedo": 0.372,
+      "temperature": 273.15,
+      "atmosphere present?": false,
+      "greenhouse effect": 1,
+      "position": [5.9e7, 0],
+      "velocity": [0, 122],
+      "parent": "Pluto"
+    },
+    {
+      "type": "Terrestrial",
+      "name": "Hydra",
+      "mass": 8e16,
+      "radius": 23800,
+      "color": "#ffffff",
+      "albedo": 0.372,
+      "temperature": 273.15,
+      "atmosphere present?": false,
+      "greenhouse effect": 1,
+      "position": [6.478e7, 0],
+      "velocity": [0, 116],
+      "parent": "Pluto"
+    }
+  ]
+}

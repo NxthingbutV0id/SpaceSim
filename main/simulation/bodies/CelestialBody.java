@@ -26,6 +26,7 @@ public abstract class CelestialBody {
     protected Vec2 velocity;
     protected Paint planetColor;
     protected double surfaceTemp;
+    protected double parentMass;
     private LinkedList<Vec2> path = new LinkedList<>();
     private Logger logger = LoggerFactory.getLogger(CelestialBody.class);
 
@@ -105,7 +106,7 @@ public abstract class CelestialBody {
         double offsetY = screenHeight / 2;
 
         gc.setStroke(planetColor);
-        double thickness = radius / 2;
+        double thickness = 4;
 
         for (int i = path.size() - 1; i > 1; --i) {
             gc.setLineWidth(thickness);
@@ -118,7 +119,7 @@ public abstract class CelestialBody {
 
             double[] points = computeLinePoints(pos1, pos2, offsetX, offsetY, scale, relative);
             gc.strokeLine(points[0], points[1], points[2], points[3]);
-            thickness *= 1 - (1.0 / 250);
+            thickness *= 0.99;
         }
     }
 
