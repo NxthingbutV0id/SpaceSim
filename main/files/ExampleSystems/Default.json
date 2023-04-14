@@ -6,7 +6,7 @@
   "system": [
     {
       "type": "Terrestrial",
-      "name": "Alpha",
+      "name": "A",
       "mass": 5e17,
       "radius": 25.0,
       "color": "#ff0000",
@@ -19,7 +19,7 @@
     },
     {
       "type": "Terrestrial",
-      "name": "Beta",
+      "name": "B",
       "mass": 5e17,
       "radius": 25.0,
       "color": "#00ff00",
@@ -32,7 +32,7 @@
     },
     {
       "type": "Terrestrial",
-      "name": "Gamma",
+      "name": "C",
       "mass": 5e17,
       "radius": 25.0,
       "color": "#0000ff",

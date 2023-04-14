@@ -1,0 +1,80 @@
+//DO NOT RUN
+
+{
+  "settings": {
+    //How fast your simulation starts
+    "time scale": 43200,
+    //How zoomed in it starts at (1 -> 1 meter per pixel)
+    "zoom": 8e-7
+  },
+  "system": [
+    {
+      //Types: String -> The following is a star and it MUST have the following fields
+      "type": "Star",
+      //Name: String -> name of the object
+      "name": "Sol",
+      //Mass: Double/String -> mass of the object
+      //if Double -> units are in kg
+      //if String -> State units (Allowed units below)
+      //(Ms -> Solar mass, Me -> Earth mass, Mm -> Moon mass, Mj -> Jupiter mass)
+      "mass": "1 Ms",
+      //Radius: Double/String -> radius of the object
+      //if Double -> units are in meters
+      //if String -> State units (Allowed units below)
+      //(Rs -> Solar radii, Re -> Earth radii, Rm -> Moon radii, Rj -> Jupiter radii, Km -> kilometers)
+      "radius": "1 Rs",
+      //Temperature(Star): Double -> Teperature of the star in kelvin
+      "temperature": 5776.0,
+      //Color: String -> HexColor of the object (Must have the format "#XXXXXX")
+      "color": "#fcf44c",
+      //Position: [Double/String, Double/String] -> x and y position of the object NOTE: y axis is flipped
+      //if Double -> units are in meters
+      //if String -> State units (Allowed units below)
+      //(Km -> Kilometers, Au -> Astronomical Units)
+      "position": [0, 0],
+      //Velocity: [Double, Double] -> velocity vector of the body
+      "velocity": [0, 0],
+      //Parent: String/Null
+      //if String (name of parent) -> position and velocity are set relative to the parent object
+      //if Null -> position and velocity is absolute
+      //NOTE: Parent MUST be defined before Children
+      "parent": null
+    },
+    {
+      //Type: String -> The following is a gas giant and it MUST have the following fields
+      "type": "Gas Giant",
+      "name": "Saturn",
+      "mass": "0.29941 Mj",
+      "radius": "0.834 Rj",
+      "color": "#f5cd89",
+      //Albedo: Double -> how reflective a body is in range 0 -> 1
+      "albedo": 0.47,
+      //Ring system: Object/null -> the ring of the planet, null if no ring
+      "ring system": {
+        "inner radius": 1.239, //(Double) inner ring radius as a multiple of the planet radius
+        "outer radius": 2.320, //(Double) outer ring radius as a multiple of the planet radius
+        "color": "#ffe1ab", //(String) hex color of the rings (format: "#XXXXXX")
+        "opacity": "1" //how visible though the rings are
+      },
+      "position": [0, 0],
+      "velocity": [0, 0],
+      "parent": null
+    },
+    {
+      //Type: String -> The following is a terrestrial and it MUST have the following fields
+      "type": "Terrestrial",
+      "name": "Mimas",
+      "mass": 3.791e19,
+      "radius": 198200,
+      "color": "#ffffff",
+      "albedo": 0.6,
+      //Atmosphere: (Boolean) -> Does it have an atmosphere?
+      "atmosphere present?": false,
+      //Greenhouse: (Double) -> The greenhouse effect of the atmosphere, if no atmosphere, the value will be ignored
+      "greenhouse effect": 1,
+      "position": [1.8554e8, 0],
+      "velocity": [0, 14300],
+      "parent": "Saturn"
+    }
+  ]
+}

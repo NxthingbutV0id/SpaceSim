@@ -94,9 +94,6 @@ public class JsonReader {
             temp.setAlbedo(((Number) body.get("albedo")).doubleValue());
         }
         temp.setHasAtmosphere((boolean) body.get("atmosphere present?"));
-        if (body.get("temperature") instanceof Number) {
-            temp.setInitTemp((double) body.get("temperature"));
-        }
         if (body.get("greenhouse effect") instanceof Number) {
             temp.setGreenhouseFactor(((Number) body.get("greenhouse effect")).doubleValue());
         }

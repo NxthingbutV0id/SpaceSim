@@ -46,7 +46,7 @@ public class Animator extends AnimationTimer {
         this.scale = scale;
         this.timeScale = timeScale;
         this.subDivisions = subDivisions;
-        path = "main/files/ExampleSystems/Chaos.json";
+        path = "main/files/ExampleSystems/Default.json";
         paused = true;
         camera = new Vec2(0, 0);
         target.setPosition(camera);
