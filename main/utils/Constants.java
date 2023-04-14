@@ -6,7 +6,7 @@
  *
  * Attributes: *** See code below ***
  */
-package main.customUtils;
+package main.utils;
 
 public class Constants {
     public static final double GRAVITATIONAL_CONSTANT = 6.67428e-11;

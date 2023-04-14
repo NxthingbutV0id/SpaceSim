@@ -16,7 +16,7 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-import main.customUtils.Vec2;
+import main.utils.Vec2;
 import main.simulation.bodies.CelestialBody;
 import main.simulation.bodies.Terrestrial;
 import org.slf4j.Logger;
@@ -69,7 +69,6 @@ public class Animator extends AnimationTimer {
 
     private void update(double deltaT) {
         inputHandler.handleInput(deltaT);
-
         if (timer >= 1.0/60.0) {
             for (CelestialBody body : simulationHandler.getBodies()) {
                 body.addToPath();

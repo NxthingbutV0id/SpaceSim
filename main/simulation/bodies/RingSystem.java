@@ -3,7 +3,7 @@ package main.simulation.bodies;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
-import main.customUtils.Vec2;
+import main.utils.Vec2;
 
 public class RingSystem{
     private double innerRadius, outerRadius;
@@ -29,21 +29,21 @@ public class RingSystem{
         relX = relative.getX() * scale;
         relY = relative.getY() * scale;
 
-        g.setFill(Color.BLACK);
+        g.setFill(color);
+        g.setGlobalAlpha(opacity);
         g.fillOval(
                 ((x - or) + screenWidth/2) - relX,
                 ((y - or) + screenHeight/2) - relY,
                 2*or,
                 2*or
         );
-        g.setFill(color);
-        g.setGlobalAlpha(opacity);
+        g.setGlobalAlpha(1);
+        g.setFill(Color.BLACK);
         g.fillOval(
                 ((x - ir) + screenWidth/2) - relX,
                 ((y - ir) + screenHeight/2) - relY,
                 2*ir,
                 2*ir
         );
-        g.setGlobalAlpha(1);
     }
 }

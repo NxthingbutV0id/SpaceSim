@@ -1,7 +1,7 @@
 {
   "settings": {
-    "time scale": 1,
-    "zoom": 8e-4
+    "time scale": 40000,
+    "zoom": 8e-6
   },
   "system": [
     {

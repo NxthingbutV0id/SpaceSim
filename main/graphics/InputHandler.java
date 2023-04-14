@@ -17,7 +17,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
 import javafx.stage.FileChooser;
-import main.customUtils.Vec2;
+import main.utils.Vec2;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -98,10 +98,7 @@ public class InputHandler {
         if (!animator.isLockOn()) {
             moveCamera(deltaT);
         }
-        if (keyPressed.get("pause").get()) {
-            paused = !paused;
-            animator.setPaused(paused);
-        }
+        animator.setPaused(!keyPressed.get("pause").get());
     }
 
     private void keyPressed(KeyEvent event) {

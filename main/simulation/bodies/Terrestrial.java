@@ -10,7 +10,7 @@
  */
 package main.simulation.bodies;
 
-import main.customUtils.*;
+import main.utils.*;
 
 public class Terrestrial extends CelestialBody {
     private double albedo; //value from 0 to 1

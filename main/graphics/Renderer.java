@@ -13,7 +13,7 @@ package main.graphics;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
-import main.customUtils.Vec2;
+import main.utils.Vec2;
 import main.simulation.bodies.CelestialBody;
 
 import java.nio.file.Path;
@@ -44,7 +44,7 @@ public class Renderer {
         gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
         for (CelestialBody body : simulationHandler.getBodies()) {
             body.drawBody(gc, scale, canvas.getWidth(), canvas.getHeight(), camera);
-            body.drawBodyPath(gc, scale, canvas.getWidth(), canvas.getHeight(), camera, animator.getTarget().getPosition());
+            body.drawOrbit(gc, scale, canvas.getWidth(), canvas.getHeight(), camera);
         }
     }
 

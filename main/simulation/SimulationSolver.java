@@ -15,13 +15,11 @@
 package main.simulation;
 
 import java.util.LinkedList;
-import main.customUtils.*;
+import main.utils.*;
 import main.files.JsonReader;
 import main.graphics.Animator;
 import main.simulation.bodies.CelestialBody;
-import main.simulation.bodies.GasGiant;
 import main.simulation.bodies.Star;
-import main.simulation.bodies.Terrestrial;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import static java.lang.Math.sqrt;

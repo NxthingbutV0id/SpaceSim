@@ -13,10 +13,12 @@ package main.simulation.bodies;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.*;
-import main.customUtils.*;
+import javafx.scene.text.Font;
+import main.utils.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.util.LinkedList;
+import static java.lang.Math.*;
 
 public abstract class CelestialBody {
     protected String name;
@@ -26,7 +28,7 @@ public abstract class CelestialBody {
     protected Vec2 velocity;
     protected Paint planetColor;
     protected double surfaceTemp;
-    protected double parentMass;
+    protected CelestialBody parent;
     private LinkedList<Vec2> path = new LinkedList<>();
     private Logger logger = LoggerFactory.getLogger(CelestialBody.class);
 
@@ -47,7 +49,7 @@ public abstract class CelestialBody {
     public double getTemperature() {return surfaceTemp;}
     public void setPlanetColor(Paint planetColor) {this.planetColor = planetColor;}
     public void setPosition(Vec2 position) {this.position = position;}
-    public void setName(String name) {this.name = name;}
+    public void setParentObject(CelestialBody parent) {this.parent = parent;}
 
     public void addToPath() {
         Vec2 currentPos = new Vec2(position.getX(), position.getY());
@@ -58,15 +60,14 @@ public abstract class CelestialBody {
     }
 
     public Vec2 getScreenPosition(double scale, double screenWidth, double screenHeight, Vec2 relative) {
-        double x, y, r, relX, relY;
+        double x, y, relX, relY;
 
         x = position.getX() * scale;
         y = position.getY() * scale;
-        r = radius*scale;
         relX = relative.getX() * scale;
         relY = relative.getY() * scale;
 
-        return new Vec2((((x - r) + screenWidth/2) - relX), (((y - r) + screenHeight/2) - relY));
+        return new Vec2(((x + screenWidth/2) - relX), ((y + screenHeight/2) - relY));
     }
 
     public void drawBody(GraphicsContext g, double scale, double screenWidth, double screenHeight, Vec2 relative) {
@@ -96,12 +97,76 @@ public abstract class CelestialBody {
         relX = relative.getX() * scale;
         relY = relative.getY() * scale;
 
+        g.setFont(new Font("Impact", 20));
+
+        g.setFill(Color.BLACK);
+        g.fillText(name, ((x) + screenWidth/2) - relX - 2, ((y) + screenHeight/2) - relY - 2);
         g.setFill(Color.WHITE);
-        g.fillText(name, ((x - r) + screenWidth/2) - relX, ((y - r) + screenHeight/2) - relY);
+        g.fillText(name, ((x) + screenWidth/2) - relX, ((y) + screenHeight/2) - relY);
     }
 
-    public void drawBodyPath(
-            GraphicsContext gc, double scale, double screenWidth, double screenHeight, Vec2 relative, Vec2 target) {
+    public void drawOrbit(GraphicsContext gc, double scale, double screenWidth, double screenHeight, Vec2 camera) {
+        if (parent != null) {
+            drawBodyConic(gc, scale, screenWidth, screenHeight, camera);
+        } else {
+            drawBodyPath(gc, scale, screenWidth, screenHeight, camera);
+        }
+    }
+
+    private void drawBodyConic(GraphicsContext gc, double scale, double screenWidth, double screenHeight, Vec2 camera) {
+        int res = 1000;
+        double mu = Constants.GRAVITATIONAL_CONSTANT * parent.mass;
+        Vec2 parentScreenPos = parent.getScreenPosition(scale, screenWidth, screenHeight, camera);
+        Vec2 relativePos = position.sub(parent.position);
+        Vec2 relativeVel = velocity.sub(parent.velocity);
+        double r = position.distance(parent.position);
+        double v = relativeVel.getMagnitude();
+        double a = (mu * r)/(2 * mu - r * v * v);
+
+        double vTheta = relativePos.crossProduct(relativeVel)/r;
+        double e = sqrt(1 + ((r * vTheta * vTheta)/mu) * ((r * v * v)/mu - 2));
+
+        double vRadial = relativePos.dotProduct(relativeVel)/r;
+
+        double deltaTheta = sign(vTheta*vRadial) * acos((a * (1 - e * e) - r)/(e * r)) - atan2(relativePos.getY(), relativePos.getX());
+
+        double rMax = parent.radius*1000;
+
+        gc.setStroke(planetColor);
+        gc.setLineWidth(4);
+        gc.beginPath();
+        double thetaMax = acos((a * (1 - e * e) - rMax)/(e * rMax));
+        if (e >= 1) {
+            for (double theta = -thetaMax; theta <= thetaMax; theta += (2 * PI) / res) {
+                drawConic(gc, scale, parentScreenPos, a, e, deltaTheta, theta);
+            }
+        } else {
+            for (double theta = 0; theta <= 2 * PI; theta += (2 * PI) / res) {
+                drawConic(gc, scale, parentScreenPos, a, e, deltaTheta, theta);
+            }
+        }
+        gc.stroke();
+    }
+
+    private void drawConic(GraphicsContext gc, double scale, Vec2 parentScreenPos, double a, double e, double deltaTheta, double theta) {
+        double pathX = r(theta, a, e) * cos(theta + deltaTheta);
+        double pathY = -r(theta, a, e) * sin(theta + deltaTheta);
+        if (theta == 0) {
+            gc.moveTo(pathX * scale + parentScreenPos.getX(), pathY * scale + parentScreenPos.getY());
+        } else {
+            gc.lineTo(pathX * scale + parentScreenPos.getX(), pathY * scale + parentScreenPos.getY());
+        }
+    }
+
+    private double r(double theta, double a, double e) {
+        return (a * (1 - e * e))/(1 + e * cos(theta));
+    }
+
+    private double sign(double x) {
+        return x/abs(x);
+    }
+
+    private void drawBodyPath(GraphicsContext gc, double scale, double screenWidth, double screenHeight, Vec2 relative) {
         double offsetX = screenWidth / 2;
         double offsetY = screenHeight / 2;
 

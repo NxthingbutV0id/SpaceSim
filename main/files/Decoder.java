@@ -13,7 +13,7 @@ package main.files;
 
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
-import main.customUtils.Constants;
+import main.utils.Constants;
 import main.simulation.bodies.CelestialBody;
 import java.util.LinkedList;
 import org.slf4j.Logger;
@@ -89,6 +89,7 @@ public class Decoder {
 
         for (CelestialBody otherBody : bodies) {
             if (otherBody.getName().equals(str)) {
+                body.setParentObject(otherBody);
                 body.getPosition().incrementBy(otherBody.getPosition());
                 body.getVelocity().incrementBy(otherBody.getVelocity());
                 return;

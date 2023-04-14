@@ -10,7 +10,7 @@
  */
 package main.simulation.bodies;
 
-import main.customUtils.*;
+import main.utils.*;
 
 public class Star extends CelestialBody {
     private double luminosity;

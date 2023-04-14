@@ -1,6 +1,6 @@
 {
   "settings": {
-    "time scale": 0.5,
+    "time scale": 1,
     "zoom": 0.5
   },
   "system": [
@@ -14,7 +14,7 @@
       "atmosphere present?": false,
       "greenhouse effect": 1.0,
       "position": [0.0, 0.0],
-      "velocity": [0.0, 0.0],
+      "velocity": [-100.0, 0.0],
       "parent": null
     },
     {
@@ -39,8 +39,8 @@
       "albedo": 1.0,
       "atmosphere present?": false,
       "greenhouse effect": 1.0,
-      "position": [-500.0, 500.0],
-      "velocity": [200.0, 50.0],
+      "position": [-1000, 0],
+      "velocity": [50.0, -200.0],
       "parent": null
     }
   ]

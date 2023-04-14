@@ -12,7 +12,7 @@ package main.files;
 
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
-import main.customUtils.Vec2;
+import main.utils.Vec2;
 import main.simulation.bodies.CelestialBody;
 import main.simulation.bodies.GasGiant;
 import main.simulation.bodies.Star;
@@ -120,7 +120,7 @@ public class JsonReader {
 
     public void setupRing(JSONObject body, GasGiant gg) {
         JSONObject ring = (JSONObject) body.get("ring system");
-        if (!ring.isEmpty()) {
+        if (ring != null) {
             double ir = (double) ring.get("inner radius");
             double or = (double) ring.get("outer radius");
             Paint col = decoder.getColor(ring.get("color").toString());

@@ -11,10 +11,9 @@
 package main.simulation.bodies;
 
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
-import main.customUtils.Constants;
-import main.customUtils.Vec2;
+import main.utils.Constants;
+import main.utils.Vec2;
 
 public class GasGiant extends CelestialBody {
     private double albedo;

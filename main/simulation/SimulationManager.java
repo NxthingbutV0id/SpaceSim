@@ -21,9 +21,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class SimulationManager extends Application {
-    private final String version = "0.8.0";
+    private final String version = "0.9.0";
     private double width = 1280, height = 720, timeScale = 1.0, scale = 1.0;
-    private int subDivisions = 1 << 6; //64
+    private int subDivisions = 1 << 7; //128
     private Animator animator;
     private Stage stage;
     private Logger logger = LoggerFactory.getLogger(SimulationManager.class);

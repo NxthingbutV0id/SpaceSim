@@ -28,7 +28,7 @@
  *          +normalize(): Vec2
  *          +toString(): String
  */
-package main.customUtils;
+package main.utils;
 
 public class Vec2 {
     private double x, y;
@@ -116,9 +116,13 @@ public class Vec2 {
     public double distance(Vec2 vec) {
         return Math.sqrt((Math.abs(vec.x - x) * Math.abs(vec.x - x)) + (Math.abs(vec.y - y) * Math.abs(vec.y - y)));
     }
-
+    //Pro-tip: taking the dot product of yourself is the same as doing (x^2 + y^2)
     public double dotProduct(Vec2 vec) {
         return (x * vec.getX()) + (y * vec.getY());
+    }
+
+    public double crossProduct(Vec2 vec) {
+        return ((x * vec.y) - (y * vec.x));
     }
 
     public double radiansBetween(Vec2 vec) {
@@ -148,6 +152,11 @@ public class Vec2 {
     public void set(Vec2 other) {
         x = other.x;
         y = other.y;
+    }
+
+    public void rotate(double angle) {
+        x *= Math.sin(angle);
+        y *= Math.cos(angle);
     }
 
     @Override
