@@ -21,7 +21,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class SimulationManager extends Application {
-    private final String version = "0.9.0";
+    private final String version = "0.9.2";
     private double width = 1280, height = 720, timeScale = 1.0, scale = 1.0;
     private int subDivisions = 1 << 7; //128
     private Animator animator;

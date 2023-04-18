@@ -9,12 +9,12 @@ public class RingSystem{
     private double innerRadius, outerRadius;
     private Paint color;
     private double opacity;
-    private Vec2 position;
+    private CelestialBody parent;
 
-    public RingSystem(CelestialBody body, double innerRadius, double outerRadius, Paint color, double opacity) {
-        position = body.position;
-        this.innerRadius = innerRadius * body.radius;
-        this.outerRadius = outerRadius * body.radius;
+    public RingSystem(CelestialBody parent, double innerRadius, double outerRadius, Paint color, double opacity) {
+        this.parent = parent;
+        this.innerRadius = innerRadius * parent.radius;
+        this.outerRadius = outerRadius * parent.radius;
         this.color = color;
         this.opacity = opacity;
     }
@@ -22,8 +22,8 @@ public class RingSystem{
     public void drawRing(GraphicsContext g, double scale, double screenWidth, double screenHeight, Vec2 relative) {
         double x, y, ir, or, relX, relY;
 
-        x = position.getX() * scale;
-        y = position.getY() * scale;
+        x = parent.getScreenPosition(scale, screenWidth, screenHeight, relative).getX();
+        y = parent.getScreenPosition(scale, screenWidth, screenHeight, relative).getY();
         ir = innerRadius * scale;
         or = outerRadius * scale;
         relX = relative.getX() * scale;
@@ -32,16 +32,16 @@ public class RingSystem{
         g.setFill(color);
         g.setGlobalAlpha(opacity);
         g.fillOval(
-                ((x - or) + screenWidth/2) - relX,
-                ((y - or) + screenHeight/2) - relY,
+                x - or,
+                y - or,
                 2*or,
                 2*or
         );
         g.setGlobalAlpha(1);
         g.setFill(Color.BLACK);
         g.fillOval(
-                ((x - ir) + screenWidth/2) - relX,
-                ((y - ir) + screenHeight/2) - relY,
+                x - ir,
+                y - ir,
                 2*ir,
                 2*ir
         );

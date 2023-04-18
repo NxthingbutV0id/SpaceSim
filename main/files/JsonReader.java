@@ -140,7 +140,7 @@ public class JsonReader {
         } catch (Exception e) {
             y = decoder.getDistance(arr.get(1).toString());
         }
-        return new Vec2(x, y);
+        return new Vec2(x, -y);
     }
 
     private void getSettings() {settings = (JSONObject) rawData.get("settings");}

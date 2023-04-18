@@ -130,8 +130,12 @@ public abstract class CelestialBody {
 
         double deltaTheta = sign(vTheta*vRadial) * acos((a * (1 - e * e) - r)/(e * r)) - atan2(relativePos.getY(), relativePos.getX());
 
-        double rMax = parent.radius*1000;
-
+        double rMax;
+        if (parent.parent != null) {
+            rMax = a* (parent.mass/parent.parent.mass) * (parent.mass/parent.parent.mass) * sqrt((parent.mass/parent.parent.mass));
+        } else {
+            rMax = 1.36e7*parent.radius;
+        }
         gc.setStroke(planetColor);
         gc.setLineWidth(4);
         gc.beginPath();
