@@ -14,7 +14,7 @@
       "atmosphere present?": false,
       "greenhouse effect": 1.0,
       "position": [0.0, 0.0],
-      "velocity": [-100.0, 0.0],
+      "velocity": [0.0, 0.0],
       "parent": null
     },
     {
@@ -27,7 +27,7 @@
       "atmosphere present?": false,
       "greenhouse effect": 1.0,
       "position": [1000.0, 0.0],
-      "velocity": [-30.0, 150.0],
+      "velocity": [0.0, -90.0],
       "parent": null
     },
     {
@@ -40,7 +40,7 @@
       "atmosphere present?": false,
       "greenhouse effect": 1.0,
       "position": [-1000, 0],
-      "velocity": [50.0, -200.0],
+      "velocity": [0.0, 90.0],
       "parent": null
     }
   ]

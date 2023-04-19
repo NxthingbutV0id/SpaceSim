@@ -17,16 +17,12 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.*;
 import main.graphics.Animator;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class SimulationManager extends Application {
-    private final String version = "0.9.2";
-    private double width = 1280, height = 720, timeScale = 1.0, scale = 1.0;
-    private int subDivisions = 1 << 7; //128
+    private double width = 1280;
+    private double height = 720;
     private Animator animator;
     private Stage stage;
-    private Logger logger = LoggerFactory.getLogger(SimulationManager.class);
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -35,17 +31,29 @@ public class SimulationManager extends Application {
     }
 
     private void initialize() {
+        double timeScale = 1.0;
+        double scale = 1.0;
+        int subDivisions = 1 << 7;
+
         BorderPane root = new BorderPane();
         Scene mainScene = new Scene(root);
         Canvas canvas = new Canvas(width, height);
+
         root.getChildren().add(canvas);
         animator = new Animator(stage, canvas, mainScene, scale, timeScale, subDivisions);
 
+        setStage(mainScene);
+    }
+
+    private void setStage(Scene mainScene) {
+        String version = "0.9.2";
         stage.setTitle("System Simulation V" + version);
+
         stage.setMinHeight(height);
         stage.setMinWidth(width);
         stage.setResizable(false);
         stage.setScene(mainScene);
+
         animator.start();
         stage.show();
     }

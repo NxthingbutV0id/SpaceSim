@@ -39,6 +39,7 @@ public class JsonReader {
         try {
             parseJSON(new FileReader(path));
         } catch (Exception e) {
+            logger.error("Error loading file");
             e.printStackTrace();
         }
         return bodies;
@@ -75,6 +76,8 @@ public class JsonReader {
             case "Gas Giant" -> createGasGiant(body, name, mass, radius, position, velocity);
             default -> throw new InvalidFileFormatException("Error, Type not found");
         }
+
+        logger.info("Body \"{}\" successfully loaded!", name);
     }
 
     public void createStar(JSONObject body, String name, double mass, double radius, Vec2 position, Vec2 velocity) {
