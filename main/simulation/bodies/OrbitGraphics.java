@@ -1,3 +1,13 @@
+/* Class: OrbitGraphics
+ * Author: Christian Torres
+ * Date: 2023/4/19
+ *
+ * Purpose: *TO BE FINALIZED*
+ *
+ * Attributes: *TO BE FINALIZED*
+ *
+ * Methods: *TO BE FINALIZED*
+ */
 package main.simulation.bodies;
 
 import javafx.scene.canvas.GraphicsContext;
