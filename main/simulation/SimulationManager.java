@@ -49,8 +49,8 @@ public class SimulationManager extends Application {
         String version = "0.9.5";
         stage.setTitle("System Simulation V" + version);
 
-        stage.setMinHeight(height);
-        stage.setMinWidth(width);
+        stage.setHeight(height);
+        stage.setWidth(width);
         stage.setResizable(false);
         stage.setScene(mainScene);
 

@@ -165,8 +165,10 @@ public class Animator extends AnimationTimer {
     }
 
     public void restart() {
-        paused = true;
         simulationHandler = new SimulationHandler(this, path);
+        paused = true;
+        lockOn = false;
+        camera.set(0, 0);
     }
 
     public Stage getStage() {
