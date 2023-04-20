@@ -6,27 +6,32 @@ import javafx.scene.text.Font;
 import main.utils.Vec2;
 
 public class BodyGraphics {
-    private double x, y, r, relX, relY;
+    private double x;
+    private double y;
+    private double relX;
+    private double relY;
     private CelestialBody body;
+    private RingSystem ring;
 
-    public BodyGraphics(CelestialBody body) {
-        this.body = body;
-    }
+    public BodyGraphics(CelestialBody body) {this.body = body;}
+    public BodyGraphics(RingSystem ring) {this.ring = ring;}
 
     public void drawBody(GraphicsContext g, double scale, double screenWidth, double screenHeight, Vec2 relative) {
-        x = body.position.getX() * scale;
-        y = body.position.getY() * scale;
-        r = body.radius*scale;
-        relX = relative.getX() * scale;
-        relY = relative.getY() * scale;
+        if (body != null) {
+            x = body.position.getX() * scale;
+            y = body.position.getY() * scale;
+            double r = body.radius * scale;
+            relX = relative.getX() * scale;
+            relY = relative.getY() * scale;
 
-        g.setFill(body.planetColor);
-        g.fillOval(
-                ((x - r) + screenWidth/2) - relX,
-                ((y - r) + screenHeight/2) - relY,
-                2*r,
-                2*r
-        );
+            g.setFill(body.planetColor);
+            g.fillOval(
+                    ((x - r) + screenWidth / 2) - relX,
+                    ((y - r) + screenHeight / 2) - relY,
+                    2 * r,
+                    2 * r
+            );
+        }
     }
 
     public void drawBodyText(GraphicsContext g, double scale, double screenWidth, double screenHeight, Vec2 relative) {
@@ -43,4 +48,29 @@ public class BodyGraphics {
         g.fillText(body.name, ((x) + screenWidth/2) - relX, ((y) + screenHeight/2) - relY);
     }
 
+    public void drawRing(GraphicsContext g, double scale, double screenWidth, double screenHeight, Vec2 relative) {
+        double ir, or;
+
+        x = ring.getParent().getScreenPosition(scale, screenWidth, screenHeight, relative).getX();
+        y = ring.getParent().getScreenPosition(scale, screenWidth, screenHeight, relative).getY();
+        ir = ring.getInnerRadius() * scale;
+        or = ring.getOuterRadius() * scale;
+
+        g.setFill(ring.getColor());
+        g.setGlobalAlpha(ring.getOpacity());
+        g.fillOval(
+                x - or,
+                y - or,
+                2*or,
+                2*or
+        );
+        g.setGlobalAlpha(1);
+        g.setFill(Color.BLACK);
+        g.fillOval(
+                x - ir,
+                y - ir,
+                2*ir,
+                2*ir
+        );
+    }
 }

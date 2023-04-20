@@ -28,8 +28,6 @@ public abstract class CelestialBody {
     protected Paint planetColor;
     protected double surfaceTemp;
     protected CelestialBody parent;
-    private LinkedList<Vec2> path = new LinkedList<>();
-    private Logger logger = LoggerFactory.getLogger(CelestialBody.class);
     private BodyGraphics bodyGraphics;
     private OrbitGraphics orbitGraphics;
 
@@ -42,16 +40,6 @@ public abstract class CelestialBody {
         bodyGraphics = new BodyGraphics(this);
         orbitGraphics = new OrbitGraphics(this);
     }
-
-    public double getMass() {return mass;}
-    public Vec2 getPosition() {return position;}
-    public Vec2 getVelocity() {return velocity;}
-    public String getName() {return name;}
-    public double getRadius() {return radius;}
-    public double getTemperature() {return surfaceTemp;}
-    public void setPlanetColor(Paint planetColor) {this.planetColor = planetColor;}
-    public void setPosition(Vec2 position) {this.position = position;}
-    public void setParentObject(CelestialBody parent) {this.parent = parent;}
 
     public void addToPath() {
         orbitGraphics.addToPath();
@@ -68,23 +56,22 @@ public abstract class CelestialBody {
         return new Vec2(((x + screenWidth/2) - relX), ((y + screenHeight/2) - relY));
     }
 
-    public void drawBody(GraphicsContext g, double scale, double screenWidth, double screenHeight, Vec2 relative) {
-        bodyGraphics.drawBody(g, scale, screenWidth, screenHeight, relative);
+    public BodyGraphics getBodyGraphics() {
+        return bodyGraphics;
     }
 
-    public void drawBodyText(GraphicsContext g, double scale, double screenWidth, double screenHeight, Vec2 relative) {
-        bodyGraphics.drawBodyText(g, scale, screenWidth, screenHeight, relative);
+    public OrbitGraphics getOrbitGraphics() {
+        return orbitGraphics;
     }
 
-    public void drawOrbit(GraphicsContext gc, double scale, double screenWidth, double screenHeight, Vec2 camera) {
-        orbitGraphics.drawOrbit(gc, scale, screenWidth, screenHeight, camera);
-    }
-
-    public void printStats() {
-        logger.debug("Body stats debug\nName: {}\nMass: {}\nRadius: {}\nPosition: {}\nVelocity: {}\n",
-                name, mass, radius, position, velocity
-        );
-    }
-
+    public double getMass() {return mass;}
+    public Vec2 getPosition() {return position;}
+    public Vec2 getVelocity() {return velocity;}
+    public String getName() {return name;}
+    public double getRadius() {return radius;}
+    public double getTemperature() {return surfaceTemp;}
+    public void setPlanetColor(Paint planetColor) {this.planetColor = planetColor;}
+    public void setPosition(Vec2 position) {this.position = position;}
+    public void setParentObject(CelestialBody parent) {this.parent = parent;}
     public abstract void setTemp(Star star);
 }

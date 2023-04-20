@@ -10,6 +10,7 @@ public class RingSystem{
     private Paint color;
     private double opacity;
     private CelestialBody parent;
+    private BodyGraphics graphics;
 
     public RingSystem(CelestialBody parent, double innerRadius, double outerRadius, Paint color, double opacity) {
         this.parent = parent;
@@ -17,33 +18,30 @@ public class RingSystem{
         this.outerRadius = outerRadius * parent.radius;
         this.color = color;
         this.opacity = opacity;
+        graphics = new BodyGraphics(this);
     }
 
-    public void drawRing(GraphicsContext g, double scale, double screenWidth, double screenHeight, Vec2 relative) {
-        double x, y, ir, or, relX, relY;
+    public BodyGraphics getGraphics() {
+        return graphics;
+    }
 
-        x = parent.getScreenPosition(scale, screenWidth, screenHeight, relative).getX();
-        y = parent.getScreenPosition(scale, screenWidth, screenHeight, relative).getY();
-        ir = innerRadius * scale;
-        or = outerRadius * scale;
-        relX = relative.getX() * scale;
-        relY = relative.getY() * scale;
+    public CelestialBody getParent() {
+        return parent;
+    }
 
-        g.setFill(color);
-        g.setGlobalAlpha(opacity);
-        g.fillOval(
-                x - or,
-                y - or,
-                2*or,
-                2*or
-        );
-        g.setGlobalAlpha(1);
-        g.setFill(Color.BLACK);
-        g.fillOval(
-                x - ir,
-                y - ir,
-                2*ir,
-                2*ir
-        );
+    public double getInnerRadius() {
+        return innerRadius;
+    }
+
+    public double getOuterRadius() {
+        return outerRadius;
+    }
+
+    public Paint getColor() {
+        return color;
+    }
+
+    public double getOpacity() {
+        return opacity;
     }
 }

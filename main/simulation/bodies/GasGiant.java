@@ -42,26 +42,11 @@ public class GasGiant extends CelestialBody {
         }
     }
 
-    @Override
-    public void drawBody(GraphicsContext g, double scale, double screenWidth, double screenHeight, Vec2 relative) {
-        double x, y, r, relX, relY;
+    public RingSystem getRings() {
+        return rings;
+    }
 
-        x = position.getX() * scale;
-        y = position.getY() * scale;
-        r = radius*scale;
-        relX = relative.getX() * scale;
-        relY = relative.getY() * scale;
-
-        if (rings != null) {
-            rings.drawRing(g, scale, screenWidth, screenHeight, relative);
-        }
-
-        g.setFill(planetColor);
-        g.fillOval(
-                ((x - r) + screenWidth/2) - relX,
-                ((y - r) + screenHeight/2) - relY,
-                2*r,
-                2*r
-        );
+    public boolean hasRings() {
+        return rings != null;
     }
 }

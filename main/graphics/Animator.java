@@ -39,6 +39,7 @@ public class Animator extends AnimationTimer {
     private int subDivisions;
     private String path;
     private Stage stage;
+    private double frameRate;
 
     public Animator(Stage stage, Canvas canvas, Scene scene, double scale, double timeScale, int subDivisions) {
         this.stage = stage;
@@ -60,6 +61,7 @@ public class Animator extends AnimationTimer {
         double deltaT = (currentTime - lastTime) / 1e9;
         lastTime = currentTime;
         timer += deltaT;
+        frameRate = 1/deltaT;
         if (!paused) {
             simulationHandler.update(deltaT/timeScale, subDivisions);
         }
@@ -109,7 +111,7 @@ public class Animator extends AnimationTimer {
         if (lockOn) {
             camera = target.getPosition();
         }
-        renderer.draw(simulationHandler, scale, timeScale, camera);
+        renderer.draw(simulationHandler, scale, timeScale, camera, frameRate);
     }
 
     public double getScale() {

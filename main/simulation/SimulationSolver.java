@@ -29,6 +29,7 @@ public class SimulationSolver {
     private int simulationTime;
     private Animator animator;
     private Logger logger = LoggerFactory.getLogger(SimulationSolver.class);
+    private LinkedList<Star> stars = new LinkedList<>();
 
     public SimulationSolver(Animator animator) {
         simulationTime = 0;
@@ -44,11 +45,15 @@ public class SimulationSolver {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        for (CelestialBody body : bodies) {
+            if (body instanceof Star) {
+                stars.add((Star) body);
+            }
+        }
     }
 
     public void update(double deltaT, int timeStep) {
         simulationTime++;
-        LinkedList<Star> stars = new LinkedList<>();
         for (int i = 0; i < timeStep; i++) {
             for (CelestialBody body : bodies) {
                 Vec2 originalVelocity = body.getVelocity().copy();
@@ -83,12 +88,9 @@ public class SimulationSolver {
 
                 body.getVelocity().incrementBy(deltaV);
                 body.getPosition().incrementBy(deltaX);
-                if (body instanceof Star) {
-                    stars.add((Star) body);
-                } else {
-                    for (Star star : stars) {
-                        body.setTemp(star);
-                    }
+
+                for (Star star : stars) {
+                    body.setTemp(star);
                 }
             }
         }
@@ -115,45 +117,10 @@ public class SimulationSolver {
         return new Vec2(ax, ay);
     }
 
-    private void updatePosition(CelestialBody body, Vec2 velocity, double deltaT) {
-        body.getPosition().incrementBy(velocity.multiply(deltaT));
-    }
-
-    private void updateVelocity(CelestialBody body, Vec2 acceleration, double deltaT) {
-        body.getVelocity().incrementBy(acceleration.multiply(deltaT));
-    }
-
     public int getSimulationTime() {
         return simulationTime;
     }
     public LinkedList<CelestialBody> getBodies() {
         return bodies;
-    }
-
-    public Vec2 getCenterOfMass() {
-        double totalMass = 0;
-        Vec2 centerOfMass, summationVec = new Vec2(0, 0);
-        for (CelestialBody body : bodies) {
-            totalMass += body.getMass();
-        }
-        for (CelestialBody body : bodies) {
-            summationVec.incrementBy(body.getPosition().multiply(body.getMass()));
-        }
-        centerOfMass = summationVec.divide(totalMass);
-        return centerOfMass;
-    }
-
-    public Vec2 getCenterOfAllBodies() {
-        Vec2 summationVec = new Vec2(0, 0);
-        for (CelestialBody body : bodies) {
-            summationVec.incrementBy(body.getPosition());
-        }
-        return summationVec;
-    }
-
-    public void printBodiesStats() {
-        for (CelestialBody body : bodies) {
-            body.printStats();
-        }
     }
 }
