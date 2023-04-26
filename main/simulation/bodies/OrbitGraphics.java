@@ -21,6 +21,8 @@ import static java.lang.Math.*;
 public class OrbitGraphics {
     private CelestialBody body;
     private LinkedList<Vec2> path = new LinkedList<>();
+    private double rMax, a, r, mu, v;
+    private Vec2 relativeVel;
 
     public OrbitGraphics(CelestialBody body) {
         this.body = body;
@@ -37,6 +39,7 @@ public class OrbitGraphics {
 
     public void drawOrbit(GraphicsContext gc, double scale, double screenWidth, double screenHeight, Vec2 camera) {
         if (body.parent != null) {
+            setValues();
             drawBodyConic(gc, scale, screenWidth, screenHeight, camera);
         } else {
             drawBodyPath(gc, scale, screenWidth, screenHeight, camera);
@@ -45,13 +48,8 @@ public class OrbitGraphics {
 
     private void drawBodyConic(GraphicsContext gc, double scale, double screenWidth, double screenHeight, Vec2 camera) {
         int res = 1000;
-        double mu = Constants.GRAVITATIONAL_CONSTANT * body.parent.mass;
         Vec2 parentScreenPos = body.parent.getScreenPosition(scale, screenWidth, screenHeight, camera);
         Vec2 relativePos = body.position.sub(body.parent.position);
-        Vec2 relativeVel = body.velocity.sub(body.parent.velocity);
-        double r = body.position.distance(body.parent.position);
-        double v = relativeVel.getMagnitude();
-        double a = (mu * r)/(2 * mu - r * v * v);
 
         double vTheta = relativePos.crossProduct(relativeVel)/r;
         double e = sqrt(1 + ((r * vTheta * vTheta)/mu) * ((r * v * v)/mu - 2));
@@ -61,12 +59,6 @@ public class OrbitGraphics {
         double deltaTheta = sign(vTheta*vRadial) * acos((a * (1 - e * e) - r)/(e * r)) -
                 atan2(relativePos.getY(), relativePos.getX());
 
-        double rMax;
-        if (body.parent.parent != null) {
-            rMax = a* pow(body.parent.mass/body.parent.parent.mass, 2.5);
-        } else {
-            rMax = 1.36e7*body.parent.radius;
-        }
         gc.setStroke(body.planetColor);
         gc.setLineWidth(4);
         gc.beginPath();
@@ -81,6 +73,20 @@ public class OrbitGraphics {
             }
         }
         gc.stroke();
+    }
+
+    private void setValues() {
+        mu = Constants.GRAVITATIONAL_CONSTANT * body.parent.mass;
+        relativeVel = body.velocity.sub(body.parent.velocity);
+        r = body.position.distance(body.parent.position);
+        v = relativeVel.getMagnitude();
+        a = (mu * r)/(2 * mu - r * v * v);
+
+        if (body.parent.parent != null) {
+            rMax = a* pow(body.parent.mass/body.parent.parent.mass, 2.5);
+        } else {
+            rMax = 1e10*body.parent.radius;
+        }
     }
 
     private void drawConic(GraphicsContext gc, double scale, Vec2 parentScreenPos,

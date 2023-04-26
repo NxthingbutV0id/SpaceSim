@@ -2,11 +2,24 @@
  * Author: Christian Torres
  * Date: 2023/4/19
  *
- * Purpose: *TO BE FINALIZED*
+ * Purpose: This class is responsible for rendering celestial bodies
+ *          and their associated visual components (e.g., ring systems)
+ *          on the simulation canvas.
  *
- * Attributes: *TO BE FINALIZED*
+ * Attributes:
+ * -x: double
+ * -y: double
+ * -relX: double
+ * -relY: double
+ * -body: CelestialBody
+ * -ring: RingSystem
  *
- * Methods: *TO BE FINALIZED*
+ * Methods:
+ * +BodyGraphics(CelestialBody): Constructor
+ * +BodyGraphics(RingSystem): Constructor
+ * +drawBody(GraphicsContext, double, double, double, Vec2): void
+ * +drawBodyText(GraphicsContext, double, double, double, Vec2): void
+ * +drawRing(GraphicsContext, double, double, double, Vec2): void
  */
 package main.simulation.bodies;
 

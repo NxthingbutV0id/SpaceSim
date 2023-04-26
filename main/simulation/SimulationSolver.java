@@ -1,16 +1,23 @@
 /* Class: SimulationSolver
  * Author: Christian Torres
- * Created: 2023/3/13
- * Modified:
+ * Date: 2023/3/13
  *
- * Purpose: grabs the data from the file and runs the calculations
+ * Purpose: This class is responsible for managing the celestial bodies in a simulation, updating their positions and velocities, and handling user interaction with the simulation.
  *
- * Attributes: -bodies: LinkedList<CelestialBody>
- *             -simulationTime: int
- *             -animator: Animator
- *             -logger: Logger
+ * Attributes:
+ * -bodies: LinkedList<CelestialBody>
+ * -simulationTime: int
+ * -animator: Animator
+ * -logger: Logger
+ * -stars: LinkedList<Star>
  *
- * Methods: *** for now, its a lot ***
+ * Methods:
+ * +SimulationSolver(Animator): Constructor
+ * +createBodies(String): void
+ * +update(double, int): void
+ * -getAcceleration(CelestialBody): Vec2
+ * +getSimulationTime(): int
+ * +getBodies(): LinkedList<CelestialBody>
  */
 package main.simulation;
 

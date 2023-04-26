@@ -1,23 +1,44 @@
 /* Class: CelestialBody
  * Author: Christian Torres
- * Created: 2023/3/13
- * Modified:
+ * Date: 2023/3/13
  *
- * Purpose: The bodies that generate gravity
+ * Purpose: This abstract class represents a celestial body in the simulation,
+ *          providing common properties and methods for managing the body's position,
+ *          velocity, mass, and appearance.
  *
- * Attributes: *TO BE FINALIZED*
+ * Attributes:
+ * #name: String
+ * #mass: double
+ * #radius: double
+ * #position: Vec2
+ * #velocity: Vec2
+ * #planetColor: Paint
+ * #surfaceTemp: double
+ * #parent: CelestialBody
+ * -bodyGraphics: BodyGraphics
+ * -orbitGraphics: OrbitGraphics
  *
- * Methods: *TO BE FINALIZED*
+ * Methods:
+ * +CelestialBody(String, double, double, Vec2, Vec2): Constructor
+ * +addToPath(): void
+ * +getScreenPosition(double, double, double, Vec2): Vec2
+ * +getBodyGraphics(): BodyGraphics
+ * +getOrbitGraphics(): OrbitGraphics
+ * +getMass(): double
+ * +getPosition(): Vec2
+ * +getVelocity(): Vec2
+ * +getName(): String
+ * +getRadius(): double
+ * +getTemperature(): double
+ * +setPlanetColor(Paint): void
+ * +setPosition(Vec2): void
+ * +setParentObject(CelestialBody): void
+ * +setTemp(Star): void (abstract)
  */
 package main.simulation.bodies;
 
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.*;
 import main.utils.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import java.util.LinkedList;
-import static java.lang.Math.*;
 
 public abstract class CelestialBody {
     protected String name;

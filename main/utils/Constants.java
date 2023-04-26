@@ -8,7 +8,7 @@
  */
 package main.utils;
 
-public class Constants {
+public enum Constants {;
     public static final double GRAVITATIONAL_CONSTANT = 6.67428e-11;
     public static final double STEFAN_BOLTZMANN = 5.67037419e-8;
     public static final double R_SOL = 6.957e8;
@@ -21,6 +21,5 @@ public class Constants {
     public static final double M_MOON = 7.3459e22;
     public static final double ASTRONOMICAL_UNIT = 1.496e11;
     public static final double KILOMETER = 1000;
-    public static final double T_SOL = 5776;
     public static final double L_SOL = 3.828e26;
 }

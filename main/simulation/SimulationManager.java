@@ -1,13 +1,21 @@
 /* Class: SimulationManager
  * Author: Christian Torres
- * Created: 2023/3/13
- * Modified:
+ * Date: 2023/3/13
  *
- * Purpose: The sets up the window and the application
+ * Purpose: This class is responsible for setting up and managing
+ *          the JavaFX application for the celestial system simulation.
+ *          It initializes the stage, scene, and canvas, and starts the Animator.
  *
  * Attributes:
+ * -width: double
+ * -height: double
+ * -animator: Animator
+ * -stage: Stage
  *
- * Methods: +start(Stage): void
+ * Methods:
+ * +start(Stage): void
+ * -initialize(): void
+ * -setStage(Scene): void
  */
 package main.simulation;
 
@@ -46,7 +54,7 @@ public class SimulationManager extends Application {
     }
 
     private void setStage(Scene mainScene) {
-        String version = "0.9.5";
+        String version = "0.9.9";
         stage.setTitle("System Simulation V" + version);
 
         stage.setHeight(height);

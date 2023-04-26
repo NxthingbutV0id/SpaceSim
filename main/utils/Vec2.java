@@ -1,32 +1,38 @@
 /* Class: Vec2
  * Author: Christian Torres
- * Created: 2023/3/13
- * Modified:
+ * Date: 2023/3/13
  *
- * Purpose: My own version of a vector with the necessary methods
+ * Purpose: This class represents a two-dimensional vector and provides various operations and
+ *          methods to work with these vectors, such as addition, subtraction,
+ *          multiplication, dot product, cross product, and normalization.
  *
- * Attributes: -x: double
- *             -y: double
+ * Attributes:
+ * -x: double
+ * -y: double
  *
- * Methods: +Vec2(double, double): this
- *          +Vec2(double, Vec2): this
- *          +getX(): double
- *          +getY(): double
- *          +getMagnitude(): double
- *          +getAngleRadians(): double
- *          +getAngleDegrees(): double
- *          +getComponents(): double[]
- *          +setXY(double, double): void
- *          +setXY(double[]): void
- *          +add(Vec2): Vec2
- *          +sub(Vec2): Vec2
- *          +multiply(double): Vec2
- *          +divide(double): Vec2
- *          +getDistance(Vec2): double
- *          +dotProduct(Vec2): double
- *          +radiansBetween(Vec2): double
- *          +normalize(): Vec2
- *          +toString(): String
+ * Methods:
+ * +Vec2(double, double): Constructor
+ * +Vec2(double, Vec2): Constructor
+ * +Vec2(): Constructor
+ * +getX(): double
+ * +getY(): double
+ * +setX(double): void
+ * +setY(double): void
+ * +getMagnitude(): double
+ * +getAngleRadians(): double
+ * +set(double, double): void
+ * +add(Vec2): Vec2
+ * +incrementBy(Vec2): void
+ * +sub(Vec2): Vec2
+ * +multiply(double): Vec2
+ * +selfMultiply(double): void
+ * +distance(Vec2): double
+ * +dotProduct(Vec2): double
+ * +crossProduct(Vec2): double
+ * +selfNormalize(): void
+ * +copy(): Vec2
+ * +set(Vec2): void
+ * +toString(): String
  */
 package main.utils;
 
@@ -72,22 +78,9 @@ public class Vec2 {
         return Math.acos(x/getMagnitude());
     }
 
-    public double getAngleDegrees() {
-        return getAngleRadians() * (180.0/Math.PI);
-    }
-
-    public double[] getComponents() {
-        return new double[]{x, y};
-    }
-
     public void set(double x, double y) {
         this.x = x;
         this.y = y;
-    }
-
-    public void set(double[] xy){
-        x = xy[0];
-        y = xy[1];
     }
 
     public Vec2 add(Vec2 vec) {
@@ -109,10 +102,6 @@ public class Vec2 {
 
     public void selfMultiply(double scalar) {x *= scalar; y *= scalar;}
 
-    public Vec2 divide(double scalar) {
-        return new Vec2(x / scalar, y / scalar);
-    }
-
     public double distance(Vec2 vec) {
         return Math.sqrt((Math.abs(vec.x - x) * Math.abs(vec.x - x)) + (Math.abs(vec.y - y) * Math.abs(vec.y - y)));
     }
@@ -123,18 +112,6 @@ public class Vec2 {
 
     public double crossProduct(Vec2 vec) {
         return ((x * vec.y) - (y * vec.x));
-    }
-
-    public double radiansBetween(Vec2 vec) {
-        return Math.acos(dotProduct(vec)/(getMagnitude() * vec.getMagnitude()));
-    }
-
-    public Vec2 normalize() {
-        if (getMagnitude() != 0) {
-            return new Vec2(x / getMagnitude(), y / getMagnitude());
-        } else {
-            return new Vec2();
-        }
     }
 
     public void selfNormalize() {
@@ -152,11 +129,6 @@ public class Vec2 {
     public void set(Vec2 other) {
         x = other.x;
         y = other.y;
-    }
-
-    public void rotate(double angle) {
-        x *= Math.sin(angle);
-        y *= Math.cos(angle);
     }
 
     @Override

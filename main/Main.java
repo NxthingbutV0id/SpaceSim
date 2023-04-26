@@ -1,7 +1,6 @@
 /* Class: Main
  * Author: Christian Torres
- * Created: 2023/3/13
- * Modified:
+ * Date: 2023/3/13
  *
  * Purpose: Start point for the program
  *
@@ -14,6 +13,7 @@ package main;
 import main.simulation.SimulationManager;
 import javafx.application.Application;
 
+//Start of project 3/13, End of project 4/27
 public class Main {
     public static void main(String[] args) {Application.launch(SimulationManager.class, args);}
 }
