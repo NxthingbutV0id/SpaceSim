@@ -4,9 +4,13 @@
  *
  * Purpose: handles the simulation
  *
- * Attributes: *TO BE FINALIZED*
+ * Attributes:
+ * -simulator: SimulationSolver
  *
- * Methods: *TO BE FINALIZED*
+ * Methods:
+ * +SimulationHandler(Animator, String): Constructor
+ * +update(double, int): void
+ * +getBodies(): List<CelestialBody>
  */
 package main.graphics;
 
@@ -28,10 +32,6 @@ public class SimulationHandler {
 
     public List<CelestialBody> getBodies() {
         return simulator.getBodies();
-    }
-
-    public int getSimulationTime() {
-        return simulator.getSimulationTime();
     }
 }
 

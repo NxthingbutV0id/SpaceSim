@@ -1,13 +1,21 @@
 /* Class: Decoder
  * Author: Christian Torres
- * Created: 2023/3/25
- * Modified:
+ * Date: 2023/3/25
  *
- * Purpose: parses data to usable values
+ * Purpose: The Decoder class is responsible for converting string data into appropriate values
+ *          for various celestial body attributes such as mass, radius, distance, and color.
+ *          It also helps set the relative positions of celestial bodies.
  *
- * Attributes: *TO BE FINALIZED*
+ * Attributes:
+ * -logger: Logger
  *
- * Methods: *TO BE FINALIZED*
+ * Methods:
+ * +getMass(String): double
+ * +getRadius(String): double
+ * +getDistance(String): double
+ * +getColor(String): Paint
+ * +extractDouble(String): double
+ * +setRelative(String, LinkedList<CelestialBody>, CelestialBody): void
  */
 package main.files;
 
@@ -79,10 +87,6 @@ public class Decoder {
         } catch (Exception e) {
             return Double.parseDouble(str.replaceAll("[^\\d.]", ""));
         }
-    }
-
-    public double getValue(String str) {
-        return extractDouble(str);
     }
 
     public void setRelative(String str, LinkedList<CelestialBody> bodies, CelestialBody body) {

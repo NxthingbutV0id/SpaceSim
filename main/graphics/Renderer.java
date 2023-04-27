@@ -1,12 +1,22 @@
 /* Class: Renderer
  * Author: Christian Torres
- * Date: 4/6/2023
+ * Date: 2023/4/6
  *
- * Purpose: draws graphics to the screen
+ * Purpose: The Renderer class is responsible for drawing the simulation's celestial bodies and UI elements onto the canvas.
  *
- * Attributes: *TO BE FINALIZED*
+ * Attributes:
+ * -canvas: Canvas
+ * -animator: Animator
+ * -gc: GraphicsContext
+ * -screenWidth: double
  *
- * Methods: *TO BE FINALIZED*
+ * Methods:
+ * +draw(SimulationHandler, double, double, Vec2, double): void
+ * +drawBodies(SimulationHandler, double, Vec2): void
+ * +drawText(double, double, double): void
+ * +drawBodyText(SimulationHandler, double, Vec2): void
+ * +drawPauseMenu(): void
+ * +roundTwo(double): double
  */
 package main.graphics;
 

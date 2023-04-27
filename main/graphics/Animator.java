@@ -1,13 +1,47 @@
 /* Class: Animator
  * Author: Christian Torres
- * Created: 2023/3/23
- * Modified:
+ * Date: 2023/3/23
  *
- * Purpose: Runs the animation logic and draws the pictures
+ * Purpose: The Animator class is responsible for managing the animation loop and rendering of the
+ *          simulation. It also handles input and camera movement.
  *
- * Attributes: *TO BE FINALIZED*
+ * Attributes:
+ * -lastTime: long
+ * -timer: double
+ * -canvas: Canvas
+ * -scale: double
+ * -timeScale: double
+ * -paused: boolean
+ * -camera: Vec2
+ * -lockOn: boolean
+ * -target: CelestialBody
+ * -simulationHandler: SimulationHandler
+ * -inputHandler: InputHandler
+ * -renderer: Renderer
+ * -subDivisions: int
+ * -path: String
+ * -stage: Stage
+ * -frameRate: double
  *
- * Methods: *TO BE FINALIZED*
+ * Methods:
+ * +handle(long): void
+ * +update(double): void
+ * +setTarget(MouseEvent): void
+ * +draw(): void
+ * +getScale(): double
+ * +getCamera(): Vec2
+ * +getTimeScale(): double
+ * +isLockOn(): boolean
+ * +isPaused(): boolean
+ * +getTarget(): CelestialBody
+ * +setScale(double): void
+ * +setTimeScale(double): void
+ * +setPaused(boolean): void
+ * +setPath(String): void
+ * +restart(): void
+ * +getStage(): Stage
+ * +getPath(): String
+ * +escapePressed(): boolean
  */
 package main.graphics;
 
@@ -19,8 +53,6 @@ import javafx.stage.Stage;
 import main.utils.Vec2;
 import main.simulation.bodies.CelestialBody;
 import main.simulation.bodies.Terrestrial;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class Animator extends AnimationTimer {
     private long lastTime = System.nanoTime();
@@ -32,7 +64,6 @@ public class Animator extends AnimationTimer {
     private Vec2 camera;
     private boolean lockOn;
     private CelestialBody target = new Terrestrial(null, Double.NaN, Double.NaN, new Vec2(0,0), null);
-    private Logger logger = LoggerFactory.getLogger(Animator.class);
     private SimulationHandler simulationHandler;
     private InputHandler inputHandler;
     private Renderer renderer;
@@ -142,16 +173,8 @@ public class Animator extends AnimationTimer {
         this.scale = scale;
     }
 
-    public void setCamera(Vec2 camera) {
-        this.camera = camera;
-    }
-
     public void setTimeScale(double timeScale) {
         this.timeScale = timeScale;
-    }
-
-    public void setLockOn(boolean lockOn) {
-        this.lockOn = lockOn;
     }
 
     public void setPaused(boolean paused) {

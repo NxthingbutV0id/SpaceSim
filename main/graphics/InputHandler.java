@@ -1,12 +1,26 @@
 /* Class: InputHandler
  * Author: Christian Torres
- * Date: 4/6/2023
+ * Date: 2023/4/6
  *
- * Purpose: handles keyboard input
+ * Purpose: The InputHandler class is responsible for handling user input from the keyboard and mouse in the simulation.
  *
- * Attributes: *TO BE FINALIZED*
+ * Attributes:
+ * -scene: Scene
+ * -keyPressed: HashMap<String, BooleanProperty>
+ * -cameraVel: Vec2
+ * -animator: Animator
  *
- * Methods: *TO BE FINALIZED*
+ * Methods:
+ * +setControls(): void
+ * +moveCamera(double): void
+ * +handleInput(double): void
+ * +update(double): void
+ * +keyPressed(KeyEvent): void
+ * +keyReleased(KeyEvent): void
+ * +pauseMenuClick(MouseEvent): void
+ * +scrollEvent(ScrollEvent): void
+ * +mouseEvent(MouseEvent): void
+ * +escapePressed(): boolean
  */
 package main.graphics;
 
@@ -18,8 +32,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
 import javafx.stage.FileChooser;
 import main.utils.Vec2;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.util.HashMap;
@@ -27,7 +39,6 @@ import java.util.HashMap;
 public class InputHandler {
     private Scene scene;
     private HashMap<String, BooleanProperty> keyPressed = new HashMap<>();
-    private Logger logger = LoggerFactory.getLogger(InputHandler.class);
     private Vec2 cameraVel = new Vec2();
     private Animator animator;
 

@@ -1,12 +1,29 @@
 /* Class: JsonReader
  * Author: Christian Torres
- * Date: 4/6/2023
+ * Date: 2023/4/6
  *
- * Purpose: reads from a .json file
+ * Purpose: The JsonReader class is responsible for reading and parsing JSON files containing celestial body data. The class loads and creates instances of celestial bodies according to the data in the JSON file.
  *
- * Attributes: *TO BE FINALIZED*
+ * Attributes:
+ * -decoder: Decoder
+ * -rawData: JSONObject
+ * -settings: JSONObject
+ * -bodies: LinkedList<CelestialBody>
+ * -logger: Logger
  *
- * Methods: *TO BE FINALIZED*
+ * Methods:
+ * +loadFile(String): LinkedList<CelestialBody>
+ * +parseJSON(FileReader): void
+ * +loadBodies(): void
+ * +setupBodies(JSONObject): void
+ * +createStar(JSONObject, String, double, double, Vec2, Vec2): void
+ * +createTerrestrial(JSONObject, String, double, double, Vec2, Vec2): void
+ * +createGasGiant(JSONObject, String, double, double, Vec2, Vec2): void
+ * +setupRing(JSONObject, GasGiant): void
+ * +arrayToVec(JSONArray): Vec2
+ * -getSettings(): void
+ * +getScale(): double
+ * +getTimeScale(): double
  */
 package main.files;
 
@@ -23,7 +40,6 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.LinkedList;
