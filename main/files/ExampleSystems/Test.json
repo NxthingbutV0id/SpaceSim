@@ -1,0 +1,49 @@
+{
+  "settings": {
+    "time scale": 1000,
+    "zoom": 1e-5
+  },
+  "system": [
+    {
+      "type": "Terrestrial",
+      "name": "Earth",
+      "mass": "1 Me",
+      "radius": "1 Re",
+      "color": "#6184c2",
+      "albedo": 0.30,
+      "temperature": 273.15,
+      "atmosphere present?": true,
+      "greenhouse effect": 1.133,
+      "position": [0, 0],
+      "velocity": [0, 0],
+      "parent": null
+    },
+    {
+      "type": "Terrestrial",
+      "name": "Moon",
+      "mass": "1 Mm",
+      "radius": "1 Rm",
+      "color": "#949494",
+      "albedo": 0.12,
+      "temperature": 273.15,
+      "atmosphere present?": false,
+      "greenhouse effect": 1,
+      "position": [4.057e8, 0],
+      "velocity": [0, 1020],
+      "parent": "Earth"
+    },
+    {
+      "type": "Terrestrial",
+      "name": "Satellite",
+      "mass": 0.0,
+      "radius": 25.0,
+      "color": "#ff0000",
+      "albedo": 1.0,
+      "atmosphere present?": false,
+      "greenhouse effect": 1.0,
+      "position": [323069644.68, 0],
+      "velocity": [0.0, 1080.0],
+      "parent": "Earth"
+    }
+  ]
+}
