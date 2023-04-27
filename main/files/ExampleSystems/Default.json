@@ -7,7 +7,7 @@
     {
       "type": "Terrestrial",
       "name": "A",
-      "mass": 5e17,
+      "mass": 5e18,
       "radius": 25.0,
       "color": "#ff0000",
       "albedo": 1.0,
@@ -27,7 +27,7 @@
       "atmosphere present?": false,
       "greenhouse effect": 1.0,
       "position": [1000.0, 0.0],
-      "velocity": [0.0, -200.0],
+      "velocity": [0.0, -400.0],
       "parent": null
     },
     {
@@ -40,7 +40,33 @@
       "atmosphere present?": false,
       "greenhouse effect": 1.0,
       "position": [-1000, 0],
-      "velocity": [0.0, 200.0],
+      "velocity": [0.0, 400.0],
+      "parent": null
+    },
+    {
+      "type": "Terrestrial",
+      "name": "D",
+      "mass": 5e17,
+      "radius": 25.0,
+      "color": "#ffff00",
+      "albedo": 1.0,
+      "atmosphere present?": false,
+      "greenhouse effect": 1.0,
+      "position": [0.0, 1000.0],
+      "velocity": [400.0, 0.0],
+      "parent": null
+    },
+    {
+      "type": "Terrestrial",
+      "name": "E",
+      "mass": 5e17,
+      "radius": 25.0,
+      "color": "#00ffff",
+      "albedo": 1.0,
+      "atmosphere present?": false,
+      "greenhouse effect": 1.0,
+      "position": [0.0, -1000.0],
+      "velocity": [-400.0, 0.0],
       "parent": null
     }
   ]

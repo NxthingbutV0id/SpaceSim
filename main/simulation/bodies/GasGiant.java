@@ -1,16 +1,25 @@
 /* Class: GasGiant
  * Author: Christian Torres
- * Date: 4/6/2023
+ * Date: 2023/4/6
  *
- * Purpose: a giant gas planet like jupiter, also could have rings!
+ * Purpose: This class represents gas giant celestial bodies in the simulation,
+ *          extending the CelestialBody class. It includes additional attributes and
+ *          methods specific to gas giants, such as albedo and the presence of ring systems.
  *
- * Attributes: *TO BE FINALIZED*
+ * Attributes:
+ * -albedo: double
+ * -rings: RingSystem
  *
- * Methods: *TO BE FINALIZED*
+ * Methods:
+ * +GasGiant(String, double, double, Vec2, Vec2): Constructor
+ * +setAlbedo(double): void
+ * +setRings(double, double, Paint, double): void
+ * +setTemp(Star): void
+ * +getRings(): RingSystem
+ * +hasRings(): boolean
  */
 package main.simulation.bodies;
 
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Paint;
 import main.utils.Constants;
 import main.utils.Vec2;
