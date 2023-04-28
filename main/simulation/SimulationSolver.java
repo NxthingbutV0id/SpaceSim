@@ -2,11 +2,11 @@
  * Author: Christian Torres
  * Date: 2023/3/13
  *
- * Purpose: This class is responsible for managing the celestial bodies in a simulation, updating their positions and velocities, and handling user interaction with the simulation.
+ * Purpose: This class is responsible for managing the celestial bodies in a simulation,
+ *          updating their positions and velocities, and handling user interaction with the simulation.
  *
  * Attributes:
  * -bodies: LinkedList<CelestialBody>
- * -simulationTime: int
  * -animator: Animator
  * -logger: Logger
  * -stars: LinkedList<Star>
@@ -16,7 +16,6 @@
  * +createBodies(String): void
  * +update(double, int): void
  * -getAcceleration(CelestialBody): Vec2
- * +getSimulationTime(): int
  * +getBodies(): LinkedList<CelestialBody>
  */
 package main.simulation;
@@ -33,13 +32,11 @@ import static java.lang.Math.sqrt;
 
 public class SimulationSolver {
     private LinkedList<CelestialBody> bodies = new LinkedList<>();
-    private int simulationTime;
     private Animator animator;
     private Logger logger = LoggerFactory.getLogger(SimulationSolver.class);
     private LinkedList<Star> stars = new LinkedList<>();
 
     public SimulationSolver(Animator animator) {
-        simulationTime = 0;
         this.animator = animator;
     }
 
@@ -60,7 +57,6 @@ public class SimulationSolver {
     }
 
     public void update(double deltaT, int timeStep) {
-        simulationTime++;
         for (int i = 0; i < timeStep; i++) {
             for (CelestialBody body : bodies) {
                 Vec2 originalVelocity = body.getVelocity().copy();
@@ -124,9 +120,6 @@ public class SimulationSolver {
         return new Vec2(ax, ay);
     }
 
-    public int getSimulationTime() {
-        return simulationTime;
-    }
     public LinkedList<CelestialBody> getBodies() {
         return bodies;
     }

@@ -1,13 +1,21 @@
 /* Class: Terrestrial
  * Author: Christian Torres
- * Date: 4/6/2023
+ * Date: 2023/4/6
  *
- * Purpose: its like earth, or the moon, or whatever you want it to be
+ * Purpose: The Terrestrial class represents a terrestrial celestial body, inheriting from the CelestialBody class.
  *
- * Attributes: *TO BE FINALIZED*
+ * Attributes:
+ * -albedo: double
+ * -greenhouseFactor: double
+ * -hasAtmosphere: boolean
  *
- * Methods: *TO BE FINALIZED*
+ * Methods:
+ * +setGreenhouseFactor(double greenhouseFactor): void
+ * +setAlbedo(double albedo): void
+ * +setHasAtmosphere(boolean hasAtmosphere): void
+ * -setTemp(Star star): void
  */
+
 package main.simulation.bodies;
 
 import main.utils.*;
@@ -19,10 +27,6 @@ public class Terrestrial extends CelestialBody {
 
     public Terrestrial(String name, double mass, double radius, Vec2 position, Vec2 velocity) {
         super(name, mass, radius, position, velocity);
-    }
-
-    public void setInitTemp(double temp) {
-        surfaceTemp = temp;
     }
 
     public void setGreenhouseFactor(double greenhouseFactor) {

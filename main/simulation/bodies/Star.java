@@ -1,13 +1,43 @@
 /* Class: Star
  * Author: Christian Torres
- * Date: 4/6/2023
+ * Date: 2023/4/6
  *
- * Purpose: "Its a star!" - Bill Wurtz
+ * Purpose: The Star class represents a celestial body that is a star, inheriting from the CelestialBody class.
  *
- * Attributes: *TO BE FINALIZED*
+ * Attributes:
+ * -luminosity: double
  *
- * Methods: *TO BE FINALIZED*
+ * Inherited Attributes:
+ * -name: String
+ * -mass: double
+ * -radius: double
+ * -position: Vec2
+ * -velocity: Vec2
+ * -planetColor: Color
+ * -surfaceTemp: double
+ * -parent: CelestialBody
+ * -orbitGraphics: OrbitGraphics
+ * -bodyGraphics: BodyGraphics
+ *
+ * Methods:
+ * +getLuminosity(): double
+ *
+ * Inherited Methods:
+ * +getMass(): double
+ * +getRadius(): double
+ * +getPosition(): Vec2
+ * +getVelocity(): Vec2
+ * +getOrbitGraphics(): OrbitGraphics
+ * +getBodyGraphics(): BodyGraphics
+ * +getTemperature(): double
+ * +getName(): String
+ * +getParent(): CelestialBody
+ *
+ * Private Methods:
+ * -setLuminosity(): double
+ * -setTemp(Star star): void
  */
+
 package main.simulation.bodies;
 
 import main.utils.*;

@@ -41,7 +41,7 @@
       "albedo": 1.0,
       "atmosphere present?": false,
       "greenhouse effect": 1.0,
-      "position": [323069644.68, 0],
+      "position": [323079644.68, 0],
       "velocity": [0.0, 1080.0],
       "parent": "Earth"
     }

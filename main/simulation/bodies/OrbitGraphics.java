@@ -2,20 +2,37 @@
  * Author: Christian Torres
  * Date: 2023/4/19
  *
- * Purpose: *TO BE FINALIZED*
+ * Purpose: The OrbitGraphics class is responsible for rendering the orbits of celestial bodies.
  *
- * Attributes: *TO BE FINALIZED*
+ * Attributes:
+ * -body: CelestialBody
+ * -path: LinkedList<Vec2>
+ * -rMax: double
+ * -a: double
+ * -r: double
+ * -mu: double
+ * -v: double
+ * -relativeVel: Vec2
  *
- * Methods: *TO BE FINALIZED*
+ * Methods:
+ * +addToPath(): void
+ * +drawOrbit(GraphicsContext, double, double, double, Vec2): void
+ * -drawBodyConic(GraphicsContext, double, double, double, Vec2): void
+ * -setValues(): void
+ * -drawConic(GraphicsContext, double, Vec2, double, double, double, double): void
+ * -r(double, double, double): double
+ * -sign(double): double
+ * -drawBodyPath(GraphicsContext, double, double, double, Vec2): void
+ * -shouldSkipDrawing(Vec2, Vec2, double, double): boolean
+ * -computeLinePoints(Vec2, Vec2, double, double, double, Vec2): double[]
  */
+
 package main.simulation.bodies;
 
 import javafx.scene.canvas.GraphicsContext;
 import main.utils.Constants;
 import main.utils.Vec2;
-
 import java.util.LinkedList;
-
 import static java.lang.Math.*;
 
 public class OrbitGraphics {

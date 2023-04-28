@@ -1,9 +1,29 @@
+/* Class: RingSystem
+ * Author: Christian Torres
+ * Date: 2023/4/27
+ *
+ * Purpose: The RingSystem class represents the ring system of a celestial body, such as a gas giant.
+ *
+ * Attributes:
+ * -innerRadius: double
+ * -outerRadius: double
+ * -color: Paint
+ * -opacity: double
+ * -parent: CelestialBody
+ * -graphics: BodyGraphics
+ *
+ * Methods:
+ * +getGraphics(): BodyGraphics
+ * +getParent(): CelestialBody
+ * +getInnerRadius(): double
+ * +getOuterRadius(): double
+ * +getColor(): Paint
+ * +getOpacity(): double
+ */
+
 package main.simulation.bodies;
 
-import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
-import main.utils.Vec2;
 
 public class RingSystem{
     private double innerRadius, outerRadius;

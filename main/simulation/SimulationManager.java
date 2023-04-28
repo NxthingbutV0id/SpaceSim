@@ -41,7 +41,7 @@ public class SimulationManager extends Application {
     private void initialize() {
         double timeScale = 1.0;
         double scale = 1.0;
-        int subDivisions = 1 << 10;
+        int subDivisions = 2000;
 
         BorderPane root = new BorderPane();
         Scene mainScene = new Scene(root);
@@ -54,7 +54,7 @@ public class SimulationManager extends Application {
     }
 
     private void setStage(Scene mainScene) {
-        String version = "0.9.9";
+        String version = "1.0.0";
         stage.setTitle("System Simulation V" + version);
 
         stage.setHeight(height);
