@@ -33,22 +33,29 @@ public class Renderer {
     private Canvas canvas;
     private Animator animator;
     private GraphicsContext gc;
-    private double screenWidth;
+    private double screenWidth, screenHeight;
 
     public Renderer(Canvas canvas, Animator animator) {
         this.canvas = canvas;
         this.animator = animator;
         screenWidth = canvas.getWidth();
+        screenHeight = canvas.getHeight();
     }
 
-    public void draw(SimulationHandler simulationHandler, double scale, double timeScale, Vec2 camera, double fps) {
+    public void draw(SimulationHandler simulationHandler, double scale, double timeScale, Vec2 camera, double fps,
+                     boolean error) {
         gc = canvas.getGraphicsContext2D();
         drawBodies(simulationHandler, scale, camera);
         drawBodyText(simulationHandler, scale, camera);
         if (animator.escapePressed()) {
             drawPauseMenu();
         } else {
-            drawText(scale, timeScale, fps);
+            if (!error) {
+                drawText(scale, timeScale, fps);
+            }
+        }
+        if (error) {
+            errorMsg();
         }
     }
 
@@ -110,6 +117,14 @@ public class Renderer {
 
     private double roundTwo(double value) {
         return Math.round(value * 100.0)/100.0;
+    }
+
+    private void errorMsg() {
+        gc.setFill(Color.WHITE);
+        Path pathFromString = Path.of(animator.getPath());
+        String file = pathFromString.getFileName().toString();
+        gc.fillText("ERROR, "+ file +" is not in the correct format, please select a valid file.",
+                50, 50);
     }
 }
 

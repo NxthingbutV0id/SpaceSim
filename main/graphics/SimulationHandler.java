@@ -26,12 +26,8 @@ public class SimulationHandler {
         simulator.createBodies(path);
     }
 
-    public void update(double deltaT, int subDivisions) {
-        simulator.update(deltaT, subDivisions);
-    }
-
-    public List<CelestialBody> getBodies() {
-        return simulator.getBodies();
-    }
+    public void update(double deltaT, int subDivisions) {simulator.update(deltaT, subDivisions);}
+    public List<CelestialBody> getBodies() {return simulator.getBodies();}
+    public boolean isError() {return simulator.isError();}
 }
 

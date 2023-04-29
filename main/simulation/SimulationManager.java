@@ -55,7 +55,7 @@ public class SimulationManager extends Application {
 
     private void setStage(Scene mainScene) {
         String version = "1.0.0";
-        stage.setTitle("System Simulation V" + version);
+        stage.setTitle("WorldSim V" + version);
 
         stage.setHeight(height);
         stage.setWidth(width);

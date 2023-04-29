@@ -54,9 +54,8 @@ public class JsonReader {
     public LinkedList<CelestialBody> loadFile(String path) {
         try {
             parseJSON(new FileReader(path));
-        } catch (Exception e) {
+        } catch (Exception ignore) {
             logger.error("Error loading file");
-            e.printStackTrace();
         }
         return bodies;
     }

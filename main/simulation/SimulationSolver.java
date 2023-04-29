@@ -35,6 +35,7 @@ public class SimulationSolver {
     private Animator animator;
     private Logger logger = LoggerFactory.getLogger(SimulationSolver.class);
     private LinkedList<Star> stars = new LinkedList<>();
+    private boolean error = false;
 
     public SimulationSolver(Animator animator) {
         this.animator = animator;
@@ -46,8 +47,8 @@ public class SimulationSolver {
             bodies = reader.loadFile(path);
             animator.setScale(reader.getScale());
             animator.setTimeScale(reader.getTimeScale());
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (Exception ignore) {
+            error = true;
         }
         for (CelestialBody body : bodies) {
             if (body instanceof Star) {
@@ -59,6 +60,7 @@ public class SimulationSolver {
     public void update(double deltaT, int timeStep) {
         for (int i = 0; i < timeStep; i++) {
             for (CelestialBody body : bodies) {
+                //Runge-Kutta 4 method
                 Vec2 originalVelocity = body.getVelocity().copy();
                 Vec2 originalPosition = body.getPosition().copy();
 
@@ -123,4 +125,6 @@ public class SimulationSolver {
     public LinkedList<CelestialBody> getBodies() {
         return bodies;
     }
+
+    public boolean isError() {return error;}
 }

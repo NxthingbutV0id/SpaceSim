@@ -142,7 +142,7 @@ public class Animator extends AnimationTimer {
         if (lockOn) {
             camera = target.getPosition();
         }
-        renderer.draw(simulationHandler, scale, timeScale, camera, frameRate);
+        renderer.draw(simulationHandler, scale, timeScale, camera, frameRate, simulationHandler.isError());
     }
 
     public double getScale() {
