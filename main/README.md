@@ -147,3 +147,8 @@ The following are the allowed units in the .json file
     - "Km" - Kilometers (1000 meters)
     - "Au" - Astronomical Units (1.496e11 meters)
 
+## Libraries used
+
+- [JavaFX](https://openjfx.io)
+- [SLF4J](https://www.slf4j.org/index.html)
+- [json-simple](https://code.google.com/archive/p/json-simple/)
