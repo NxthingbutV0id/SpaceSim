@@ -1,4 +1,4 @@
-# WorldSim V1.0.0 Manuel
+# WorldSim V1.0.0 Manual
 
 ## Controls
 The following are the list of controls for the simulation
