@@ -139,6 +139,7 @@ public class InputHandler {
     private void pauseMenuClick(MouseEvent event) {
         if (event.getX() >= 50 && event.getX() <= 200 && event.getY() >= 250 && event.getY() <= 300) {
             FileChooser fc = new FileChooser();
+            fc.getExtensionFilters().add(new FileChooser.ExtensionFilter("JSON files (*.json)", "*.json"));
             File file = fc.showOpenDialog(animator.getStage());
             if (file != null) {
                 animator.setPath(file.getPath());
