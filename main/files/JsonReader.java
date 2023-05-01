@@ -2,7 +2,8 @@
  * Author: Christian Torres
  * Date: 2023/4/6
  *
- * Purpose: The JsonReader class is responsible for reading and parsing JSON files containing celestial body data. The class loads and creates instances of celestial bodies according to the data in the JSON file.
+ * Purpose: The JsonReader class is responsible for reading and parsing JSON files containing celestial body data.
+ *              The class loads and creates instances of celestial bodies according to the data in the JSON file.
  *
  * Attributes:
  * -decoder: Decoder

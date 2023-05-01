@@ -22,4 +22,5 @@ public enum Constants {;
     public static final double ASTRONOMICAL_UNIT = 1.496e11;
     public static final double KILOMETER = 1000;
     public static final double L_SOL = 3.828e26;
+    public static final double T_SOL = 5778;
 }

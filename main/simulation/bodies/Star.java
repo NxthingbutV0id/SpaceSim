@@ -69,6 +69,7 @@ public class Star extends CelestialBody {
 
     @Override
     public void setTemp(Star star) {
-        surfaceTemp =  Math.sqrt(Math.sqrt(luminosity/(radius * radius)));
+        double relativeRadius = radius/Constants.R_SOL;
+        surfaceTemp = Math.pow(setLuminosity()/(relativeRadius * relativeRadius), 0.25) * Constants.T_SOL;
     }
 }
