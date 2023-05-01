@@ -89,6 +89,42 @@ For all celestial bodies, they will contain the following fields:
 - velocity
 
     - A 2d array as [dx, dy], only numbers in units of meters per second
+- parent
+
+  - The parent is the name of the celestial body that the current body is relative to
+  if there is no parent object, the value can be null.
+  Note that the parent must be defined beforehand.
+
+#### Terrestrial Specific Fields
+
+- albedo
+
+  - A value from 0 to 1 of how reflective the body is, used for temperature calculations.
+  Note that if there is no star in the system, the temperatures will all be 0 kelvin
+- atmosphere present?
+
+  - A boolean of whether the body has an atmosphere present or not
+- greenhouse effect
+
+  - How much heat the atmosphere will absorb, if there is no atmosphere, this value is ignored.
+
+#### Gas Giant Specific Fields
+
+- albedo
+
+    - A value from 0 to 1 of how reflective the body is, used for temperature calculations.
+      Note that if there is no star in the system, the temperatures will all be 0 kelvin
+- ring system
+
+  - A json object with the following fields.
+  
+    - inner radius, in multiples of the planet radius
+    - outer radius, in multiples of the planet radius
+    - color, a hex string similar to the ones stated above
+    - opacity, how visible are the rings
+  - if there isn't a ring system, the value can be null
+  
+
 
 ### Units
 
